@@ -1,0 +1,23 @@
+﻿<catel:UserControl x:Class="PhotoManagementStudio.Views.MediaView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+				   xmlns:catel="http://catel.codeplex.com"
+				   xmlns:controls="clr-namespace:PhotoManagementStudio.Controls"
+                   xmlns:converters="clr-namespace:PhotoManagementStudio.Converters">
+    
+    <!-- Resources -->
+    <UserControl.Resources>
+        <converters:ImageSourceConverter x:Key="ImageSourceConverter"/>
+    </UserControl.Resources>
+
+    <!-- Content -->
+    <catel:StackGrid controls:ScalingImage.CacheFolder="PhotoLibraryCache" controls:ScalingImage.ThumbServer="http://localhost:54321/api/image/">
+		<catel:StackGrid.ColumnDefinitions>
+			<ColumnDefinition Width="100" />
+			<ColumnDefinition Width="Auto" />
+		</catel:StackGrid.ColumnDefinitions>
+		
+        <controls:ScalingImage ImageId="{Binding FileName}" />
+		<Label Content="{Binding FullFilePath}" />
+    </catel:StackGrid>
+</catel:UserControl>
