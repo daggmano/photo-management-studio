@@ -1,4 +1,5 @@
 ﻿using Catel.IoC;
+using NetworkSupervisor;
 using PhotoManagementStudio.Services;
 using PhotoManagementStudio.Services.Interfaces;
 
@@ -13,6 +14,7 @@ namespace PhotoManagementStudio
     /// </summary>
     public partial class App : Application
     {
+        private NetworkManager _networkManager;
         /// <summary>
         /// Raises the <see cref="E:System.Windows.Application.Startup"/> event.
         /// </summary>
@@ -30,6 +32,8 @@ namespace PhotoManagementStudio
             var serviceLocator = ServiceLocator.Default;
             serviceLocator.RegisterType<IDataService, DataService>();
 
+            _networkManager = new NetworkManager();
+            _networkManager.Initialize();
 
             base.OnStartup(e);
         }

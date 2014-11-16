@@ -49,8 +49,9 @@
     <Reference Include="MyCouch.Net45">
       <HintPath>..\packages\MyCouch.2.6.0\lib\net45\MyCouch.Net45.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -154,6 +155,12 @@
     <Resource Include="PlaceholderImages\Placeholder_128.jpg" />
     <Resource Include="PlaceholderImages\Placeholder_256.jpg" />
     <Resource Include="PlaceholderImages\Placeholder_512.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NetworkSupervisor\NetworkSupervisor.csproj">
+      <Project>{92535ED5-D9B9-4152-8C9C-A3A10CB63280}</Project>
+      <Name>NetworkSupervisor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
