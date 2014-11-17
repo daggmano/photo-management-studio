@@ -91,6 +91,7 @@
     </ApplicationDefinition>
     <Compile Include="Controls\ScalingImage.cs" />
     <Compile Include="Converters\ImageSourceConverter.cs" />
+    <Compile Include="Models\NetworkConfiguration.cs" />
     <Compile Include="ViewModels\MediaViewModel.cs" />
     <Compile Include="Views\MediaView.xaml.cs">
       <DependentUpon>MediaView.xaml</DependentUpon>

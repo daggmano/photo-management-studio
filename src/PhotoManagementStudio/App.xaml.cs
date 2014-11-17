@@ -1,5 +1,7 @@
-﻿using Catel.IoC;
+﻿using System;
+using Catel.IoC;
 using NetworkSupervisor;
+using PhotoManagementStudio.Models;
 using PhotoManagementStudio.Services;
 using PhotoManagementStudio.Services.Interfaces;
 
@@ -31,8 +33,18 @@ namespace PhotoManagementStudio
             // Catel.IoC.ServiceLocator.Instance.RegisterExternalContainer(MyUnityContainer);
             var serviceLocator = ServiceLocator.Default;
             serviceLocator.RegisterType<IDataService, DataService>();
+            serviceLocator.RegisterType(typeof(NetworkConfiguration), (obj) => new NetworkConfiguration());
+
+            var networkConfiguration = serviceLocator.ResolveType(typeof (NetworkConfiguration)) as NetworkConfiguration;
 
             _networkManager = new NetworkManager();
+            _networkManager.OnServerInfoChanged += (sender, args) =>
+            {
+                if (networkConfiguration != null)
+                {
+                    networkConfiguration.ServerPath = String.Format("http://{0}:{1}/api/image/", args.Address, args.Port);
+                }
+            };
             _networkManager.Initialize();
 
             base.OnStartup(e);

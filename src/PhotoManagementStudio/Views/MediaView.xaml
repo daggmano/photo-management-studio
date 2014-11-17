@@ -11,7 +11,7 @@
     </UserControl.Resources>
 
     <!-- Content -->
-    <catel:StackGrid controls:ScalingImage.CacheFolder="PhotoLibraryCache" controls:ScalingImage.ThumbServer="http://localhost:54321/api/image/">
+    <catel:StackGrid controls:ScalingImage.CacheFolder="PhotoLibraryCache" controls:ScalingImage.ThumbServer="{Binding ServerPath}">
 		<catel:StackGrid.ColumnDefinitions>
 			<ColumnDefinition Width="100" />
 			<ColumnDefinition Width="Auto" />

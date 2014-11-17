@@ -21,6 +21,8 @@ namespace NetworkSupervisor
         private IPAddress _imageServerAddress;
         private int _imageServerPort;
 
+        public event ServerInfoChangedEventHandler OnServerInfoChanged;
+
         public void Initialize()
         {
             var watchdogTimeout = Int32.Parse(ConfigurationManager.AppSettings["WatchdogTimeout"]);
@@ -41,6 +43,16 @@ namespace NetworkSupervisor
         {
             _imageServerAddress = e.Address;
             _imageServerPort = e.Port;
+
+            if (OnServerInfoChanged != null)
+            {
+                OnServerInfoChanged(this, new ServerInfoEventArgs
+                {
+                    Address = _imageServerAddress,
+                    Port = _imageServerPort
+                });
+            }
+
             _connectionStatus = ConnectionState.Connected;
         }
 
@@ -107,6 +119,15 @@ namespace NetworkSupervisor
                     _connectionStatus = ConnectionState.Disconnected;
                     _imageServerAddress = null;
                     _imageServerPort = 0;
+
+                    if (OnServerInfoChanged != null)
+                    {
+                        OnServerInfoChanged(this, new ServerInfoEventArgs
+                        {
+                            Address = null,
+                            Port = 0
+                        });
+                    }
                 }
                 else
                 {

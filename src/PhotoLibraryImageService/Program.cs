@@ -77,7 +77,6 @@ namespace PhotoLibraryImageService
 
                         SocketClient.Send(groupEp.Address, discoveryObject.ClientSocketPort, networkMessage);
                     }
-                    //                    Console.WriteLine("Received broadcast from {0} : \n {1}\n", groupEp, Encoding.ASCII.GetString(bytes, 0, bytes.Length));
                 }
             }
             catch (Exception e)

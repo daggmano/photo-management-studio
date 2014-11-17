@@ -1,6 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
 using Catel;
 using Catel.Data;
 using PhotoManagementStudio.Models;
@@ -41,19 +39,6 @@ namespace PhotoManagementStudio.ViewModels
         }
 
         #endregion
-
-        //private async void Blah()
-        //{
-        //    var media = await _dataService.GetAllMedia();
-
-        //    var collections = await _dataService.GetAllCollections(true);
-
-        //    var imports = await _dataService.GetAllImports(true);
-
-        //    var mediaNames = media.Select(x => x.FullFilePath).ToList();
-
-        //    var tags = await _dataService.GetAllTagsAsHierarchy();
-        //}
 
         #region Properties
 

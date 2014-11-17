@@ -1,4 +1,5 @@
-﻿using Catel;
+﻿using System;
+using Catel;
 using Catel.Data;
 using Catel.MVVM;
 using PhotoManagementStudio.Models;
@@ -17,10 +18,13 @@ namespace PhotoManagementStudio.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaViewModel"/> class.
         /// </summary>
-        public MediaViewModel(Media media)
+        public MediaViewModel(Media media, NetworkConfiguration networkConfiguration)
         {
             Argument.IsNotNull(() => media);
+            Argument.IsNotNull(() => networkConfiguration);
+
             Media = media;
+            NetworkConfiguration = networkConfiguration;
         }
         #endregion
 
@@ -48,6 +52,21 @@ namespace PhotoManagementStudio.ViewModels
         /// Register the MediaItem property so it is known in the class.
         /// </summary>
         public static readonly PropertyData MediaProperty = RegisterProperty("Media", typeof(Media), null);
+
+        /// <summary>
+        /// Gets or sets the network configuration item.
+        /// </summary>
+        [Model]
+        public NetworkConfiguration NetworkConfiguration
+        {
+            get { return GetValue<NetworkConfiguration>(NetworkConfigurationProperty); }
+            private set { SetValue(NetworkConfigurationProperty, value); }
+        }
+
+        /// <summary>
+        /// Register the NetworkConfiguration property so it is known in the class.
+        /// </summary>
+        public static readonly PropertyData NetworkConfigurationProperty = RegisterProperty("NetworkConfiguration", typeof(NetworkConfiguration), null);
 
         // TODO: Register view model properties with the vmprop or vmpropviewmodeltomodel codesnippets
 
@@ -80,6 +99,21 @@ namespace PhotoManagementStudio.ViewModels
         /// Register the FileName property so it is known in the class.
         /// </summary>
         public static readonly PropertyData FileNameProperty = RegisterProperty("FileName", typeof(string), null);
+
+        /// <summary>
+        /// Gets the image server path.
+        /// </summary>
+        [ViewModelToModel("NetworkConfiguration")]
+        public string ServerPath
+        {
+            get { return GetValue<string>(ServerPathProperty); }
+            set {  SetValue(ServerPathProperty, value); }
+        }
+
+        /// <summary>
+        /// Register the ServerPath property so it is known in the class.
+        /// </summary>
+        public static readonly PropertyData ServerPathProperty = RegisterProperty("ServerPath", typeof(string), null);
 
         #endregion
 
