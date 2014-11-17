@@ -4,14 +4,26 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using Newtonsoft.Json;
+using Shared;
 
 namespace NetworkSupervisor
 {
+    public delegate void ServerInfoChangedEventHandler(object sender, ServerInfoEventArgs e);
+
+    public class ServerInfoEventArgs : EventArgs
+    {
+        public IPAddress Address { get; set; }
+        public int Port { get; set; }
+    }
+
     public class SocketServer
     {
         public int SocketPort { get; private set; }
         // Thread signal.
         public ManualResetEvent AllDone = new ManualResetEvent(false);
+
+        public event ServerInfoChangedEventHandler OnServerInfoChanged;
 
         public void StartListening()
         {
@@ -92,7 +104,27 @@ namespace NetworkSupervisor
                 {
                     // All the data has been read from the 
                     // client. Display it on the console.
-                    Console.WriteLine("Read {0} bytes from socket. \n Data : {1}", content.Length, content);
+//                    Console.WriteLine("Read {0} bytes from socket. \n Data : {1}", content.Length, content);
+//                    Console.WriteLine("Remote IP: {0}", ((IPEndPoint)handler.RemoteEndPoint).Address);
+
+                    // Remove <EOF> string
+                    var msg = content.Substring(0, content.Length - 5);
+                    var obj = JsonConvert.DeserializeObject<NetworkMessageObject>(msg);
+                    switch (obj.MessageType)
+                    {
+                        case NetworkMessageType.ServerSpecification:
+                            var spec = JsonConvert.DeserializeObject<NetworkMessageObject<ServerSpecificationObject>>(msg);
+                            if (OnServerInfoChanged != null)
+                            {
+                                OnServerInfoChanged(this, new ServerInfoEventArgs
+                                {
+                                    Address = ((IPEndPoint)handler.RemoteEndPoint).Address,
+                                    Port = spec.Message.ServerPort
+                                });
+                            }
+//                            Console.WriteLine("Remote Port = {0}", spec.Message.ServerPort);
+                            break;
+                    }
                     // Echo the data back to the client.
                     Send(handler, content);
                 }
