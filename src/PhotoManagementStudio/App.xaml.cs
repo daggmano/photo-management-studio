@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using Catel.IoC;
 using NetworkSupervisor;
 using PhotoManagementStudio.Models;
@@ -35,15 +36,14 @@ namespace PhotoManagementStudio
             serviceLocator.RegisterType<IDataService, DataService>();
             serviceLocator.RegisterType(typeof(NetworkConfiguration), (obj) => new NetworkConfiguration());
 
-            var networkConfiguration = serviceLocator.ResolveType(typeof (NetworkConfiguration)) as NetworkConfiguration;
+            var networkConfiguration = (NetworkConfiguration)serviceLocator.ResolveType(typeof (NetworkConfiguration));
+            networkConfiguration.CacheFolder = ConfigurationManager.AppSettings["CacheFolder"];
 
             _networkManager = new NetworkManager();
             _networkManager.OnServerInfoChanged += (sender, args) =>
             {
-                if (networkConfiguration != null)
-                {
-                    networkConfiguration.ServerPath = String.Format("http://{0}:{1}/api/image/", args.Address, args.Port);
-                }
+                networkConfiguration.ServerPath = String.Format("http://{0}:{1}/api/image/", args.Address, args.Port);
+                networkConfiguration.CacheFolder = ConfigurationManager.AppSettings["CacheFolder"];
             };
             _networkManager.Initialize();
 

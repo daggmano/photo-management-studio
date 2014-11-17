@@ -51,6 +51,20 @@ namespace PhotoManagementStudio.Models
         /// </summary>
         public static readonly PropertyData ServerPathProperty = RegisterProperty("ServerPath", typeof(string), String.Empty);
 
+        /// <summary>
+        /// Gets or sets the image cache folder.
+        /// </summary>
+        public string CacheFolder
+        {
+            get { return GetValue<string>(CacheFolderProperty); }
+            set { SetValue(CacheFolderProperty, value); }
+        }
+
+        /// <summary>
+        /// Register the CacheFolder property so it is known in the class.
+        /// </summary>
+        public static readonly PropertyData CacheFolderProperty = RegisterProperty("CacheFolder", typeof(string), String.Empty);
+
         #endregion
 
         #region Methods

@@ -107,13 +107,28 @@ namespace PhotoManagementStudio.ViewModels
         public string ServerPath
         {
             get { return GetValue<string>(ServerPathProperty); }
-            set {  SetValue(ServerPathProperty, value); }
+            set { SetValue(ServerPathProperty, value); }
         }
 
         /// <summary>
         /// Register the ServerPath property so it is known in the class.
         /// </summary>
         public static readonly PropertyData ServerPathProperty = RegisterProperty("ServerPath", typeof(string), null);
+
+        /// <summary>
+        /// Gets the image cache path.
+        /// </summary>
+        [ViewModelToModel("NetworkConfiguration")]
+        public string CacheFolder
+        {
+            get { return GetValue<string>(CacheFolderProperty); }
+            set { SetValue(CacheFolderProperty, value); }
+        }
+
+        /// <summary>
+        /// Register the CacheFolder property so it is known in the class.
+        /// </summary>
+        public static readonly PropertyData CacheFolderProperty = RegisterProperty("CacheFolder", typeof(string), null);
 
         #endregion
 

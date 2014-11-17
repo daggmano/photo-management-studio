@@ -90,7 +90,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controls\ScalingImage.cs" />
-    <Compile Include="Converters\ImageSourceConverter.cs" />
     <Compile Include="Models\NetworkConfiguration.cs" />
     <Compile Include="ViewModels\MediaViewModel.cs" />
     <Compile Include="Views\MediaView.xaml.cs">
@@ -162,6 +161,9 @@
       <Project>{92535ED5-D9B9-4152-8C9C-A3A10CB63280}</Project>
       <Name>NetworkSupervisor</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Converters\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
