@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Net;
 using Catel.IoC;
 using NetworkSupervisor;
 using PhotoManagementStudio.Models;
@@ -17,7 +18,10 @@ namespace PhotoManagementStudio
     /// </summary>
     public partial class App : Application
     {
+        public static string DatabasePath { get; private set; }
+
         private NetworkManager _networkManager;
+
         /// <summary>
         /// Raises the <see cref="E:System.Windows.Application.Startup"/> event.
         /// </summary>
@@ -44,10 +48,20 @@ namespace PhotoManagementStudio
             {
                 networkConfiguration.ServerPath = String.Format("http://{0}:{1}/api/image/", args.Address, args.Port);
                 networkConfiguration.CacheFolder = ConfigurationManager.AppSettings["CacheFolder"];
+
+                SetupReplication(args.Address);
             };
             _networkManager.Initialize();
 
             base.OnStartup(e);
+        }
+
+        private async void SetupReplication(IPAddress address)
+        {
+            var serverIdObject = await _networkManager.GetDbServerId();
+            DatabasePath = String.Format("http://localhost:5984/photos_{0}", serverIdObject.ServerId);
+
+            DatabaseManager.SetupReplication(address, serverIdObject.ServerId);
         }
     }
 }

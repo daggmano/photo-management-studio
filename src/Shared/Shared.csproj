@@ -42,6 +42,7 @@
     <Compile Include="NetworkDiscoveryObject.cs" />
     <Compile Include="NetworkMessageObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerDatabaseIdentifierObject.cs" />
     <Compile Include="ServerSpecificationObject.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

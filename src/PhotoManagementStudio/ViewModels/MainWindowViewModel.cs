@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Catel;
 using Catel.Data;
 using PhotoManagementStudio.Models;
@@ -32,10 +33,12 @@ namespace PhotoManagementStudio.ViewModels
             _dataService = dataService;
         }
 
-        protected override async void Initialize()
+        protected override async Task Initialize()
         {
-            var media = await _dataService.GetAllMedia();
-            MediaList = new ObservableCollection<Media>(media);
+            await base.Initialize();
+
+            //var media = await _dataService.GetAllMedia();
+            //MediaList = new ObservableCollection<Media>(media);
         }
 
         #endregion

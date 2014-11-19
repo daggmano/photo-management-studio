@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Shared;
 
@@ -142,6 +143,45 @@ namespace NetworkSupervisor
                 _imageServerAddress = null;
                 _imageServerPort = 0;
             }
+        }
+
+        public async Task<ServerDatabaseIdentifierObject> GetDbServerId()
+        {
+            var client = new HttpClient();
+            var url = String.Format("http://{0}:{1}/api/serverInfo", _imageServerAddress, _imageServerPort);
+            Debug.WriteLine("Requesting " + url);
+
+            var request = new HttpRequestMessage()
+            {
+                RequestUri = new Uri(url),
+                Method = HttpMethod.Get
+            };
+            request.Headers.Add("Connection", new[] { "Keep-Alive" });
+
+            try
+            {
+                var response = await client.SendAsync(request);
+
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    Debug.WriteLine("Client disconnected, status code: {0}", response.StatusCode.ToString());
+                }
+                else
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    var serverIdObject = JsonConvert.DeserializeObject<ServerDatabaseIdentifierObject>(json);
+                    return serverIdObject;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Client disconnected, exception: {0}", ex);
+                _connectionStatus = ConnectionState.Disconnected;
+                _imageServerAddress = null;
+                _imageServerPort = 0;
+            }
+
+            return null;
         }
     }
 }

@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
-using Catel;
 using Catel.Collections;
 using MyCouch;
 using MyCouch.Requests;
@@ -14,17 +12,9 @@ namespace PhotoManagementStudio.Services
 {
     public class DataService : IDataService
     {
-        private readonly string _couchDbUrl;
-
-        public DataService()
-        {
-            _couchDbUrl = ConfigurationManager.AppSettings["CouchDbPath"];
-            Argument.IsNotNullOrWhitespace(() => _couchDbUrl);
-        }
-
         public async Task<IEnumerable<Media>> GetAllMedia()
         {
-            using (var store = new MyCouchStore(_couchDbUrl))
+            using (var store = new MyCouchStore(App.DatabasePath))
             {
                 var mediaQuery = new QueryViewRequest("media", "all");
                 var mediaRows = await store.Client.Views.QueryAsync<Media>(mediaQuery);
@@ -48,7 +38,7 @@ namespace PhotoManagementStudio.Services
 
         public async Task<IEnumerable<ITag>> GetAllTagsAsHierarchy()
         {
-            using (var store = new MyCouchStore(_couchDbUrl))
+            using (var store = new MyCouchStore(App.DatabasePath))
             {
                 var parentTagQuery = new QueryViewRequest("tags", "parents");
                 var bucketTagQuery = new QueryViewRequest("tags", "buckets");
@@ -79,7 +69,7 @@ namespace PhotoManagementStudio.Services
 
         public async Task<IEnumerable<Collection>> GetAllCollections(bool includeMedia = false)
         {
-            using (var store = new MyCouchStore(_couchDbUrl))
+            using (var store = new MyCouchStore(App.DatabasePath))
             {
                 var collectionQuery = new QueryViewRequest("collections", "all");
                 var collectionRows = await store.Client.Views.QueryAsync<Collection>(collectionQuery);
@@ -106,7 +96,7 @@ namespace PhotoManagementStudio.Services
 
         public async Task<IEnumerable<Import>> GetAllImports(bool includeMedia = false)
         {
-            using (var store = new MyCouchStore(_couchDbUrl))
+            using (var store = new MyCouchStore(App.DatabasePath))
             {
                 var importQuery = new QueryViewRequest("imports", "all");
                 var importRows = await store.Client.Views.QueryAsync<Import>(importQuery);
