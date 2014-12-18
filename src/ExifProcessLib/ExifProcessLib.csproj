@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2717DAF9-F571-4A3C-98E9-A0A61A7E1718}</ProjectGuid>
+    <ProjectGuid>{A30BDE97-16AA-486B-A874-0637306E15CA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FileManager</RootNamespace>
-    <AssemblyName>FileManager</AssemblyName>
+    <RootNamespace>ExifProcessLib</RootNamespace>
+    <AssemblyName>ExifProcessLib</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,32 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EnsureThat">
-      <HintPath>..\packages\Ensure.That.2.0.0\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\EnsureThat.dll\EnsureThat.dll</HintPath>
-    </Reference>
-    <Reference Include="MyCouch.Net45">
-      <HintPath>..\packages\MyCouch.2.6.0\lib\net45\MyCouch.Net45.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Reactive.Core">
-      <HintPath>..\packages\Rx-Core.2.2.5\lib\net45\System.Reactive.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Interfaces">
-      <HintPath>..\packages\Rx-Interfaces.2.2.5\lib\net45\System.Reactive.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Linq">
-      <HintPath>..\packages\Rx-Linq.2.2.5\lib\net45\System.Reactive.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.PlatformServices">
-      <HintPath>..\packages\Rx-PlatformServices.2.2.5\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -63,21 +39,43 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileManagementService.cs" />
-    <Compile Include="FileProcessor.cs" />
-    <Compile Include="Models\Media.cs" />
-    <Compile Include="Models\MediaSimple.cs" />
-    <Compile Include="Models\Metadata.cs" />
+    <Compile Include="ExifProcessor.cs" />
+    <Compile Include="Helpers\BufferHelper.cs" />
+    <Compile Include="ImageIdentifier.cs" />
+    <Compile Include="Models\Endianess.cs" />
+    <Compile Include="Models\ExifColorSpace.cs" />
+    <Compile Include="Models\ExifComponentConfiguration.cs" />
+    <Compile Include="Models\ExifCompression.cs" />
+    <Compile Include="Models\ExifContrastSaturation.cs" />
+    <Compile Include="Models\ExifData.cs" />
+    <Compile Include="Models\ExifExposureMode.cs" />
+    <Compile Include="Models\ExifExposureProgram.cs" />
+    <Compile Include="Models\ExifFlash.cs" />
+    <Compile Include="Models\ExifGainControl.cs" />
+    <Compile Include="Models\ExifLightSource.cs" />
+    <Compile Include="Models\ExifMeteringMode.cs" />
+    <Compile Include="Models\ExifOrientation.cs" />
+    <Compile Include="Models\ExifPhotometricInterpretation.cs" />
+    <Compile Include="Models\ExifPlanarConfiguration.cs" />
+    <Compile Include="Models\ExifResolutionUnit.cs" />
+    <Compile Include="Models\ExifSharpness.cs" />
+    <Compile Include="Models\ExifSceneCaptureType.cs" />
+    <Compile Include="Models\ExifSensingMethod.cs" />
+    <Compile Include="Models\ExifSensitivityType.cs" />
+    <Compile Include="Models\ExifSubjectDistanceRange.cs" />
+    <Compile Include="Models\ExifTag.cs" />
+    <Compile Include="Models\ExifValueType.cs" />
+    <Compile Include="Models\ExifWhiteBalance.cs" />
+    <Compile Include="Models\ExifYCbCrPositioning.cs" />
+    <Compile Include="Models\GPSTag.cs" />
+    <Compile Include="Models\IFDType.cs" />
+    <Compile Include="Models\ImageIdentification.cs" />
+    <Compile Include="Models\ImageType.cs" />
+    <Compile Include="Processors\ExtractExifJpeg.cs" />
+    <Compile Include="Processors\ExtractExifTiff.cs" />
+    <Compile Include="Processors\IExtractExif.cs" />
+    <Compile Include="Processors\ProcessTiffBlock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ExifProcessLib\ExifProcessLib.csproj">
-      <Project>{a30bde97-16aa-486b-a874-0637306e15ca}</Project>
-      <Name>ExifProcessLib</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using FileManager;
 
@@ -27,8 +28,13 @@ namespace FileManagementTest
 
             var missingFiles = files.Where(x => !mediaFileNames.Contains(x.ToLowerInvariant()));
 
+//            var file = missingFiles.FirstOrDefault(x => Path.GetExtension(x).ToLowerInvariant().Equals(".cr2"));
+
+            var processor = new FileProcessor();
+
             foreach (var file in missingFiles)
             {
+                var mediaObject = processor.ProcessFile(file, folder, "import");
                 Console.WriteLine(file);
             }
         }
