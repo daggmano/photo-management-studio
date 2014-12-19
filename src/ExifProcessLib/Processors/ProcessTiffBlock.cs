@@ -270,10 +270,10 @@ namespace ExifProcessLib.Processors
                                 {
                                     offset = position + 8;
                                 }
-                                var lst = new List<ushort>();
+                                var lst = new List<byte>();
                                 for (var i = 0; i < componentCount; i++)
                                 {
-                                    lst.Add(data.ReadUShort(offset + (i * 2), endianess));
+                                    lst.Add(data.ReadByte(offset + i));
                                 }
                                 result.Value = String.Join(", ", lst.Select(x => x.ToString(CultureInfo.InvariantCulture)));
                             }
