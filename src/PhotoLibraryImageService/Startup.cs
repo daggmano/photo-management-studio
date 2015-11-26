@@ -5,6 +5,10 @@ using Autofac.Integration.WebApi;
 using Owin;
 using PhotoLibraryImageService.Data;
 using PhotoLibraryImageService.Data.Interfaces;
+using Microsoft.AspNet.WebApi.MessageHandlers.Compression;
+using Microsoft.AspNet.WebApi.MessageHandlers.Compression.Compressors;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace PhotoLibraryImageService
 {
@@ -33,7 +37,15 @@ namespace PhotoLibraryImageService
 
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
 
-            appBuilder.UseWebApi(config);
-        } 
+			var formatters = config.Formatters;
+			var jsonFormatter = formatters.JsonFormatter;
+			var settings = jsonFormatter.SerializerSettings;
+			settings.Formatting = Formatting.Indented;
+			settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+			config.MessageHandlers.Insert(0, new ServerCompressionHandler(new GZipCompressor(), new DeflateCompressor()));
+
+			appBuilder.UseWebApi(config);
+		} 
     }
 }

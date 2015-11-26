@@ -145,7 +145,7 @@ namespace NetworkSupervisor
             }
         }
 
-        public async Task<ServerDatabaseIdentifierObject> GetDbServerId()
+        public async Task<ServerInfoResponseObject> GetDbServerId()
         {
             var client = new HttpClient();
             var url = String.Format("http://{0}:{1}/api/serverInfo", _imageServerAddress, _imageServerPort);
@@ -169,7 +169,7 @@ namespace NetworkSupervisor
                 else
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var serverIdObject = JsonConvert.DeserializeObject<ServerDatabaseIdentifierObject>(json);
+                    var serverIdObject = JsonConvert.DeserializeObject<ServerInfoResponseObject>(json);
                     return serverIdObject;
                 }
             }

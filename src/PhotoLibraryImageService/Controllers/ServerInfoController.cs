@@ -3,6 +3,10 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using PhotoLibraryImageService.Data.Interfaces;
+using Shared;
+using PhotoLibraryImageService.Helpers;
+using System.Net.Http.Headers;
+using System;
 
 namespace PhotoLibraryImageService.Controllers
 {
@@ -19,9 +23,27 @@ namespace PhotoLibraryImageService.Controllers
         {
             var serverId = await _dataService.GetServerDatabaseIdentifier();
 
-            return serverId != null
-                ? Request.CreateResponse(HttpStatusCode.OK, serverId)
-                : Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Unable to find server identification.");
-        }
+			if (serverId == null)
+			{
+				return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Unable to find server identification.");
+			}
+
+			var data = new ServerInfoResponseObject
+			{
+				Links = new LinksObject
+				{
+					Self = Request.GetSelfLink()
+				},
+				Data = serverId
+			};
+
+			var response = Request.CreateResponse(HttpStatusCode.OK, data);
+			response.Headers.CacheControl = new CacheControlHeaderValue
+			{
+				Public = true,
+				MaxAge = new TimeSpan(1, 0, 0, 0)
+			};
+			return response;
+		}
     }
 }
