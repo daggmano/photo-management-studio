@@ -7,6 +7,8 @@ using Shared;
 using PhotoLibraryImageService.Helpers;
 using System.Net.Http.Headers;
 using System;
+using ErrorReporting;
+using System.Net.Sockets;
 
 namespace PhotoLibraryImageService.Controllers
 {
@@ -21,7 +23,29 @@ namespace PhotoLibraryImageService.Controllers
 
         public async Task<HttpResponseMessage> Get()
         {
-            var serverId = await _dataService.GetServerDatabaseIdentifier();
+			ServerDatabaseIdentifierObject serverId = null;
+			try
+			{
+				serverId = await _dataService.GetServerDatabaseIdentifier();
+			}
+			catch (ArgumentNullException ex)
+			{
+				return Request.CreateResponse(HttpStatusCode.InternalServerError, Errors.GetErrorResponse(ErrorTypes.MissingDatabase));
+			}
+			catch (Exception ex)
+			{
+				if (ex is HttpRequestException && ex.InnerException != null && ex.InnerException is WebException)
+				{
+					var inner = ex.InnerException;
+					if (inner.InnerException != null && inner.InnerException is SocketException)
+					{
+						return Request.CreateResponse(HttpStatusCode.InternalServerError, Errors.GetErrorResponse(ErrorTypes.UnableToConnectToDatabase));
+					}
+				}
+
+				ErrorReporter.SendException(ex);
+				return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Unable to find server identification.");
+			}
 
 			if (serverId == null)
 			{
