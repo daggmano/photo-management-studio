@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Text;
 using Newtonsoft.Json;
 using Shared;
+using ErrorReporting;
 
 namespace PhotoLibraryImageService
 {
@@ -44,14 +45,17 @@ namespace PhotoLibraryImageService
             catch (ArgumentNullException ane)
             {
                 Console.WriteLine("ArgumentNullException : {0}", ane);
+				ErrorReporter.SendException(ane);
             }
             catch (SocketException se)
             {
                 Console.WriteLine("SocketException : {0}", se);
+				ErrorReporter.SendException(se);
             }
             catch (Exception e)
             {
                 Console.WriteLine("Unexpected exception : {0}", e);
+				ErrorReporter.SendException(e);
             }
         }
     }

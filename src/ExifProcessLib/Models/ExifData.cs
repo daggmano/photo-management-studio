@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ErrorReporting;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -371,8 +372,9 @@ namespace ExifProcessLib.Models
                         return obj.Value;
                 }
             }
-            catch
+            catch (Exception ex)
             {
+				ErrorReporter.SendException(ex);
                 return obj.Value;
             }
         }

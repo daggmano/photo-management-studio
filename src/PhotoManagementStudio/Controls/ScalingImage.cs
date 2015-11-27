@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Catel.Logging;
+using ErrorReporting;
 
 namespace PhotoManagementStudio.Controls
 {
@@ -148,6 +149,7 @@ namespace PhotoManagementStudio.Controls
             }
             catch (HttpRequestException ex)
             {
+				ErrorReporter.SendException(ex);
                 // TODO: Swallow this or raise message for UI indicator - probably means that the server is down.
             }
 

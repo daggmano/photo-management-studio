@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Net;
 using MyCouch;
 using MyCouch.Requests;
+using ErrorReporting;
 
 namespace NetworkSupervisor
 {
@@ -48,6 +49,7 @@ namespace NetworkSupervisor
                 catch (Exception ex)
                 {
                     Debug.WriteLine("Exception: " + ex.Message);
+					ErrorReporter.SendException(ex);
                 }
             }
             

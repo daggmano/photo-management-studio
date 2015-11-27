@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using Newtonsoft.Json;
 using Shared;
+using ErrorReporting;
 
 namespace NetworkSupervisor
 {
@@ -57,7 +58,7 @@ namespace NetworkSupervisor
             }
             catch (Exception e)
             {
-//                Console.WriteLine(e.ToString());
+				ErrorReporter.SendException(e);
                 Debug.WriteLine(e);
             }
 
@@ -162,6 +163,7 @@ namespace NetworkSupervisor
             }
             catch (Exception e)
             {
+				ErrorReporter.SendException(e);
                 Console.WriteLine(e.ToString());
             }
         }

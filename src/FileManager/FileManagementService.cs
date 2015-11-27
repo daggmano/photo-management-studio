@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using FileManager.Models;
 using MyCouch;
 using MyCouch.Requests;
+using ErrorReporting;
 
 namespace FileManager
 {
@@ -28,8 +29,10 @@ namespace FileManager
                 var files = Directory.GetFiles(rootFolder, "*.*", SearchOption.AllDirectories);
                 result.AddRange(files.Select(x => x.Replace(rootFolder, "")));
             }
-            catch (UnauthorizedAccessException)
-            {}
+            catch (UnauthorizedAccessException ex)
+            {
+				ErrorReporter.SendException(ex);
+			}
 
             return result;
         }

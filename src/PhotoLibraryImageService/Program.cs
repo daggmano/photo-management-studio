@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.Owin.Hosting;
 using Newtonsoft.Json;
 using Shared;
+using ErrorReporting;
 
 namespace PhotoLibraryImageService
 {
@@ -82,6 +83,7 @@ namespace PhotoLibraryImageService
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
+				ErrorReporter.SendException(e);
             }
             finally
             {

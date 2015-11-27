@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Shared;
+using ErrorReporting;
 
 namespace NetworkSupervisor
 {
@@ -100,8 +101,8 @@ namespace NetworkSupervisor
         private async void PingServer()
         {
             var client = new HttpClient();
-            var url = String.Format("http://{0}:{1}/api/ping", _imageServerAddress, _imageServerPort);
-            Debug.WriteLine("Requesting " + url);
+            var url = $"http://{_imageServerAddress}:{_imageServerPort}/api/ping";
+            Debug.WriteLine($"Requesting {url}");
 
             var request = new HttpRequestMessage()
             {
@@ -116,7 +117,7 @@ namespace NetworkSupervisor
 
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    Debug.WriteLine("Client disconnected, status code: {0}", response.StatusCode.ToString());
+                    Debug.WriteLine($"Client disconnected, status code: {response.StatusCode}");
                     _connectionStatus = ConnectionState.Disconnected;
                     _imageServerAddress = null;
                     _imageServerPort = 0;
@@ -132,13 +133,16 @@ namespace NetworkSupervisor
                 }
                 else
                 {
-                    Debug.WriteLine("Client received OK from ping");
+					var json = await response.Content.ReadAsStringAsync();
+					var pingObject = JsonConvert.DeserializeObject<PingResponseObject>(json);
+					Debug.WriteLine($"Client received OK from ping at {pingObject.Data.ServerDateTime}");
                 }
 
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Client disconnected, exception: {0}", ex);
+                Debug.WriteLine($"Client disconnected, exception: {ex}");
+				ErrorReporter.SendException(ex);
                 _connectionStatus = ConnectionState.Disconnected;
                 _imageServerAddress = null;
                 _imageServerPort = 0;
@@ -164,7 +168,7 @@ namespace NetworkSupervisor
 
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    Debug.WriteLine("Client disconnected, status code: {0}", response.StatusCode.ToString());
+                    Debug.WriteLine($"Client disconnected, status code: {response.StatusCode}");
                 }
                 else
                 {
@@ -175,7 +179,8 @@ namespace NetworkSupervisor
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Client disconnected, exception: {0}", ex);
+                Debug.WriteLine($"Client disconnected, exception: {ex}");
+				ErrorReporter.SendException(ex);
                 _connectionStatus = ConnectionState.Disconnected;
                 _imageServerAddress = null;
                 _imageServerPort = 0;
