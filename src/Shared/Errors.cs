@@ -50,5 +50,10 @@ namespace Shared
 				Description = item?.Description ?? "Unknown error. Please inform the developer."
 			};
 		}
+
+		public static string GetErrorDescription(ErrorTypes errorType)
+		{
+			return _errorList.SingleOrDefault(x => x.ErrorType == errorType)?.Description ?? "Unknown error. Please inform the developer.";
+		}
 	}
 }

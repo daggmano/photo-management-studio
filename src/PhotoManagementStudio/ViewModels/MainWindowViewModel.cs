@@ -33,13 +33,13 @@ namespace PhotoManagementStudio.ViewModels
             _dataService = dataService;
         }
 
-        protected override async Task Initialize()
-        {
-            await base.Initialize();
+		protected override Task InitializeAsync()
+		{
+			// var media = await _dataService.GetAllMedia();
+			// MediaList = new ObservableCollection<Media>(media);
 
-            //var media = await _dataService.GetAllMedia();
-            //MediaList = new ObservableCollection<Media>(media);
-        }
+			return base.InitializeAsync();
+		}
 
         #endregion
 

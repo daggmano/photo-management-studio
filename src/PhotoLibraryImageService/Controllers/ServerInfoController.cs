@@ -28,7 +28,7 @@ namespace PhotoLibraryImageService.Controllers
 			{
 				serverId = await _dataService.GetServerDatabaseIdentifier();
 			}
-			catch (ArgumentNullException ex)
+			catch (ArgumentNullException)
 			{
 				return Request.CreateResponse(HttpStatusCode.InternalServerError, Errors.GetErrorResponse(ErrorTypes.MissingDatabase));
 			}
