@@ -21,6 +21,16 @@ namespace Setup
 			var dbName = uri.GetComponents(UriComponents.Path, UriFormat.SafeUnescaped);
 			var dbRoot = uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.SafeUnescaped);
 
+			Console.WriteLine("NOTE: Before running Photo Management Studio, CouchDB must be installed and");
+			Console.WriteLine("      configured to allow all clients to connect to allow replication to");
+			Console.WriteLine("      client installations.  Please edit the local.ini file, probably located at");
+			Console.WriteLine("      C:\\Program Files(x86)\\Apache Software Foundation\\CouchDB\\etc\\couchdb");
+			Console.WriteLine("      and add the following line under the [httpd] section:");
+			Console.WriteLine();
+			Console.WriteLine("      bind_address = 0.0.0.0");
+			Console.WriteLine();
+			Console.WriteLine();
+
 			Console.WriteLine($"Connecting to CouchDB database at {dbRoot}...");
 
 			using (var client = new MyCouchServerClient(dbRoot))
