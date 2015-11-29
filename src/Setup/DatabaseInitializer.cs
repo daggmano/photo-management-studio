@@ -3,10 +3,8 @@ using MyCouch.Requests;
 using Newtonsoft.Json;
 using Shared;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Setup
@@ -15,6 +13,8 @@ namespace Setup
 	{
 		public async Task Run()
 		{
+			string docString;
+
 			// Check for database existence
 			var dbPath = ConfigurationManager.AppSettings["CouchDbPath"];
 			var uri = new Uri(dbPath);
@@ -51,63 +51,100 @@ namespace Setup
 				{
 					Console.WriteLine("Server Details view not found, we'll create it now...");
 
-					var doc = new
+					docString = JsonConvert.SerializeObject(new
 					{
 						language = "javascript",
 						views = new
 						{
 							get = new
 							{
-								map = "function(doc) { if (doc.type == 'server' && doc.subtype == 'server_id') { emit(doc._id, doc); } }"
+								map = "function(doc) { if (doc.type == 'server' && doc.subType == 'server_id') { emit(doc._id, doc); } }"
 							}
 						}
-					};
-					var docString = JsonConvert.SerializeObject(doc);
+					});
 
 					await store.Client.Documents.PutAsync("_design/serverId", docString);
+					Console.WriteLine("Server Details view created...");
 				}
 				else
 				{
 					Console.WriteLine("Server Details view exists, continuing...");
 				}
 
+				Console.WriteLine();
 
-				var serverIdQuery = new QueryViewRequest("serverId", "get");
-				var serverIdRows = await store.Client.Views.QueryAsync<ServerDatabaseIdentifierObject>(serverIdQuery);
+				var dbServerIdQuery = new QueryViewRequest("serverId", "get");
+				var dbServerIdRows = await store.Client.Views.QueryAsync<ServerDatabaseIdentifierObject>(dbServerIdQuery);
+				var id = dbServerIdRows.Rows.FirstOrDefault()?.Id;
+				var rev = string.Empty;
 
-				// TODO: Need to check above to get existing name and id.
+				if (!string.IsNullOrWhiteSpace(id))
+				{
+					var header = await store.GetHeaderAsync(id);
+					rev = header.Rev;
+				}
 
-				string serverName, serverId;
+				var dbServerId = dbServerIdRows.Rows.Select(x => x.Value).FirstOrDefault();
+
+				var serverId = dbServerId?.ServerId ?? string.Empty;
+				var serverName = dbServerId?.ServerName ?? string.Empty;
+
 				while (true)
 				{
-					if (GetServerName(out serverName, out serverId))
+					if (GetServerName(ref serverName, ref serverId))
 					{
 						break;
 					}
 				}
 
-				
-			}
+				docString = JsonConvert.SerializeObject(new
+				{
+					serverId = serverId,
+					type = "server",
+					subType = "server_id",
+					serverName = serverName
+				});
 
-			// Check for Server ID entries, get user prefs if required and create entries
+				if (string.IsNullOrWhiteSpace(id))
+				{
+					// create new entry
+					Console.WriteLine("Creating new Server Identification entry...");
+
+					await store.Client.Documents.PostAsync(docString);
+					Console.WriteLine("Server Identification entry created...");
+				}
+				else
+				{
+					Console.WriteLine("Updating existing Server Identification entry...");
+
+					var retval = await store.Client.Documents.PutAsync(id, rev, docString);
+					Console.WriteLine("Server Identification entry updated...");
+				}
+			}
 
 			// Check for default DB entries - not sure what they are yet
 		}
 
-		private bool GetServerName(out string serverName, out string serverId)
+		private bool GetServerName(ref string serverName, ref string serverId)
 		{
-			serverName = null;
-
-			while (string.IsNullOrWhiteSpace(serverName))
+			do
 			{
 				Console.Write("Enter a name for this server (e.g. My Photo Server): ");
-				serverName = Console.ReadLine();
-			}
+				if (!string.IsNullOrWhiteSpace(serverName))
+				{
+					Console.Write($" [current name: {serverName}] ");
+				}
+				var name = Console.ReadLine();
+				if (!string.IsNullOrWhiteSpace(name))
+				{
+					serverName = name;
+				}
+			} while (string.IsNullOrWhiteSpace(serverName));
 
-			serverId = string.Join("-", serverName.Split(' ')).ToLowerInvariant();
+			serverId = string.IsNullOrWhiteSpace(serverId) ? string.Join("-", serverName.Split(' ')).ToLowerInvariant() : serverId;
 
 			Console.WriteLine();
-			Console.WriteLine("We'll use the following to identify the server:");
+			Console.WriteLine("We'll use the following to identify the server.  Note: Once the Server ID has been set it cannot be changed.");
 			Console.WriteLine($"\tServer Name: {serverName}");
 			Console.WriteLine($"\tServer ID: {serverId}");
 			Console.Write("Is this correct? [Y/n] ");
