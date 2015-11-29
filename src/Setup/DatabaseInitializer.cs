@@ -68,7 +68,7 @@ namespace Setup
 						{
 							get = new
 							{
-								map = "function(doc) { if (doc.type == 'server' && doc.subType == 'server_id') { emit(doc._id, doc); } }"
+								map = "function(doc) { if (doc.docType == 'serverId') { emit(null, doc); } }"
 							}
 						}
 					});
@@ -110,8 +110,7 @@ namespace Setup
 				docString = JsonConvert.SerializeObject(new
 				{
 					serverId = serverId,
-					type = "server",
-					subType = "server_id",
+					docType = "serverId",
 					serverName = serverName
 				});
 
@@ -130,9 +129,98 @@ namespace Setup
 					var retval = await store.Client.Documents.PutAsync(id, rev, docString);
 					Console.WriteLine("Server Identification entry updated...");
 				}
-			}
 
-			// Check for default DB entries - not sure what they are yet
+				// Set up Default Views
+				Console.WriteLine();
+
+				serverViewExists = await store.ExistsAsync("_design/collections");
+				if (!serverViewExists)
+				{
+					Console.WriteLine("Creating Collections View...");
+
+					docString = JsonConvert.SerializeObject(new
+					{
+						language = "javascript",
+						views = new
+						{
+							all = new
+							{
+								map = "function(doc) { if (doc.docType == 'collection') { emit(null, doc); } }"
+							}
+						}
+					});
+
+					await store.Client.Documents.PutAsync("_design/collections", docString);
+				}
+
+				serverViewExists = await store.ExistsAsync("_design/imports");
+				if (!serverViewExists)
+				{
+					Console.WriteLine("Creating Imports View...");
+
+					docString = JsonConvert.SerializeObject(new
+					{
+						language = "javascript",
+						views = new
+						{
+							all = new
+							{
+								map = "function(doc) { if (doc.docType == 'import') { emit(null, doc); } }"
+							}
+						}
+					});
+
+					await store.Client.Documents.PutAsync("_design/imports", docString);
+				}
+
+				serverViewExists = await store.ExistsAsync("_design/media");
+				if (!serverViewExists)
+				{
+					Console.WriteLine("Creating Media View...");
+
+					docString = JsonConvert.SerializeObject(new
+					{
+						language = "javascript",
+						views = new
+						{
+							all = new
+							{
+								map = "function(doc) { if (doc.docType == 'media') { emit(null, doc); } }"
+							}
+						}
+					});
+
+					await store.Client.Documents.PutAsync("_design/media", docString);
+				}
+
+				serverViewExists = await store.ExistsAsync("_design/tags");
+				if (!serverViewExists)
+				{
+					Console.WriteLine("Creating Tags View...");
+
+					docString = JsonConvert.SerializeObject(new
+					{
+						language = "javascript",
+						views = new
+						{
+							parents = new
+							{
+								map = "function(doc) { if (doc.docType == 'tag' && doc.subType == 'parent') { emit(null, doc); } }"
+							},
+                            buckets = new
+							{
+								map = "function(doc) { if (doc.docType == 'tag' && doc.subType == 'bucket') { emit(null, doc); } }"
+							},
+                            tags = new
+							{
+								map = "function(doc) { if (doc.docType == 'tag' && doc.subType == 'tag') { emit(null, doc); } }"
+							},
+						}
+					});
+
+					await store.Client.Documents.PutAsync("_design/tags", docString);
+				}
+			}
 		}
 
 		private bool GetServerName(ref string serverName, ref string serverId)
