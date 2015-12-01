@@ -41,7 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Errors.cs" />
+    <Compile Include="ImportableListObject.cs" />
     <Compile Include="LinksObject.cs" />
+    <Compile Include="MediaObject.cs" />
+    <Compile Include="MetadataObject.cs" />
     <Compile Include="NetworkDiscoveryObject.cs" />
     <Compile Include="NetworkMessageObject.cs" />
     <Compile Include="PingResponseObject.cs" />

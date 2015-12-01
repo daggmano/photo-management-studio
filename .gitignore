@@ -182,3 +182,4 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 src/PhotoLibraryImageService/App_Data/
+*.DS_Store
