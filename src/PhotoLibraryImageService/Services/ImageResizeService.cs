@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using ImageMagick;
+using System.Reflection;
 
 namespace PhotoLibraryImageService.Services
 {
@@ -23,20 +24,37 @@ namespace PhotoLibraryImageService.Services
 
 		public static byte[] ProcessImage(string path, int maxDimension)
 		{
-			if (!File.Exists(path))
-			{
-				return null;
+			try {
+				if (!File.Exists(path))
+				{
+					return null;
+				}
+
+				using (var image = new MagickImage(path))
+				using (var stream = new MemoryStream())
+				{
+					image.Resize(maxDimension, maxDimension);
+					image.Write(stream, MagickFormat.Jpg);
+
+					var result = stream.ToArray();
+					return result;
+				}
 			}
-
-			using (var image = new MagickImage(path))
-			using (var stream = new MemoryStream())
+			catch
 			{
-				image.Resize(maxDimension, maxDimension);
-				image.Write(stream, MagickFormat.Jpg);
+				var placeholderPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+				placeholderPath = Path.Combine(placeholderPath, "placeholder-1200x1080.jpg");
 
-				var result = stream.ToArray();
-				return result;
-            }
+				using (var image = new MagickImage(placeholderPath))
+				using (var stream = new MemoryStream())
+				{
+					image.Resize(maxDimension, maxDimension);
+					image.Write(stream, MagickFormat.Jpg);
+
+					var result = stream.ToArray();
+					return result;
+                }
+			}
 		}
     }
 }
