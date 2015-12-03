@@ -11,15 +11,19 @@ using System.Threading.Tasks;
 
 namespace PhotoLibraryImageService.Jobs
 {
+	public class ImportableListJobResult
+	{
+		public List<string> MissingFiles { get; set; }
+		public List<string> ImportableFiles { get; set; }
+	}
+
 	public class ImportableListJob : Job
 	{
-		// Result will be two lists, one of those in the database but not in the ile system, the other files in the file system but not in the db
-
 		private int _progress;
 		private string _couchDbName;
 		private string _couchDbRoot;
 
-		private ImportableListObject _result;
+		private ImportableListJobResult _result;
 
 		BackgroundWorker _worker;
 
@@ -107,7 +111,7 @@ namespace PhotoLibraryImageService.Jobs
 			var missingFiles = dbLoweredMediaFiles.Where(x => !loweredDiskFiles.Contains(x)).Select(x => x.Replace("\\", "/")).ToList();
 			var unimportedFiles = loweredDiskFiles.Where(x => !dbLoweredMediaFiles.Contains(x)).Select(x => x.Replace("\\", "/")).ToList();
 
-			_result = new ImportableListObject
+			_result = new ImportableListJobResult
 			{
 				MissingFiles = missingFiles,
 				ImportableFiles = unimportedFiles

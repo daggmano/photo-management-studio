@@ -2,6 +2,7 @@
 using PhotoLibraryImageService.Services;
 using Shared;
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -48,10 +49,22 @@ namespace PhotoLibraryImageService.Controllers
 					break;
 			}
 
-			var result = JobsService.GetInstance().GetResult<ImportableListObject>(id);
+			var jobResult = JobsService.GetInstance().GetResult<ImportableListJobResult>(id);
 
-			if (result != null)
+			if (jobResult != null)
 			{
+				var urlBase = Request.RequestUri.GetComponents(UriComponents.SchemeAndServer, UriFormat.SafeUnescaped);
+				var result = new ImportableListObject
+				{
+					ItemCount = jobResult.ImportableFiles.Count,
+					ImportablePhotos = jobResult.ImportableFiles.Select(x => new ImportableItem
+					{
+						FullPath = x,
+						Filename = x.Split('/').Last(),
+						ThumbUrl = $"{urlBase}/api/image?path={Uri.EscapeDataString(x)}&size=200"
+					}).ToList()
+				};
+
 				return Request.CreateResponse(HttpStatusCode.OK, result);
 			}
 

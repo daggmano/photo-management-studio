@@ -4,7 +4,14 @@ namespace Shared
 {
 	public class ImportableListObject
 	{
-		public List<string> ImportableFiles { get; set; }
-		public List<string> MissingFiles { get; set; }
+		public int ItemCount { get; set; }
+		public List<ImportableItem> ImportablePhotos { get; set; }
+	}
+
+	public class ImportableItem
+	{
+		public string Filename { get; set; }
+		public string FullPath { get; set; }
+		public string ThumbUrl { get; set; }
 	}
 }
