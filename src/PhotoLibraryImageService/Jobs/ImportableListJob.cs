@@ -3,11 +3,10 @@ using Shared;
 using System.ComponentModel;
 using System.Configuration;
 using System.Linq;
-using MyCouch;
-using MyCouch.Requests;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using FileManager;
 
 namespace PhotoLibraryImageService.Jobs
 {
@@ -23,6 +22,8 @@ namespace PhotoLibraryImageService.Jobs
 		private string _couchDbName;
 		private string _couchDbRoot;
 
+		private FileManagementService _fileManagementService;
+
 		private ImportableListJobResult _result;
 
 		BackgroundWorker _worker;
@@ -32,13 +33,15 @@ namespace PhotoLibraryImageService.Jobs
 			_progress = 0;
 			_result = null;
 
+			_fileManagementService = new FileManagementService();
+
 			var dbPath = ConfigurationManager.AppSettings["CouchDbPath"];
 			var uri = new Uri(dbPath);
 			_couchDbName = uri.GetComponents(UriComponents.Path, UriFormat.SafeUnescaped);
 			_couchDbRoot = uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.SafeUnescaped);
 		}
 
-		public override void Run(params object[] args)
+		public override void Run()
 		{
 			_worker = new BackgroundWorker
 			{
@@ -67,21 +70,15 @@ namespace PhotoLibraryImageService.Jobs
 
 		private void Worker_DoWork(object sender, DoWorkEventArgs e)
 		{
-			BackgroundWorker worker = sender as BackgroundWorker;
-			List<MediaObject> dbMediaList;
+			var worker = sender as BackgroundWorker;
 
 			// Need to get list of media from database
-			using (var store = new MyCouchStore(_couchDbRoot, _couchDbName))
-			{
-				var mediaQuery = new QueryViewRequest("media", "all");
-
-				var task = store.Client.Views.QueryAsync<MediaObject>(mediaQuery);
-				Task.WaitAll(task);
-				var mediaRows = task.Result;
-				dbMediaList = mediaRows.Rows.Select(x => x.Value).ToList();
-			}
-
-			var dbLoweredMediaFiles = dbMediaList.Select(x => x.FullFilePath.ToLowerInvariant()).ToList();
+			var dbMediaTask = _fileManagementService.GetAllPhotoPaths();
+			Task.WaitAll(dbMediaTask);
+			var dbMediaList = dbMediaTask.Result;
+	
+			var dbMediaFiles = dbMediaList.Select(x => new Tuple<string, string>(x.FullFilePath.ToLowerInvariant(), x.FullFilePath)).ToList();
+			var dbLoweredMediaFiles = dbMediaFiles.Select(x => x.Item1).ToList();
 			worker.ReportProgress(33);
 
 			// Get list of files from file system
@@ -90,26 +87,16 @@ namespace PhotoLibraryImageService.Jobs
 			{
 				rootPath += "\\";
 			}
-			// TODO: Need to remove Folders from here, keep only files
-			var entries = Directory.GetFileSystemEntries(rootPath, "*", SearchOption.AllDirectories);
+			var diskFileList = _fileManagementService.GetFileList(rootPath);
 
-			var loweredDiskFiles = new List<string>();
-			foreach (var entry in entries)
-			{
-				FileAttributes attr = File.GetAttributes(entry);
-
-				// Only process files
-				if ((attr & FileAttributes.Directory) != FileAttributes.Directory)
-				{
-					loweredDiskFiles.Add(entry.Substring(rootPath.Length).ToLowerInvariant());
-				}
-			}
+			var diskFiles = diskFileList.Select(x => new Tuple<string, string>(x.ToLowerInvariant(), x)).ToList();
+			var loweredDiskFiles = diskFiles.Select(x => x.Item1).ToList();
 
 			worker.ReportProgress(66);
 
 			// Compare...
-			var missingFiles = dbLoweredMediaFiles.Where(x => !loweredDiskFiles.Contains(x)).Select(x => x.Replace("\\", "/")).ToList();
-			var unimportedFiles = loweredDiskFiles.Where(x => !dbLoweredMediaFiles.Contains(x)).Select(x => x.Replace("\\", "/")).ToList();
+			var missingFiles = dbMediaFiles.Where(x => !loweredDiskFiles.Contains(x.Item1)).Select(x => x.Item2.Replace("\\", "/")).ToList();
+			var unimportedFiles = diskFiles.Where(x => !dbLoweredMediaFiles.Contains(x.Item1)).Select(x => x.Item2.Replace("\\", "/")).ToList();
 
 			_result = new ImportableListJobResult
 			{

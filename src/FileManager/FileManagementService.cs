@@ -13,14 +13,18 @@ namespace FileManager
 {
     public class FileManagementService
     {
-        private readonly string _couchDbUrl;
+		private readonly string _couchDbName;
+		private readonly string _couchDbRoot;
 
         public FileManagementService()
         {
-            _couchDbUrl = ConfigurationManager.AppSettings["CouchDbPath"];
-        }
+			var dbPath = ConfigurationManager.AppSettings["CouchDbPath"];
+			var uri = new Uri(dbPath);
+			_couchDbName = uri.GetComponents(UriComponents.Path, UriFormat.SafeUnescaped);
+			_couchDbRoot = uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.SafeUnescaped);
+		}
 
-        public IEnumerable<string> GetFileList(string rootFolder)
+		public IEnumerable<string> GetFileList(string rootFolder)
         {
             var result = new List<string>();
 
@@ -28,8 +32,8 @@ namespace FileManager
             {
                 var files = Directory.GetFiles(rootFolder, "*.*", SearchOption.AllDirectories);
                 result.AddRange(files.Select(x => x.Replace(rootFolder, "")));
-            }
-            catch (UnauthorizedAccessException ex)
+			}
+			catch (UnauthorizedAccessException ex)
             {
 				ErrorReporter.SendException(ex);
 			}
@@ -39,7 +43,7 @@ namespace FileManager
 
         public async Task<IEnumerable<MediaSimple>> GetAllPhotoPaths()
         {
-            using (var store = new MyCouchStore(_couchDbUrl + "photos"))
+            using (var store = new MyCouchStore(_couchDbRoot, _couchDbName))
             {
                 var mediaQuery = new QueryViewRequest("media", "all");
                 var mediaRows = await store.Client.Views.QueryAsync<MediaSimple>(mediaQuery);

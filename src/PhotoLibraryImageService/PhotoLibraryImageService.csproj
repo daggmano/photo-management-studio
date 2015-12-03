@@ -132,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ImageController.cs" />
+    <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Controllers\ImportListController.cs" />
     <Compile Include="Controllers\JobsController.cs" />
     <Compile Include="Controllers\PingController.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="Data\DataService.cs" />
     <Compile Include="Data\Interfaces\IDataService.cs" />
     <Compile Include="Helpers\HttpRequestExtensions.cs" />
+    <Compile Include="Jobs\ImportJob.cs" />
     <Compile Include="Jobs\Job.cs" />
     <Compile Include="Jobs\ImportableListJob.cs" />
     <Compile Include="Jobs\JobStates.cs" />
@@ -165,6 +167,10 @@
     <ProjectReference Include="..\ErrorReporting\ErrorReporting.csproj">
       <Project>{d728b52f-1497-49fb-b679-47692a9ed815}</Project>
       <Name>ErrorReporting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileManager\FileManager.csproj">
+      <Project>{2717daf9-f571-4a3c-98e9-a0a61a7e1718}</Project>
+      <Name>FileManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shared\Shared.csproj">
       <Project>{00761896-fc37-449f-9215-bcc427410bd4}</Project>

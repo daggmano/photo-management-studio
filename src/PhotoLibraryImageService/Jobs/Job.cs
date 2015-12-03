@@ -14,7 +14,7 @@ namespace PhotoLibraryImageService.Jobs
 			Id = id;
 		}
 
-		public abstract void Run(params object[] args);
+		public abstract void Run();
 
 		public abstract void GetJobStatus(out JobStates state, out int progress);
 		public abstract ErrorMessageReponse GetJobError();

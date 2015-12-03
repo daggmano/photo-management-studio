@@ -27,6 +27,11 @@ namespace PhotoLibraryImageService.Services
 
 		public Guid? SubmitJob(JobTypes jobType)
 		{
+			return SubmitJob(jobType, "");
+		}
+
+		public Guid? SubmitJob<T>(JobTypes jobType, T arg) where T : class
+		{
 			Job job = null;
 			var newJobId = Guid.NewGuid();
 
@@ -34,6 +39,13 @@ namespace PhotoLibraryImageService.Services
 			{
 				case JobTypes.ImportableList:
 					job = new ImportableListJob(newJobId);
+					break;
+
+				case JobTypes.ImportPhotos:
+					if (typeof(IEnumerable<string>).IsAssignableFrom(typeof(T)))
+					{
+						job = new ImportJob(newJobId, arg as IEnumerable<string>);
+					}
 					break;
 
 				default:

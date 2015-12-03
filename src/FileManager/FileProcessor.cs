@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -22,7 +21,7 @@ namespace FileManager
                 FileName = Path.GetFileName(filePath),
                 DateAccuracy = 0,
                 Rating = 0,
-                Caption = String.Empty
+                Caption = string.Empty
             };
 
             var exifProcessor = new ExifProcessor(Path.Combine(rootPath, filePath));
@@ -317,8 +316,6 @@ namespace FileManager
             retval.TagIds.Add(importTagId);
 
             return retval;
-
-            // remember to set $doctype == "media"
         }
 
         private ExifData GetTag(IEnumerable<ExifData> list, params ExifTag[] tags)
