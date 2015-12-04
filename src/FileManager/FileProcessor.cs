@@ -58,7 +58,7 @@ namespace FileManager
                 }
 
                 // Image Height
-                tag = GetTag(new[] { ifd0Primary, exif }, ExifTag.ImageFullHeight, ExifTag.ImageHeight2, ExifTag.ExifImageHeight);
+                tag = GetTag(new[] { ifd0Primary, exif }, ExifTag.ImageFullHeight, ExifTag.ImageLength, ExifTag.ImageHeight2, ExifTag.ExifImageHeight);
                 if (tag != null)
                 {
                     int height;

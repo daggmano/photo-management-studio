@@ -37,6 +37,10 @@ namespace ExifProcessLib
                         var tiffExtract = new ExtractExifTiff();
                         result = tiffExtract.Extract(stream);
                         break;
+					case ImageType.Png:
+						var pngExtract = new ExtractDataPng();
+						result = pngExtract.Extract(stream);
+						break;
                 }
 
                 return result;
