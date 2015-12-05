@@ -98,7 +98,7 @@ namespace ExifProcessLib.Helpers
             return sb.ToString();
         }
 
-        private static byte[] ReadData(byte[] data, int offset, int length, Endianess endianess)
+        public static byte[] ReadData(this byte[] data, int offset, int length, Endianess endianess)
         {
             if (data.Length < offset + length)
             {

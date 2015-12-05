@@ -26,43 +26,46 @@ namespace FileManager
 
             var exifProcessor = new ExifProcessor(Path.Combine(rootPath, filePath));
             var tags = exifProcessor.ProcessImage();
+			// Note: Could be ExifData or PngData
 
             if (tags != null)
             {
-                var ifd0Primary = tags.Where(x => x.IFDType == IFDType.IFD_0_Primary).ToList();
-                var ifd1Thumbnail = tags.Where(x => x.IFDType == IFDType.IFD_1_Thumbnail).ToList();
-                var exif = tags.Where(x => x.IFDType == IFDType.IFD_Exif).ToList();
-                var gps = tags.Where(x => x.IFDType == IFDType.IFD_GPS).ToList();
+				// Deal with EXIF tags
+				var exifTags = tags.Where(x => x is ExifData).Cast<ExifData>().ToList();
+                var ifd0Primary = exifTags.Where(x => x.IFDType == IFDType.IFD_0_Primary).ToList();
+                var ifd1Thumbnail = exifTags.Where(x => x.IFDType == IFDType.IFD_1_Thumbnail).ToList();
+                var exif = exifTags.Where(x => x.IFDType == IFDType.IFD_Exif).ToList();
+                var gps = exifTags.Where(x => x.IFDType == IFDType.IFD_GPS).ToList();
 
                 // Shot Date
-                var tag = GetTag(new[] {ifd0Primary, exif}, ExifTag.DateTimeOriginal, ExifTag.DateTimeDigitized);
-                if (tag != null)
+                var exifTag = GetTag(new[] {ifd0Primary, exif}, ExifTag.DateTimeOriginal, ExifTag.DateTimeDigitized);
+                if (exifTag != null)
                 {
                     DateTime dt;
-                    if (DateTime.TryParseExact(tag.Value, "yyyy:MM:dd HH:mm:ss", CultureInfo.CurrentCulture, DateTimeStyles.AssumeLocal, out dt))
+                    if (DateTime.TryParseExact(exifTag.Value, "yyyy:MM:dd HH:mm:ss", CultureInfo.CurrentCulture, DateTimeStyles.AssumeLocal, out dt))
                     {
                         retval.ShotDate = dt;
                         retval.DateAccuracy = 6;
                     }
                 }
 
-                // Orientation
-                tag = GetTag(new[] {ifd0Primary, ifd1Thumbnail, exif}, ExifTag.Orientation);
-                if (tag != null)
+				// Orientation
+				exifTag = GetTag(new[] {ifd0Primary, ifd1Thumbnail, exif}, ExifTag.Orientation);
+                if (exifTag != null)
                 {
                     int rotate;
-                    if (Int32.TryParse(tag.Value, out rotate))
+                    if (Int32.TryParse(exifTag.Value, out rotate))
                     {
                         retval.Rotate = rotate;
                     }
                 }
 
-                // Image Height
-                tag = GetTag(new[] { ifd0Primary, exif }, ExifTag.ImageFullHeight, ExifTag.ImageLength, ExifTag.ImageHeight2, ExifTag.ExifImageHeight);
-                if (tag != null)
+				// Image Height
+				exifTag = GetTag(new[] { ifd0Primary, exif }, ExifTag.ImageFullHeight, ExifTag.ImageLength, ExifTag.ImageHeight2, ExifTag.ExifImageHeight);
+                if (exifTag != null)
                 {
                     int height;
-                    if (Int32.TryParse(tag.Value, out height))
+                    if (Int32.TryParse(exifTag.Value, out height))
                     {
                         var metadata = new Metadata
                         {
@@ -74,12 +77,12 @@ namespace FileManager
                     }
                 }
 
-                // Image Width
-                tag = GetTag(new[] { ifd0Primary, exif }, ExifTag.ImageFullWidth, ExifTag.ImageWidth, ExifTag.ImageWidth2, ExifTag.ExifImageWidth);
-                if (tag != null)
+				// Image Width
+				exifTag = GetTag(new[] { ifd0Primary, exif }, ExifTag.ImageFullWidth, ExifTag.ImageWidth, ExifTag.ImageWidth2, ExifTag.ExifImageWidth);
+                if (exifTag != null)
                 {
                     int width;
-                    if (Int32.TryParse(tag.Value, out width))
+                    if (Int32.TryParse(exifTag.Value, out width))
                     {
                         var metadata = new Metadata
                         {
@@ -91,226 +94,239 @@ namespace FileManager
                     }
                 }
 
-                // Manufacturer
-                tag = GetTag(new[] { ifd0Primary, exif }, ExifTag.Make);
-                if (tag != null)
+				// Manufacturer
+				exifTag = GetTag(new[] { ifd0Primary, exif }, ExifTag.Make);
+                if (exifTag != null)
                 {
                     var metadata = new Metadata
                     {
                         Group = "exif",
                         Name = "Make",
-                        Value = tag.Value
+                        Value = exifTag.Value
                     };
                     retval.Metadata.Add(metadata);
                 }
 
-                // Camera Model
-                tag = GetTag(new[] { ifd0Primary, exif }, ExifTag.Model, ExifTag.Model2, ExifTag.UniqueCameraModel);
-                if (tag != null)
+				// Camera Model
+				exifTag = GetTag(new[] { ifd0Primary, exif }, ExifTag.Model, ExifTag.Model2, ExifTag.UniqueCameraModel);
+                if (exifTag != null)
                 {
                     var metadata = new Metadata
                     {
                         Group = "exif",
                         Name = "Model",
-                        Value = tag.Value
+                        Value = exifTag.Value
                     };
                     retval.Metadata.Add(metadata);
                 }
 
-                // Camera Serial
-                tag = GetTag(new[] { ifd0Primary, exif }, ExifTag.SerialNumber, ExifTag.BodySerialNumber, ExifTag.CameraSerialNumber);
-                if (tag != null)
+				// Camera Serial
+				exifTag = GetTag(new[] { ifd0Primary, exif }, ExifTag.SerialNumber, ExifTag.BodySerialNumber, ExifTag.CameraSerialNumber);
+                if (exifTag != null)
                 {
                     var metadata = new Metadata
                     {
                         Group = "exif",
                         Name = "Camera Serial",
-                        Value = tag.Value
+                        Value = exifTag.Value
                     };
                     retval.Metadata.Add(metadata);
                 }
 
-                // Lens Model
-                tag = GetTag(new[] { ifd0Primary, exif }, ExifTag.Lens, ExifTag.LensModel, ExifTag.LensSpecification);
-                if (tag != null)
+				// Lens Model
+				exifTag = GetTag(new[] { ifd0Primary, exif }, ExifTag.Lens, ExifTag.LensModel, ExifTag.LensSpecification);
+                if (exifTag != null)
                 {
                     var metadata = new Metadata
                     {
                         Group = "exif",
                         Name = "Lens",
-                        Value = tag.Value
+                        Value = exifTag.Value
                     };
                     retval.Metadata.Add(metadata);
                 }
 
-                // Lens Serial
-                tag = GetTag(new[] { ifd0Primary, exif }, ExifTag.LensSerialNumber);
-                if (tag != null)
+				// Lens Serial
+				exifTag = GetTag(new[] { ifd0Primary, exif }, ExifTag.LensSerialNumber);
+                if (exifTag != null)
                 {
                     var metadata = new Metadata
                     {
                         Group = "exif",
                         Name = "Lens Serial",
-                        Value = tag.Value
+                        Value = exifTag.Value
                     };
                     retval.Metadata.Add(metadata);
                 }
 
-                // Exposure Program
-                tag = GetTag(new[] { ifd0Primary, exif }, ExifTag.ExposureProgram);
-                if (tag != null)
+				// Exposure Program
+				exifTag = GetTag(new[] { ifd0Primary, exif }, ExifTag.ExposureProgram);
+                if (exifTag != null)
                 {
                     var metadata = new Metadata
                     {
                         Group = "exif",
                         Name = "Exposure Program",
-                        Value = tag.ToDisplayString()
+                        Value = exifTag.ToDisplayString()
                     };
                     retval.Metadata.Add(metadata);
                 }
 
-                // Exposure Mode
-                tag = GetTag(new[] { ifd0Primary, exif }, ExifTag.ExposureMode);
-                if (tag != null)
+				// Exposure Mode
+				exifTag = GetTag(new[] { ifd0Primary, exif }, ExifTag.ExposureMode);
+                if (exifTag != null)
                 {
                     var metadata = new Metadata
                     {
                         Group = "exif",
                         Name = "Exposure Mode",
-                        Value = tag.ToDisplayString()
+                        Value = exifTag.ToDisplayString()
                     };
                     retval.Metadata.Add(metadata);
                 }
 
-                // ISO Speed Rating
-                tag = GetTag(new[] { ifd0Primary, exif }, ExifTag.ISOSpeedRatings, ExifTag.ISOSpeed);
-                if (tag != null)
+				// ISO Speed Rating
+				exifTag = GetTag(new[] { ifd0Primary, exif }, ExifTag.ISOSpeedRatings, ExifTag.ISOSpeed);
+                if (exifTag != null)
                 {
                     var metadata = new Metadata
                     {
                         Group = "exif",
                         Name = "ISO Rating",
-                        Value = tag.ToDisplayString()
+                        Value = exifTag.ToDisplayString()
                     };
                     retval.Metadata.Add(metadata);
                 }
 
-                // Shutter Speed Value
-                tag = GetTag(new[] { ifd0Primary, exif }, ExifTag.ExposureTime, ExifTag.ShutterSpeedValue);
-                if (tag != null)
+				// Shutter Speed Value
+				exifTag = GetTag(new[] { ifd0Primary, exif }, ExifTag.ExposureTime, ExifTag.ShutterSpeedValue);
+                if (exifTag != null)
                 {
                     var metadata = new Metadata
                     {
                         Group = "exif",
                         Name = "Shutter Speed",
-                        Value = tag.ToDisplayString()
+                        Value = exifTag.ToDisplayString()
                     };
                     retval.Metadata.Add(metadata);
                 }
 
-                // Metering Mode
-                tag = GetTag(new[] { ifd0Primary, exif }, ExifTag.MeteringMode);
-                if (tag != null)
+				// Metering Mode
+				exifTag = GetTag(new[] { ifd0Primary, exif }, ExifTag.MeteringMode);
+                if (exifTag != null)
                 {
                     var metadata = new Metadata
                     {
                         Group = "exif",
                         Name = "Metering Mode",
-                        Value = tag.ToDisplayString()
+                        Value = exifTag.ToDisplayString()
                     };
                     retval.Metadata.Add(metadata);
                 }
 
-                // Flash
-                tag = GetTag(new[] { ifd0Primary, exif }, ExifTag.Flash);
-                if (tag != null)
+				// Flash
+				exifTag = GetTag(new[] { ifd0Primary, exif }, ExifTag.Flash);
+                if (exifTag != null)
                 {
                     var metadata = new Metadata
                     {
                         Group = "exif",
                         Name = "Flash",
-                        Value = tag.ToDisplayString()
+                        Value = exifTag.ToDisplayString()
                     };
                     retval.Metadata.Add(metadata);
                 }
 
-                // Focal Length
-                tag = GetTag(new[] { ifd0Primary, exif }, ExifTag.FocalLength);
-                if (tag != null)
+				// Focal Length
+				exifTag = GetTag(new[] { ifd0Primary, exif }, ExifTag.FocalLength);
+                if (exifTag != null)
                 {
                     var metadata = new Metadata
                     {
                         Group = "exif",
                         Name = "Focal Length",
-                        Value = tag.ToDisplayString()
+                        Value = exifTag.ToDisplayString()
                     };
                     retval.Metadata.Add(metadata);
                 }
 
-                // Focal Length in 35mm
-                tag = GetTag(new[] { ifd0Primary, exif }, ExifTag.FocalLengthIn35mmFilm);
-                if (tag != null)
+				// Focal Length in 35mm
+				exifTag = GetTag(new[] { ifd0Primary, exif }, ExifTag.FocalLengthIn35mmFilm);
+                if (exifTag != null)
                 {
                     var metadata = new Metadata
                     {
                         Group = "exif",
                         Name = "Focal Length in 35mm",
-                        Value = tag.ToDisplayString()
+                        Value = exifTag.ToDisplayString()
                     };
                     retval.Metadata.Add(metadata);
                 }
 
-                // Artist
-                tag = GetTag(new[] { ifd0Primary, exif }, ExifTag.Artist);
-                if (tag != null)
+				// Artist
+				exifTag = GetTag(new[] { ifd0Primary, exif }, ExifTag.Artist);
+                if (exifTag != null)
                 {
                     var metadata = new Metadata
                     {
                         Group = "exif",
                         Name = "Artist",
-                        Value = tag.ToDisplayString()
+                        Value = exifTag.ToDisplayString()
                     };
                     retval.Metadata.Add(metadata);
                 }
 
-                // Copyright
-                tag = GetTag(new[] { ifd0Primary, exif }, ExifTag.Copyright);
-                if (tag != null)
+				// Copyright
+				exifTag = GetTag(new[] { ifd0Primary, exif }, ExifTag.Copyright);
+                if (exifTag != null)
                 {
                     var metadata = new Metadata
                     {
                         Group = "exif",
                         Name = "Copyright",
-                        Value = tag.ToDisplayString()
+                        Value = exifTag.ToDisplayString()
                     };
                     retval.Metadata.Add(metadata);
                 }
 
-                // FNumber
-                tag = GetTag(new[] { ifd0Primary, exif }, ExifTag.FNumber, ExifTag.ApertureValue);
-                if (tag != null)
+				// FNumber
+				exifTag = GetTag(new[] { ifd0Primary, exif }, ExifTag.FNumber, ExifTag.ApertureValue);
+                if (exifTag != null)
                 {
                     var metadata = new Metadata
                     {
                         Group = "exif",
                         Name = "F Number",
-                        Value = tag.ToDisplayString()
+                        Value = exifTag.ToDisplayString()
                     };
                     retval.Metadata.Add(metadata);
                 }
 
-                // Color Space
-                tag = GetTag(new[] { ifd0Primary, exif }, ExifTag.ColorSpace);
-                if (tag != null)
+				// Color Space
+				exifTag = GetTag(new[] { ifd0Primary, exif }, ExifTag.ColorSpace);
+                if (exifTag != null)
                 {
                     var metadata = new Metadata
                     {
                         Group = "exif",
                         Name = "Color Space",
-                        Value = tag.ToDisplayString()
+                        Value = exifTag.ToDisplayString()
                     };
                     retval.Metadata.Add(metadata);
                 }
+
+				// Deal with PNG tags
+				var pngTags = tags.Where(x => x is PngData).Cast<PngData>().ToList();
+				foreach (var pngTag in pngTags)
+				{
+					var metadata = new Metadata
+					{
+						Group = pngTag.Chunk,
+						Name = pngTag.TagName,
+						Value = pngTag.TagValue
+					};
+					retval.Metadata.Add(metadata);
+				}
             }
 
             retval.TagIds.Add(importTagId);

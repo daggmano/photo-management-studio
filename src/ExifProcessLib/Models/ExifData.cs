@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace ExifProcessLib.Models
 {
-    public class ExifData
+    public class ExifData : IImageData
     {
         public ExifTag ExifTag { get; set; }
         public GPSTag GPSTag { get; set; }
