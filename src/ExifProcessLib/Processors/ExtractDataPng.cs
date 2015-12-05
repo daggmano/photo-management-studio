@@ -295,7 +295,7 @@ namespace ExifProcessLib.Processors
 			{
 				Chunk = "tIME",
 				TagName = "Last Modified Time",
-				TagValue = dt.ToString()
+				TagValue = dt.ToString("o")
 			});
 
 			return result;

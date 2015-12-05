@@ -319,13 +319,40 @@ namespace FileManager
 				var pngTags = tags.Where(x => x is PngData).Cast<PngData>().ToList();
 				foreach (var pngTag in pngTags)
 				{
-					var metadata = new Metadata
+					if (pngTag.Chunk.Equals("tIME"))
 					{
-						Group = pngTag.Chunk,
-						Name = pngTag.TagName,
-						Value = pngTag.TagValue
-					};
-					retval.Metadata.Add(metadata);
+						DateTime dt;
+						if (DateTime.TryParseExact(pngTag.TagValue, "o", CultureInfo.CurrentCulture, DateTimeStyles.AssumeUniversal, out dt))
+						{
+							retval.ShotDate = dt;
+							retval.DateAccuracy = 6;
+						}
+					}
+					else if (pngTag.Chunk.Equals("tEXt") && pngTag.TagName.Equals("date:create"))
+					{
+						//2013-03-23T19:14:00-07:00
+						DateTime dt;
+						if (DateTime.TryParseExact(pngTag.TagValue, "yyyy'-'MM'-'dd'T'HH:mm:ssK", CultureInfo.CurrentCulture, DateTimeStyles.AssumeUniversal, out dt))
+						{
+							retval.ShotDate = dt;
+							retval.DateAccuracy = 6;
+						}
+						else if (DateTime.TryParseExact(pngTag.TagValue, "yyyy'-'MM'-'dd'T'HH:mm:ss", CultureInfo.CurrentCulture, DateTimeStyles.AssumeUniversal, out dt))
+						{
+							retval.ShotDate = dt;
+							retval.DateAccuracy = 6;
+						}
+					}
+					else
+					{
+						var metadata = new Metadata
+						{
+							Group = pngTag.Chunk,
+							Name = pngTag.TagName,
+							Value = pngTag.TagValue
+						};
+						retval.Metadata.Add(metadata);
+					}
 				}
             }
 
