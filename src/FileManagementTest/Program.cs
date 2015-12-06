@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using FileManager;
 
@@ -34,7 +33,7 @@ namespace FileManagementTest
 
             foreach (var file in missingFiles)
             {
-                var mediaObject = processor.ProcessFile(file, folder, "import");
+                var mediaObject = processor.ProcessFile(file, folder, Guid.NewGuid());
                 Console.WriteLine(file);
             }
         }

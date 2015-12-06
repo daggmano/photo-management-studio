@@ -68,9 +68,6 @@
   <ItemGroup>
     <Compile Include="FileManagementService.cs" />
     <Compile Include="FileProcessor.cs" />
-    <Compile Include="Models\Media.cs" />
-    <Compile Include="Models\MediaSimple.cs" />
-    <Compile Include="Models\Metadata.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -78,6 +75,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataTypes\DataTypes.csproj">
+      <Project>{be0497a1-d28d-4e4d-9a75-4abf4f2192b0}</Project>
+      <Name>DataTypes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ErrorReporting\ErrorReporting.csproj">
       <Project>{d728b52f-1497-49fb-b679-47692a9ed815}</Project>
       <Name>ErrorReporting</Name>

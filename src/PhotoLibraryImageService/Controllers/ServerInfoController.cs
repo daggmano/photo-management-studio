@@ -26,7 +26,12 @@ namespace PhotoLibraryImageService.Controllers
 			ServerDatabaseIdentifierObject serverId = null;
 			try
 			{
-				serverId = await _dataService.GetServerDatabaseIdentifier();
+				var serverDetails = await _dataService.GetServerDatabaseIdentifier();
+				serverId = new ServerDatabaseIdentifierObject
+				{
+					ServerId = serverDetails.ServerId,
+					ServerName = serverDetails.ServerName
+				};
 			}
 			catch (ArgumentNullException)
 			{

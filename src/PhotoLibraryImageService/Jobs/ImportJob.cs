@@ -4,11 +4,12 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Collections.Generic;
 using System.Linq;
-using System.IO;
-using PhotoLibraryImageService.Services;
 using FileManager;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using PhotoLibraryImageService.Data;
+using PhotoLibraryImageService.Data.Interfaces;
+using System.Threading.Tasks;
 
 namespace PhotoLibraryImageService.Jobs
 {
@@ -23,6 +24,7 @@ namespace PhotoLibraryImageService.Jobs
 		private readonly List<string> _args;
 
 		private FileProcessor _fileProcessor;
+		private IDataService _dataService = new DataService();
 
 //		private ImportableListJobResult _result;
 
@@ -83,11 +85,18 @@ namespace PhotoLibraryImageService.Jobs
 			var progressStep = (int)Math.Ceiling(100.0 / _args.Count);
 			var progress = 0;
 
+			// Need to create import tag first...
+			var importTagTask = _dataService.CreateImportTag(_importTagId, DateTime.UtcNow);
+			Task.WaitAll(importTagTask);
+			var importTag = importTagTask.Result;
+
 			foreach (var path in _args)
 			{
 				var fullPath = path.Replace("/", "\\");
 
-				var media = _fileProcessor.ProcessFile(fullPath, rootPath, _importTagId.ToString());
+				var media = _fileProcessor.ProcessFile(fullPath, rootPath, new Guid(importTag.ImportId));
+				// TODO: Check if file is already in db before importing (check loweredFileName).  May need to lock this to prevent clashing.
+				_dataService.InsertMedia(media);
 
 				var str = JsonConvert.SerializeObject(media);
 				Debug.WriteLine(str);

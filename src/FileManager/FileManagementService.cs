@@ -4,10 +4,9 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using FileManager.Models;
 using MyCouch;
-using MyCouch.Requests;
 using ErrorReporting;
+using DataTypes;
 
 namespace FileManager
 {
@@ -41,13 +40,14 @@ namespace FileManager
             return result;
         }
 
-        public async Task<IEnumerable<MediaSimple>> GetAllPhotoPaths()
+        public async Task<IEnumerable<Media>> GetAllPhotoPaths()
         {
             using (var store = new MyCouchStore(_couchDbRoot, _couchDbName))
             {
-                var mediaQuery = new QueryViewRequest("media", "all");
-                var mediaRows = await store.Client.Views.QueryAsync<MediaSimple>(mediaQuery);
-                var media = mediaRows.Rows.Select(x => x.Value).ToList();
+				var mediaQuery = new Query("media", "all");
+
+				var mediaRows = await store.QueryAsync<Media>(mediaQuery);
+                var media = mediaRows.Select(x => x.Value).ToList();
 
                 return media;
             }

@@ -1,7 +1,6 @@
-﻿using MyCouch;
-using MyCouch.Requests;
+﻿using DataTypes;
+using MyCouch;
 using Newtonsoft.Json;
-using Shared;
 using System;
 using System.Configuration;
 using System.Linq;
@@ -55,11 +54,11 @@ namespace Setup
 
 			using (var store = new MyCouchStore(dbRoot, dbName))
 			{
-				Console.WriteLine("Checking whether view for Server Details exists...");
-				var serverViewExists = await store.ExistsAsync("_design/serverId");
+				Console.WriteLine("Checking whether view for Server Detail exists...");
+				var serverViewExists = await store.ExistsAsync("_design/serverDetail");
 				if (!serverViewExists)
 				{
-					Console.WriteLine("Server Details view not found, we'll create it now...");
+					Console.WriteLine("Server Detail view not found, we'll create it now...");
 
 					docString = JsonConvert.SerializeObject(new
 					{
@@ -68,36 +67,37 @@ namespace Setup
 						{
 							get = new
 							{
-								map = "function(doc) { if (doc.docType == 'serverId') { emit(null, doc); } }"
+								map = "function(doc) { if (doc.$doctype == 'serverDetail') { emit(null, doc); } }"
 							}
 						}
 					});
 
-					await store.Client.Documents.PutAsync("_design/serverId", docString);
-					Console.WriteLine("Server Details view created...");
+					await store.Client.Documents.PutAsync("_design/serverDetail", docString);
+					Console.WriteLine("Server Detail view created...");
 				}
 				else
 				{
-					Console.WriteLine("Server Details view exists, continuing...");
+					Console.WriteLine("Server Detail view exists, continuing...");
 				}
 
 				Console.WriteLine();
 
-				var dbServerIdQuery = new QueryViewRequest("serverId", "get");
-				var dbServerIdRows = await store.Client.Views.QueryAsync<ServerDatabaseIdentifierObject>(dbServerIdQuery);
-				var id = dbServerIdRows.Rows.FirstOrDefault()?.Id;
-				var rev = string.Empty;
+				var dbServerDetailQuery = new Query("serverDetail", "get");
+				var dbServerDetailRows = await store.QueryAsync<ServerDetail>(dbServerDetailQuery);
 
-				if (!string.IsNullOrWhiteSpace(id))
+				var dbServerDetail = dbServerDetailRows.Select(x => x.Value).FirstOrDefault();
+				if (dbServerDetail == null)
 				{
-					var header = await store.GetHeaderAsync(id);
-					rev = header.Rev;
+					dbServerDetail = new ServerDetail
+					{
+						ServerDetailId = Guid.NewGuid().ToString(),
+						ServerId = String.Empty,
+						ServerName = String.Empty
+					};
 				}
 
-				var dbServerId = dbServerIdRows.Rows.Select(x => x.Value).FirstOrDefault();
-
-				var serverId = dbServerId?.ServerId ?? string.Empty;
-				var serverName = dbServerId?.ServerName ?? string.Empty;
+				var serverId = dbServerDetail.ServerId;
+				var serverName = dbServerDetail.ServerName;
 
 				while (true)
 				{
@@ -107,27 +107,28 @@ namespace Setup
 					}
 				}
 
-				docString = JsonConvert.SerializeObject(new
+				if (serverName.Equals(dbServerDetail.ServerName) && serverId.Equals(dbServerDetail.ServerId))
 				{
-					serverId = serverId,
-					docType = "serverId",
-					serverName = serverName
-				});
-
-				if (string.IsNullOrWhiteSpace(id))
-				{
-					// create new entry
-					Console.WriteLine("Creating new Server Identification entry...");
-
-					await store.Client.Documents.PostAsync(docString);
-					Console.WriteLine("Server Identification entry created...");
+					Console.WriteLine("No change to Server Identification, continuing...");
 				}
 				else
 				{
-					Console.WriteLine("Updating existing Server Identification entry...");
+					dbServerDetail.ServerId = serverId;
+					dbServerDetail.ServerName = serverName;
 
-					var retval = await store.Client.Documents.PutAsync(id, rev, docString);
-					Console.WriteLine("Server Identification entry updated...");
+					if (String.IsNullOrWhiteSpace(dbServerDetail.ServerDetailRev))
+					{
+						// create new entry
+						Console.WriteLine("Creating new Server Identification entry...");
+						dbServerDetail = await store.StoreAsync(dbServerDetail);
+						Console.WriteLine("Server Identification entry created...");
+					}
+					else
+					{
+						Console.WriteLine("Updating existing Server Identification entry...");
+						dbServerDetail = await store.StoreAsync(dbServerDetail);
+						Console.WriteLine("Server Identification entry updated...");
+					}
 				}
 
 				// Set up Default Views
@@ -145,7 +146,7 @@ namespace Setup
 						{
 							all = new
 							{
-								map = "function(doc) { if (doc.docType == 'collection') { emit(null, doc); } }"
+								map = "function(doc) { if (doc.$doctype == 'collection') { emit(null, doc); } }"
 							}
 						}
 					});
@@ -165,7 +166,7 @@ namespace Setup
 						{
 							all = new
 							{
-								map = "function(doc) { if (doc.docType == 'import') { emit(null, doc); } }"
+								map = "function(doc) { if (doc.$doctype == 'import') { emit(null, doc); } }"
 							}
 						}
 					});
@@ -185,7 +186,7 @@ namespace Setup
 						{
 							all = new
 							{
-								map = "function(doc) { if (doc.docType == 'media') { emit(null, doc); } }"
+								map = "function(doc) { if (doc.$doctype == 'media') { emit(null, doc); } }"
 							}
 						}
 					});
@@ -205,15 +206,15 @@ namespace Setup
 						{
 							parents = new
 							{
-								map = "function(doc) { if (doc.docType == 'tag' && doc.subType == 'parent') { emit(null, doc); } }"
+								map = "function(doc) { if (doc.$doctype == 'tag' && doc.subType == 'parent') { emit(null, doc); } }"
 							},
                             buckets = new
 							{
-								map = "function(doc) { if (doc.docType == 'tag' && doc.subType == 'bucket') { emit(null, doc); } }"
+								map = "function(doc) { if (doc.$doctype == 'tag' && doc.subType == 'bucket') { emit(null, doc); } }"
 							},
                             tags = new
 							{
-								map = "function(doc) { if (doc.docType == 'tag' && doc.subType == 'tag') { emit(null, doc); } }"
+								map = "function(doc) { if (doc.$doctype == 'tag' && doc.subType == 'tag') { emit(null, doc); } }"
 							},
 						}
 					});

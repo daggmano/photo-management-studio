@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoManagementStudio", "PhotoManagementStudio\PhotoManagementStudio.csproj", "{2F6EF83D-D220-43E6-869A-C7359C881A92}"
 EndProject
@@ -28,6 +28,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ErrorReporting", "ErrorReporting\ErrorReporting.csproj", "{D728B52F-1497-49FB-B679-47692A9ED815}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Setup", "Setup\Setup.csproj", "{7607E079-55A6-4CDF-831C-4931066CC672}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataTypes", "DataTypes\DataTypes.csproj", "{BE0497A1-D28D-4E4D-9A75-4ABF4F2192B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -185,6 +187,22 @@ Global
 		{7607E079-55A6-4CDF-831C-4931066CC672}.Release|x64.Build.0 = Release|Any CPU
 		{7607E079-55A6-4CDF-831C-4931066CC672}.Release|x86.ActiveCfg = Release|Any CPU
 		{7607E079-55A6-4CDF-831C-4931066CC672}.Release|x86.Build.0 = Release|Any CPU
+		{BE0497A1-D28D-4E4D-9A75-4ABF4F2192B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE0497A1-D28D-4E4D-9A75-4ABF4F2192B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE0497A1-D28D-4E4D-9A75-4ABF4F2192B0}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{BE0497A1-D28D-4E4D-9A75-4ABF4F2192B0}.Debug|ARM.Build.0 = Debug|Any CPU
+		{BE0497A1-D28D-4E4D-9A75-4ABF4F2192B0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BE0497A1-D28D-4E4D-9A75-4ABF4F2192B0}.Debug|x64.Build.0 = Debug|Any CPU
+		{BE0497A1-D28D-4E4D-9A75-4ABF4F2192B0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BE0497A1-D28D-4E4D-9A75-4ABF4F2192B0}.Debug|x86.Build.0 = Debug|Any CPU
+		{BE0497A1-D28D-4E4D-9A75-4ABF4F2192B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE0497A1-D28D-4E4D-9A75-4ABF4F2192B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE0497A1-D28D-4E4D-9A75-4ABF4F2192B0}.Release|ARM.ActiveCfg = Release|Any CPU
+		{BE0497A1-D28D-4E4D-9A75-4ABF4F2192B0}.Release|ARM.Build.0 = Release|Any CPU
+		{BE0497A1-D28D-4E4D-9A75-4ABF4F2192B0}.Release|x64.ActiveCfg = Release|Any CPU
+		{BE0497A1-D28D-4E4D-9A75-4ABF4F2192B0}.Release|x64.Build.0 = Release|Any CPU
+		{BE0497A1-D28D-4E4D-9A75-4ABF4F2192B0}.Release|x86.ActiveCfg = Release|Any CPU
+		{BE0497A1-D28D-4E4D-9A75-4ABF4F2192B0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -199,5 +217,6 @@ Global
 		{A30BDE97-16AA-486B-A874-0637306E15CA} = {1727FD01-3B99-448D-9C0E-1B05B91C0CF0}
 		{D728B52F-1497-49FB-B679-47692A9ED815} = {4741C075-D778-4C63-B166-935D7BE3D6A1}
 		{7607E079-55A6-4CDF-831C-4931066CC672} = {1727FD01-3B99-448D-9C0E-1B05B91C0CF0}
+		{BE0497A1-D28D-4E4D-9A75-4ABF4F2192B0} = {1727FD01-3B99-448D-9C0E-1B05B91C0CF0}
 	EndGlobalSection
 EndGlobal

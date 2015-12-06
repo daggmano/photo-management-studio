@@ -5,23 +5,24 @@ using System.IO;
 using System.Linq;
 using ExifProcessLib;
 using ExifProcessLib.Models;
-using FileManager.Models;
+using DataTypes;
 
 namespace FileManager
 {
     public class FileProcessor
     {
-        public Media ProcessFile(string filePath, string rootPath, string importTagId)
+        public Media ProcessFile(string filePath, string rootPath, Guid importId)
         {
-            var retval = new Media
-            {
-                MediaId = Guid.NewGuid().ToString(),
-                FullFilePath = filePath,
-                LoweredFilePath = filePath.ToLowerInvariant(),
-                FileName = Path.GetFileName(filePath),
-                DateAccuracy = 0,
-                Rating = 0,
-                Caption = string.Empty
+			var retval = new Media
+			{
+				MediaId = Guid.NewGuid().ToString(),
+				FullFilePath = filePath,
+				LoweredFilePath = filePath.ToLowerInvariant(),
+				FileName = Path.GetFileName(filePath),
+				DateAccuracy = 0,
+				Rating = 0,
+				Caption = string.Empty,
+				ImportId = importId.ToString()
             };
 
             var exifProcessor = new ExifProcessor(Path.Combine(rootPath, filePath));
@@ -355,8 +356,6 @@ namespace FileManager
 					}
 				}
             }
-
-            retval.TagIds.Add(importTagId);
 
             return retval;
         }

@@ -50,6 +50,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataTypes\DataTypes.csproj">
+      <Project>{be0497a1-d28d-4e4d-9a75-4abf4f2192b0}</Project>
+      <Name>DataTypes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FileManager\FileManager.csproj">
       <Project>{2717daf9-f571-4a3c-98e9-a0a61a7e1718}</Project>
       <Name>FileManager</Name>
