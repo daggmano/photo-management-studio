@@ -9,6 +9,6 @@ namespace PhotoLibraryImageService.Data.Interfaces
         Task<ServerDetail> GetServerDatabaseIdentifier();
 		Task<Import> CreateImportTag(Guid tagId, DateTime importDate);
 		Task<Media> InsertMedia(Media media);
-
+		Task<bool> MediaExists(string loweredFilePath);
 	}
 }

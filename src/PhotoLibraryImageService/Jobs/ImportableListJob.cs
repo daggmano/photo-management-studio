@@ -76,7 +76,7 @@ namespace PhotoLibraryImageService.Jobs
 			Task.WaitAll(dbMediaTask);
 			var dbMediaList = dbMediaTask.Result;
 	
-			var dbMediaFiles = dbMediaList.Select(x => new Tuple<string, string>(x.FullFilePath.ToLowerInvariant(), x.FullFilePath)).ToList();
+			var dbMediaFiles = dbMediaList.Select(x => new Tuple<string, string>(x.MediaId, x.FullFilePath)).ToList();
 			var dbLoweredMediaFiles = dbMediaFiles.Select(x => x.Item1).ToList();
 			worker.ReportProgress(33);
 
@@ -88,7 +88,7 @@ namespace PhotoLibraryImageService.Jobs
 			}
 			var diskFileList = _fileManagementService.GetFileList(rootPath);
 
-			var diskFiles = diskFileList.Select(x => new Tuple<string, string>(x.ToLowerInvariant(), x)).ToList();
+			var diskFiles = diskFileList.Select(x => new Tuple<string, string>(x.ToLowerInvariant().Replace("\\", "/"), x)).ToList();
 			var loweredDiskFiles = diskFiles.Select(x => x.Item1).ToList();
 
 			worker.ReportProgress(66);

@@ -20,12 +20,12 @@ namespace FileManagementTest
 
             var service = new FileManagementService();
 
-            var files = service.GetFileList(folder);
+            var files = service.GetFileList(folder).Select(x => x.ToLowerInvariant().Replace("\\", "/")).ToList();
             var media = await service.GetAllPhotoPaths();
 
-            var mediaFileNames = media.Select(x => x.LoweredFilePath);
+            var mediaFileNames = media.Select(x => x.MediaId);
 
-            var missingFiles = files.Where(x => !mediaFileNames.Contains(x.ToLowerInvariant()));
+            var missingFiles = files.Where(x => !mediaFileNames.Contains(x));
 
 //            var file = missingFiles.FirstOrDefault(x => Path.GetExtension(x).ToLowerInvariant().Equals(".cr2"));
 

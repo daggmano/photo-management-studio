@@ -5,13 +5,19 @@ namespace DataTypes
 {
     public class Media
     {
+		/// <summary>
+		/// MediaId is the Lowered File Path
+		/// </summary>
 		public string MediaId { get; set; }
 		public string MediaRev { get; set; }
 
 		public string ImportId { get; set; }
+		/// <summary>
+		/// CollectionId is a Guid that is used in the Collection tag
+		/// </summary>
+		public string CollectionId { get; set; }
 
 		public string FullFilePath { get; set; }
-		public string LoweredFilePath { get; set; }
 		public string FileName { get; set; }
 		public DateTime ShotDate { get; set; }
 		public int Rating { get; set; }

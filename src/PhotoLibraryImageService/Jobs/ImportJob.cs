@@ -15,6 +15,7 @@ namespace PhotoLibraryImageService.Jobs
 {
 	public class ImportJob : Job
 	{
+		private readonly object _lock;
 		private int _progress;
 
 		private readonly string _couchDbName;
@@ -33,6 +34,7 @@ namespace PhotoLibraryImageService.Jobs
 		public ImportJob(Guid id, IEnumerable<string> args) : base(id)
 		{
 			_args = args.ToList();
+			_lock = new object();
 
 			_progress = 0;
 //			_result = null;
@@ -95,11 +97,22 @@ namespace PhotoLibraryImageService.Jobs
 				var fullPath = path.Replace("/", "\\");
 
 				var media = _fileProcessor.ProcessFile(fullPath, rootPath, new Guid(importTag.ImportId));
-				// TODO: Check if file is already in db before importing (check loweredFileName).  May need to lock this to prevent clashing.
-				_dataService.InsertMedia(media);
 
-				var str = JsonConvert.SerializeObject(media);
-				Debug.WriteLine(str);
+				// TODO: Check if file is already in db before importing (check loweredFileName).  May need to lock this to prevent clashing.
+				lock (_lock)
+				{
+					var mediaExistsTask = _dataService.MediaExists(media.MediaId);
+					Task.WaitAll(mediaExistsTask);
+					if (mediaExistsTask.Result)
+					{
+						Debug.WriteLine($"Media with path '{media.MediaId}' already in database, skipping.");
+					}
+					else
+					{
+						var insertMediaTask = _dataService.InsertMedia(media);
+						Task.WaitAll(insertMediaTask);
+					}
+				}
 
 				progress = Math.Min(progress + progressStep, 100);
 				worker.ReportProgress(progress);

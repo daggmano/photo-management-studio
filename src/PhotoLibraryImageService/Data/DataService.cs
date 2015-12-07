@@ -56,5 +56,13 @@ namespace PhotoLibraryImageService.Data
 				return media;
 			}
 		}
+
+		public async Task<bool> MediaExists(string loweredFilePath)
+		{
+			using (var store = new MyCouchStore(_couchDbRoot, _couchDbName))
+			{
+				return await store.ExistsAsync(loweredFilePath);
+			}
+		}
 	}
 }
