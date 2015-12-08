@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using ExifProcessLib.Models;
+using ExifProcessLib.Helpers;
 
 namespace ExifProcessLib.Processors
 {
@@ -30,7 +31,7 @@ namespace ExifProcessLib.Processors
 					var atomData = new byte[atomLength - 8];
 					stream.Read(atomData, 0, atomLength - 8);
 
-					result.AddRange(DecodeMoov(atomData));
+					result.AddRange(DecodeAtom(atomData, atomType));
 				}
 				else
 				{
@@ -46,17 +47,51 @@ namespace ExifProcessLib.Processors
 			return result;
 		}
 
-		private IEnumerable<Mp4Data> DecodeMoov(byte[] atom)
+		private IEnumerable<Mp4Data> DecodeAtom(byte[] atomData, string atomType)
 		{
-			return new List<Mp4Data>
+			var result = new List<Mp4Data>();
+			var idx = 0;
+
+			while (true)
 			{
-				new Mp4Data
+				switch (atomType)
 				{
-					Atom = "moov",
-					TagName = "Length",
-					TagValue = $"{atom.Length} bytes"
+					case "mdia":
+					case "minf":
+					case "moov":
+					case "stbl":
+					case "trak":
+						result.Add(new Mp4Data
+						{
+							Atom = atomType,
+							TagName = "Node",
+							TagValue = "Node"
+						});
+						// Contain subatoms
+						var subAtomLength = (atomData[idx] * 256 * 256 * 256) + (atomData[idx + 1] * 256 * 256) + (atomData[idx + 2] * 256) + atomData[idx + 3];
+						var subAtomType = System.Text.Encoding.ASCII.GetString(atomData, idx + 4, 4);
+						var subAtomData = atomData.ReadData(idx + 8, subAtomLength - 8, Endianess.Big);
+						result.AddRange(DecodeAtom(subAtomData, subAtomType));
+						idx += subAtomLength;
+						break;
+					default:
+						result.Add(new Mp4Data
+						{
+							Atom = atomType,
+							TagName = "Length",
+							TagValue = $"{atomData.Length}"
+						});
+						idx = atomData.Length;
+						break;
 				}
-			};
+
+				if (idx == atomData.Length)
+				{
+					break;
+				}
+			}
+
+			return result;
 		}
 	}
 }
