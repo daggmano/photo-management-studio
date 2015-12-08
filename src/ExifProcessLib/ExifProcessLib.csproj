@@ -77,11 +77,14 @@
     <Compile Include="Models\IImageData.cs" />
     <Compile Include="Models\ImageIdentification.cs" />
     <Compile Include="Models\ImageType.cs" />
+    <Compile Include="Models\Mp4Data.cs" />
     <Compile Include="Models\PngData.cs" />
+    <Compile Include="Processors\ExtractDataMp4.cs" />
     <Compile Include="Processors\ExtractDataPng.cs" />
     <Compile Include="Processors\ExtractExifJpeg.cs" />
     <Compile Include="Processors\ExtractExifTiff.cs" />
     <Compile Include="Processors\IExtractExif.cs" />
+    <Compile Include="Processors\IExtractMp4.cs" />
     <Compile Include="Processors\IExtractPng.cs" />
     <Compile Include="Processors\ProcessTiffBlock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

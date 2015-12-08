@@ -32,14 +32,21 @@ namespace ExifProcessLib
                         var jpegExtract = new ExtractExifJpeg();
                         result = jpegExtract.Extract(stream);
                         break;
+
                     case ImageType.Cr2:
                     case ImageType.Dng:
                         var tiffExtract = new ExtractExifTiff();
                         result = tiffExtract.Extract(stream);
                         break;
+
 					case ImageType.Png:
 						var pngExtract = new ExtractDataPng();
 						result = pngExtract.Extract(stream);
+						break;
+
+					case ImageType.Mp4:
+						var mp4Extract = new ExtractDataMp4();
+						result = mp4Extract.Extract(stream);
 						break;
                 }
 

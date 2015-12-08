@@ -39,8 +39,8 @@ namespace ExifProcessLib
                     result.Type = ImageType.Dng;
                     break;
 
-                case ".mov":
-                    result.Type = ImageType.Mov;
+                case ".mp4":
+                    result.Type = ImageType.Mp4;
                     break;
             }
 
@@ -96,8 +96,8 @@ namespace ExifProcessLib
                         result.Type = ImageType.Unknown;
                     }
                     break;
-                case ImageType.Mov:
-                    // For now, assume MOV will be ftyp type, and start with <4-byte length> 0x66 0x74 0x79 0x70
+                case ImageType.Mp4:
+                    // For now, assume MP4 will be ftyp type, and start with <4-byte length> 0x66 0x74 0x79 0x70
                     stream.Seek(4, SeekOrigin.Begin);
                     stream.Read(buffer, 0, 4);
                     if (!buffer.CompareBytes(0, 0x66, 0x74, 0x79, 0x70))

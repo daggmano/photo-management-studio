@@ -4,7 +4,7 @@ using System.IO;
 
 namespace ExifProcessLib.Processors
 {
-	interface IExtractPng
+	public interface IExtractPng
 	{
 		IEnumerable<PngData> Extract(Stream stream);
 	}

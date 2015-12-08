@@ -8,6 +8,6 @@
         Tiff,
         Cr2,
         Dng,
-        Mov
+        Mp4
     }
 }
