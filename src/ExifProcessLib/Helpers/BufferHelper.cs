@@ -62,6 +62,23 @@ namespace ExifProcessLib.Helpers
             return BitConverter.ToInt16(bytes, 0);
         }
 
+		public static float ReadFixed16(this byte[] data, int offset, Endianess endianess)
+		{
+			// TODO: This does not properly correct for endianess
+			var nBytes = ReadData(data, offset, 2, ConvertEndianess(endianess));
+			var dBytes = ReadData(data, offset + 2, 2, ConvertEndianess(endianess));
+			var n = BitConverter.ToInt16(nBytes, 0);
+			var d = BitConverter.ToInt16(dBytes, 0);
+
+			return n + (d / 256.0f);
+		}
+
+		public static float ReadFixed8(this byte[] data, int offset, Endianess endianess)
+		{
+			// TODO: This does not properly correct for endianess
+			return data[offset] + (data[offset + 1] / 16.0f);
+		}
+
         public static byte ReadByte(this byte[] data, int offset)
         {
             return data[offset];

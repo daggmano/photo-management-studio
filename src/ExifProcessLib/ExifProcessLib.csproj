@@ -77,6 +77,11 @@
     <Compile Include="Models\IImageData.cs" />
     <Compile Include="Models\ImageIdentification.cs" />
     <Compile Include="Models\ImageType.cs" />
+    <Compile Include="Models\Mp4Atoms\Atom.cs" />
+    <Compile Include="Models\Mp4Atoms\Moov.cs" />
+    <Compile Include="Models\Mp4Atoms\Mvhd.cs" />
+    <Compile Include="Models\Mp4Atoms\Tkhd.cs" />
+    <Compile Include="Models\Mp4Atoms\Trak.cs" />
     <Compile Include="Models\Mp4Data.cs" />
     <Compile Include="Models\PngData.cs" />
     <Compile Include="Processors\ExtractDataMp4.cs" />

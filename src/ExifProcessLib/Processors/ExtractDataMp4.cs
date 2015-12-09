@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using ExifProcessLib.Models;
 using ExifProcessLib.Helpers;
+using System.Diagnostics;
+using ExifProcessLib.Models.Mp4Atoms;
 
 namespace ExifProcessLib.Processors
 {
@@ -20,6 +23,7 @@ namespace ExifProcessLib.Processors
 			{
 				// Atom format is 4 bytes length, 4 byte atom identifier, followed by data.  Length is entire packet including the 8 bytes mentioned.
 				stream.Read(buffer, 0, 4);
+				// TODO: Should use ReadUInt...
 				var atomLength = (buffer[0] * 256 * 256 * 256) + (buffer[1] * 256 * 256) + (buffer[2] * 256) + buffer[3];
 
 				stream.Read(buffer, 0, 4);
@@ -28,10 +32,13 @@ namespace ExifProcessLib.Processors
 				// We are interested in the moov atom only (and its sub-atoms)
 				if (atomType.Equals("moov"))
 				{
-					var atomData = new byte[atomLength - 8];
-					stream.Read(atomData, 0, atomLength - 8);
+					var atomData = new byte[atomLength];
+					stream.Seek(-8, SeekOrigin.Current);
+					stream.Read(atomData, 0, atomLength);
 
-					result.AddRange(DecodeAtom(atomData, atomType));
+					var atom = new Moov(atomData);
+					Debugger.Break();
+//					result.AddRange(DecodeAtom(atomData, atomType));
 				}
 				else
 				{
@@ -41,53 +48,6 @@ namespace ExifProcessLib.Processors
 				if (stream.Position == stream.Length)
 				{
 					break ;
-				}
-			}
-
-			return result;
-		}
-
-		private IEnumerable<Mp4Data> DecodeAtom(byte[] atomData, string atomType)
-		{
-			var result = new List<Mp4Data>();
-			var idx = 0;
-
-			while (true)
-			{
-				switch (atomType)
-				{
-					case "mdia":
-					case "minf":
-					case "moov":
-					case "stbl":
-					case "trak":
-						result.Add(new Mp4Data
-						{
-							Atom = atomType,
-							TagName = "Node",
-							TagValue = "Node"
-						});
-						// Contain subatoms
-						var subAtomLength = (atomData[idx] * 256 * 256 * 256) + (atomData[idx + 1] * 256 * 256) + (atomData[idx + 2] * 256) + atomData[idx + 3];
-						var subAtomType = System.Text.Encoding.ASCII.GetString(atomData, idx + 4, 4);
-						var subAtomData = atomData.ReadData(idx + 8, subAtomLength - 8, Endianess.Big);
-						result.AddRange(DecodeAtom(subAtomData, subAtomType));
-						idx += subAtomLength;
-						break;
-					default:
-						result.Add(new Mp4Data
-						{
-							Atom = atomType,
-							TagName = "Length",
-							TagValue = $"{atomData.Length}"
-						});
-						idx = atomData.Length;
-						break;
-				}
-
-				if (idx == atomData.Length)
-				{
-					break;
 				}
 			}
 
