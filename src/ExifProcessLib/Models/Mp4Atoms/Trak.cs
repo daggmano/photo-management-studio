@@ -15,24 +15,9 @@ namespace ExifProcessLib.Models.Mp4Atoms
 			while (idx < Length)
 			{
 				var subLength = data.ReadUInt(idx, Endianess.Big);
-				var subType = data.ReadString(idx + 4, 4);
 				var subData = data.ReadData(idx, (int)subLength, Endianess.Big);
 
-				switch (subType)
-				{
-					case "moov":
-						Subatoms.Add(new Moov(subData));
-						break;
-					case "mvhd":
-						Subatoms.Add(new Mvhd(subData));
-						break;
-					case "tkhd":
-						Subatoms.Add(new Tkhd(subData));
-						break;
-					case "trak":
-						Subatoms.Add(new Trak(subData));
-						break;
-				}
+				Subatoms.AddRange(Atom.Decode(subData));
 
 				idx += (int)subLength;
 			}

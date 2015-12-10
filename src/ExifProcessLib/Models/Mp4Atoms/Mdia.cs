@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace ExifProcessLib.Models.Mp4Atoms
 {
-	public class Moov : Atom
+	public class Mdia : Atom
 	{
 		public List<Atom> Subatoms { get; set; }
 
-		public Moov(byte[] data) : base(data)
+		public Mdia(byte[] data) : base(data)
 		{
 			Subatoms = new List<Atom>();
 

@@ -18,8 +18,8 @@ namespace ExifProcessLib.Models.Mp4Atoms
 		public float Volume { get; set; }
 		public byte[] Reserved3 { get; set; }
 		public byte[] MatrixStructure { get; set; }
-		public uint TrackWidth { get; set; }
-		public uint TrackHeight { get; set; }
+		public float TrackWidth { get; set; }
+		public float TrackHeight { get; set; }
 
 		public Tkhd(byte[] data) : base(data)
 		{
@@ -41,8 +41,8 @@ namespace ExifProcessLib.Models.Mp4Atoms
 			Volume = data.ReadFixed8(44, Endianess.Big);
 			Reserved3 = data.ReadData(46, 2, Endianess.Big);
 			MatrixStructure = data.ReadData(48, 36, Endianess.Big);
-			TrackWidth = data.ReadUInt(84, Endianess.Big);
-			TrackHeight = data.ReadUInt(88, Endianess.Big);
+			TrackWidth = data.ReadFixed16(84, Endianess.Big);
+			TrackHeight = data.ReadFixed16(88, Endianess.Big);
 		}
 	}
 }
