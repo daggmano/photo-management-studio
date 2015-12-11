@@ -29,11 +29,13 @@ namespace ExifProcessLib.Models.Mp4Atoms
 				switch (atomType)
 				{
 					case "ctts":
+						result.Add(new Ctts(atomData));
 						break;
 					case "dinf":
 						result.Add(new Dinf(atomData));
 						break;
 					case "dref":
+						result.Add(new Dref(atomData));
 						break;
 					case "hdlr":
 						result.Add(new Hdlr(atomData));
@@ -62,10 +64,13 @@ namespace ExifProcessLib.Models.Mp4Atoms
 						result.Add(new Stbl(atomData));
 						break;
 					case "stco":
+						result.Add(new Stco(atomData));
 						break;
 					case "stsc":
+						result.Add(new Stsc(atomData));
 						break;
 					case "stsd":
+						result.Add(new Stsd(atomData));
 						break;
 					case "stss":
 						break;
@@ -88,6 +93,8 @@ namespace ExifProcessLib.Models.Mp4Atoms
 					case "Xtra":
 						break;
 					case "©xyz":
+						break;
+					case "url ":
 						break;
 					default:
 						Debug.WriteLine($"Missing decode for atom type: {atomType}");

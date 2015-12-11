@@ -73,6 +73,11 @@
     <Compile Include="Models\ExifWhiteBalance.cs" />
     <Compile Include="Models\ExifYCbCrPositioning.cs" />
     <Compile Include="Models\GPSTag.cs" />
+    <Compile Include="Models\Mp4Atoms\Ctts.cs" />
+    <Compile Include="Models\Mp4Atoms\Dref.cs" />
+    <Compile Include="Models\Mp4Atoms\Stco.cs" />
+    <Compile Include="Models\Mp4Atoms\Stsc.cs" />
+    <Compile Include="Models\Mp4Atoms\Stsd.cs" />
     <Compile Include="Models\Mp4Atoms\Udta.cs" />
     <Compile Include="Models\Mp4Atoms\Stbl.cs" />
     <Compile Include="Models\Mp4Atoms\Hdlr.cs" />
