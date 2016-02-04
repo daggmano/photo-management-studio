@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Shared;
 
 namespace PhotoLibraryImageService.Jobs

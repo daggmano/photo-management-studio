@@ -1,15 +1,14 @@
-﻿using System;
+using System;
 using Shared;
 using System.ComponentModel;
-using System.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using FileManager;
-using Newtonsoft.Json;
 using System.Diagnostics;
-using PhotoLibraryImageService.Data;
 using PhotoLibraryImageService.Data.Interfaces;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Mvc;
+using Microsoft.Extensions.OptionsModel;
 
 namespace PhotoLibraryImageService.Jobs
 {
@@ -25,7 +24,12 @@ namespace PhotoLibraryImageService.Jobs
 		private readonly List<string> _args;
 
 		private FileProcessor _fileProcessor;
-		private IDataService _dataService = new DataService();
+
+		[FromServices]
+		public IDataService _dataService { get; set; }
+		
+		[FromServices]
+		public IOptions<AppSettings> _appSettings { get; set; }
 
 //		private ImportableListJobResult _result;
 
@@ -39,7 +43,7 @@ namespace PhotoLibraryImageService.Jobs
 			_progress = 0;
 //			_result = null;
 
-			var dbPath = ConfigurationManager.AppSettings["CouchDbPath"];
+			var dbPath = _appSettings.Value.CouchDbPath;
 			var uri = new Uri(dbPath);
 			_couchDbName = uri.GetComponents(UriComponents.Path, UriFormat.SafeUnescaped);
 			_couchDbRoot = uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.SafeUnescaped);
@@ -79,7 +83,7 @@ namespace PhotoLibraryImageService.Jobs
 		private void Worker_DoWork(object sender, DoWorkEventArgs e)
 		{
 			var worker = sender as BackgroundWorker;
-			var rootPath = ConfigurationManager.AppSettings["LibraryPath"];
+			var rootPath = _appSettings.Value.LibraryPath;
 			if (!rootPath.EndsWith("\\"))
 			{
 				rootPath += "\\";

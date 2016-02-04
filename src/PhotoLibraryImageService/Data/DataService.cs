@@ -1,21 +1,25 @@
-﻿using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.OptionsModel;
 using MyCouch;
 using PhotoLibraryImageService.Data.Interfaces;
 using System;
 using DataTypes;
+using Shared;
 
 namespace PhotoLibraryImageService.Data
 {
 	public class DataService : IDataService
 	{
+		private readonly AppSettings _appSettings;		
 		private readonly string _couchDbRoot;
 		private readonly string _couchDbName;
 
-		public DataService()
+		public DataService(IOptions<AppSettings> options)
 		{
-			var dbPath = ConfigurationManager.AppSettings["CouchDbPath"];
+			_appSettings = options.Value;
+			
+			var dbPath = _appSettings.CouchDbPath;
 			var uri = new Uri(dbPath);
 			_couchDbName = uri.GetComponents(UriComponents.Path, UriFormat.SafeUnescaped);
 			_couchDbRoot = uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.SafeUnescaped);

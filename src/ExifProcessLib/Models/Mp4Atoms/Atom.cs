@@ -107,4 +107,9 @@ namespace ExifProcessLib.Models.Mp4Atoms
 			return result;
 		}
 	}
+	
+	public interface IAtomWithSubatoms
+	{
+		List<Atom> Subatoms { get; set; }
+	}
 }

@@ -1,4 +1,4 @@
-﻿using PhotoLibraryImageService.Jobs;
+using PhotoLibraryImageService.Jobs;
 using Shared;
 using System;
 using System.Collections.Generic;

@@ -1,12 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using MyCouch;
 using ErrorReporting;
 using DataTypes;
+using Shared;
 
 namespace FileManager
 {
@@ -14,10 +14,13 @@ namespace FileManager
     {
 		private readonly string _couchDbName;
 		private readonly string _couchDbRoot;
+		private readonly AppSettings _appSettings;
 
         public FileManagementService()
         {
-			var dbPath = ConfigurationManager.AppSettings["CouchDbPath"];
+			_appSettings = SharedConfiguration.GetAppSettings();
+
+			var dbPath = _appSettings.CouchDbPath;
 			var uri = new Uri(dbPath);
 			_couchDbName = uri.GetComponents(UriComponents.Path, UriFormat.SafeUnescaped);
 			_couchDbRoot = uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.SafeUnescaped);

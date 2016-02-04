@@ -1,49 +1,51 @@
-﻿using PhotoLibraryImageService.Jobs;
+using PhotoLibraryImageService.Jobs;
 using PhotoLibraryImageService.Services;
 using Shared;
 using System;
 using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNet.Mvc;
 
 namespace PhotoLibraryImageService.Controllers
 {
-	public class ImportController : ApiController
+	[Route("api/[controller]")]
+	public class ImportController : Controller
 	{
-		public HttpResponseMessage Post([FromBody] ImportPhotosRequestObject request)
+		[HttpPost]
+		public IActionResult Post([FromBody] ImportPhotosRequestObject request)
 		{
 			var id = JobsService.GetInstance().SubmitJob(JobTypes.ImportPhotos, request.PhotoPaths);
 
 			if (!id.HasValue)
 			{
-				return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Unable to submit job");
+				return new ObjectResult("Unable to submit job") { StatusCode = (int)HttpStatusCode.InternalServerError };
 			}
 
-			return Request.CreateResponse(HttpStatusCode.OK, new { jobId = id.Value, status = "submitted" });
+			return new ObjectResult(new { jobId = id.Value, status = "submitted" });
 		}
 
-		public HttpResponseMessage Get(Guid id)
+		[HttpGet]
+		public IActionResult Get(Guid id)
 		{
 			JobStates state;
 			int progress;
 
 			if (!JobsService.GetInstance().GetJobStatus(id, out state, out progress))
 			{
-				return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No such job");
+				return new ObjectResult("No such job") { StatusCode = (int)HttpStatusCode.NotFound };
 			}
 
 			switch (state)
 			{
 				case JobStates.Tombstoned:
-					return Request.CreateErrorResponse(HttpStatusCode.Gone, "Job no longer available");
+					return new ObjectResult("Job no longer available") { StatusCode = (int)HttpStatusCode.Gone };
 				case JobStates.Error:
-					return Request.CreateErrorResponse(HttpStatusCode.PreconditionFailed, "Job is in error state");
+					return new ObjectResult("Job is in error state") { StatusCode = (int)HttpStatusCode.PreconditionFailed };
 				case JobStates.Running:
-					return Request.CreateErrorResponse(HttpStatusCode.PreconditionFailed, "Job is still running");
+					return new ObjectResult("Job is still running") { StatusCode = (int)HttpStatusCode.PreconditionFailed };
 				case JobStates.Submitted:
-					return Request.CreateErrorResponse(HttpStatusCode.PreconditionFailed, "Job has not yet started");
+					return new ObjectResult("Job has not started yet") { StatusCode = (int)HttpStatusCode.PreconditionFailed };
 				case JobStates.Unknown:
-					return Request.CreateErrorResponse(HttpStatusCode.PreconditionFailed, "Job is in an unknown state");
+					return new ObjectResult("Job is in an unknown state") { StatusCode = (int)HttpStatusCode.PreconditionFailed };
 				default:
 					break;
 			}
@@ -67,7 +69,7 @@ namespace PhotoLibraryImageService.Controllers
 			//	return Request.CreateResponse(HttpStatusCode.OK, result);
 			//}
 
-			return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Job complete without error, but no result available");
+			return new ObjectResult("Job complete without error, but no result available") { StatusCode = (int)HttpStatusCode.InternalServerError };
 		}
 	}
 }

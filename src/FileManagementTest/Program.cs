@@ -1,12 +1,13 @@
-﻿using System;
+using System;
 using System.Linq;
 using FileManager;
+using Newtonsoft.Json;
 
 namespace FileManagementTest
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             Process();
 
@@ -16,11 +17,11 @@ namespace FileManagementTest
 
         private static async void Process()
         {
-            const string folder = @"\\MediaCenter\Photos\";
+            const string folder = @"/Users/darrenoster/Desktop/TestImages";
 
             var service = new FileManagementService();
 
-            var files = service.GetFileList(folder).Select(x => x.ToLowerInvariant().Replace("\\", "/")).ToList();
+            var files = service.GetFileList(folder).Select(x => x.Substring(1).ToLowerInvariant().Replace("\\", "/")).ToList();
             var media = await service.GetAllPhotoPaths();
 
             var mediaFileNames = media.Select(x => x.MediaId);
@@ -31,10 +32,15 @@ namespace FileManagementTest
 
             var processor = new FileProcessor();
 
-            foreach (var file in missingFiles)
+            foreach (var file in missingFiles.Where(x => x != ".ds_store"))
             {
                 var mediaObject = processor.ProcessFile(file, folder, Guid.NewGuid());
+				
                 Console.WriteLine(file);
+				Console.WriteLine();
+				Console.WriteLine(JsonConvert.SerializeObject(mediaObject));
+				Console.WriteLine();
+				Console.WriteLine();
             }
         }
     }

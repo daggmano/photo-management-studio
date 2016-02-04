@@ -1,11 +1,12 @@
-﻿using System;
+using System;
 using Shared;
 using System.ComponentModel;
-using System.Configuration;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FileManager;
+using Microsoft.Extensions.OptionsModel;
+using Microsoft.AspNet.Mvc;
 
 namespace PhotoLibraryImageService.Jobs
 {
@@ -26,6 +27,9 @@ namespace PhotoLibraryImageService.Jobs
 		private ImportableListJobResult _result;
 
 		BackgroundWorker _worker;
+		
+		[FromServices]
+		public IOptions<AppSettings> _appSettings { get; set; }
 
 		public ImportableListJob(Guid id) : base(id)
 		{
@@ -34,7 +38,7 @@ namespace PhotoLibraryImageService.Jobs
 
 			_fileManagementService = new FileManagementService();
 
-			var dbPath = ConfigurationManager.AppSettings["CouchDbPath"];
+			var dbPath = _appSettings.Value.CouchDbPath;
 			var uri = new Uri(dbPath);
 			_couchDbName = uri.GetComponents(UriComponents.Path, UriFormat.SafeUnescaped);
 			_couchDbRoot = uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.SafeUnescaped);
@@ -81,7 +85,7 @@ namespace PhotoLibraryImageService.Jobs
 			worker.ReportProgress(33);
 
 			// Get list of files from file system
-			var rootPath = ConfigurationManager.AppSettings["LibraryPath"];
+			var rootPath = _appSettings.Value.LibraryPath;
 			if (!rootPath.EndsWith("\\"))
 			{
 				rootPath += "\\";

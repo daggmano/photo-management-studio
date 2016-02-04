@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace DataTypes
 {
-    public class Media
-    {
+	public class Media
+ 	{
 		/// <summary>
 		/// MediaId is the Lowered File Path
 		/// </summary>

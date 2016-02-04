@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -9,10 +9,10 @@ using DataTypes;
 
 namespace FileManager
 {
-    public class FileProcessor
-    {
-        public Media ProcessFile(string filePath, string rootPath, Guid importId)
-        {
+	public class FileProcessor
+	{
+		public Media ProcessFile(string filePath, string rootPath, Guid importId)
+		{
 			var retval = new Media
 			{
 				MediaId = filePath.ToLowerInvariant().Replace("\\", "/"),
@@ -23,67 +23,67 @@ namespace FileManager
 				Rating = 0,
 				Caption = string.Empty,
 				ImportId = importId.ToString()
-            };
+			};
 
-            var exifProcessor = new ExifProcessor(Path.Combine(rootPath, filePath));
-            var tags = exifProcessor.ProcessImage();
-			// Note: Could be ExifData or PngData
+			var exifProcessor = new ExifProcessor(Path.Combine(rootPath, filePath));
+			var tags = exifProcessor.ProcessImage();
+			// Note: Could be ExifData, PngData or Mp4Data
 
-            if (tags != null)
-            {
+			if (tags != null)
+			{
 				// Deal with EXIF tags
 				var exifTags = tags.Where(x => x is ExifData).Cast<ExifData>().ToList();
-                var ifd0Primary = exifTags.Where(x => x.IFDType == IFDType.IFD_0_Primary).ToList();
-                var ifd1Thumbnail = exifTags.Where(x => x.IFDType == IFDType.IFD_1_Thumbnail).ToList();
-                var exif = exifTags.Where(x => x.IFDType == IFDType.IFD_Exif).ToList();
-                var gps = exifTags.Where(x => x.IFDType == IFDType.IFD_GPS).ToList();
+				var ifd0Primary = exifTags.Where(x => x.IFDType == IFDType.IFD_0_Primary).ToList();
+				var ifd1Thumbnail = exifTags.Where(x => x.IFDType == IFDType.IFD_1_Thumbnail).ToList();
+				var exif = exifTags.Where(x => x.IFDType == IFDType.IFD_Exif).ToList();
+				var gps = exifTags.Where(x => x.IFDType == IFDType.IFD_GPS).ToList();
 
-                // Shot Date
-                var exifTag = GetTag(new[] {ifd0Primary, exif}, ExifTag.DateTimeOriginal, ExifTag.DateTimeDigitized);
-                if (exifTag != null)
-                {
-                    DateTime dt;
-                    if (DateTime.TryParseExact(exifTag.Value, "yyyy:MM:dd HH:mm:ss", CultureInfo.CurrentCulture, DateTimeStyles.AssumeLocal, out dt))
-                    {
-                        retval.ShotDate = dt;
-                        retval.DateAccuracy = 6;
-                    }
-                }
+				// Shot Date
+				var exifTag = GetTag(new[] {ifd0Primary, exif}, ExifTag.DateTimeOriginal, ExifTag.DateTimeDigitized);
+				if (exifTag != null)
+				{
+					DateTime dt;
+					if (DateTime.TryParseExact(exifTag.Value, "yyyy:MM:dd HH:mm:ss", CultureInfo.CurrentCulture, DateTimeStyles.AssumeLocal, out dt))
+					{
+						retval.ShotDate = dt;
+						retval.DateAccuracy = 6;
+					}
+				}
 
 				// Orientation
 				exifTag = GetTag(new[] {ifd0Primary, ifd1Thumbnail, exif}, ExifTag.Orientation);
-                if (exifTag != null)
-                {
-                    int rotate;
-                    if (Int32.TryParse(exifTag.Value, out rotate))
-                    {
-                        retval.Rotate = rotate;
-                    }
-                }
+				if (exifTag != null)
+				{
+					int rotate;
+					if (Int32.TryParse(exifTag.Value, out rotate))
+					{
+						retval.Rotate = rotate;
+					}
+				}
 
 				// Image Height
 				exifTag = GetTag(new[] { ifd0Primary, exif }, ExifTag.ImageFullHeight, ExifTag.ImageLength, ExifTag.ImageHeight2, ExifTag.ExifImageHeight);
-                if (exifTag != null)
-                {
-                    int height;
-                    if (Int32.TryParse(exifTag.Value, out height))
-                    {
-                        var metadata = new Metadata
-                        {
-                            Group = "exif",
-                            Name = "ImageHeight",
-                            Value = height.ToString(CultureInfo.InvariantCulture)
-                        };
-                        retval.Metadata.Add(metadata);
-                    }
-                }
+				if (exifTag != null)
+				{
+					int height;
+					if (Int32.TryParse(exifTag.Value, out height))
+					{
+						var metadata = new Metadata
+						{
+							Group = "exif",
+							Name = "ImageHeight",
+							Value = height.ToString(CultureInfo.InvariantCulture)
+						};
+						retval.Metadata.Add(metadata);
+					}
+				}
 
 				// Image Width
 				exifTag = GetTag(new[] { ifd0Primary, exif }, ExifTag.ImageFullWidth, ExifTag.ImageWidth, ExifTag.ImageWidth2, ExifTag.ExifImageWidth);
-                if (exifTag != null)
-                {
-                    int width;
-                    if (Int32.TryParse(exifTag.Value, out width))
+				if (exifTag != null)
+				{
+					int width;
+					if (Int32.TryParse(exifTag.Value, out width))
                     {
                         var metadata = new Metadata
                         {
@@ -355,6 +355,32 @@ namespace FileManager
 						retval.Metadata.Add(metadata);
 					}
 				}
+				
+				// Deal with MP4 tags
+				var mp4Tags = tags.Where(x => x is Mp4Data).Cast<Mp4Data>().ToList();
+				foreach (var mp4Tag in mp4Tags)
+				{
+					if (mp4Tag.Atom.Equals("mvhd") && mp4Tag.TagName.Equals("Creation Time"))
+					{
+						DateTime dt;
+						if (DateTime.TryParseExact(mp4Tag.TagValue, "o", CultureInfo.CurrentCulture, DateTimeStyles.AssumeUniversal, out dt))
+						{
+							retval.ShotDate = dt;
+							retval.DateAccuracy = 6;
+						}
+					}
+					else
+					{
+						var metadata = new Metadata
+						{
+							Group = mp4Tag.Atom,
+							Name = mp4Tag.TagName,
+							Value = mp4Tag.TagValue
+						};
+						retval.Metadata.Add(metadata);
+					}
+				}
+
             }
 
             return retval;

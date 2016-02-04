@@ -1,4 +1,4 @@
-﻿namespace PhotoLibraryImageService.Jobs
+namespace PhotoLibraryImageService.Jobs
 {
 	public enum JobTypes
 	{

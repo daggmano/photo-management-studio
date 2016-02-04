@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ExifProcessLib.Models.Mp4Atoms
 {
-	public class Trak : Atom
+	public class Trak : Atom, IAtomWithSubatoms
 	{
 		public List<Atom> Subatoms { get; set; }
 

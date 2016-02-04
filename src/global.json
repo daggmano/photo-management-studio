@@ -1,0 +1,7 @@
+{
+	"authors": [ "Darren Oster <darren.oster@gmail.com>" ],
+	"projects": [ "PhotoLibraryImageService", "DataTypes", "ErrorReporting", "FileManagementTest", "FileManager", "Setup", "Shared" ],
+	"frameworks": {
+		"dnx451": { }
+	}
+}

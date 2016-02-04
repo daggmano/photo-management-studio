@@ -1,39 +1,44 @@
-﻿using System.IO;
+using System.IO;
 using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Web.Http;
+using Microsoft.AspNet.Mvc;
 using PhotoLibraryImageService.Services;
-using System.Configuration;
+using Shared;
+using Microsoft.Extensions.OptionsModel;
+using Microsoft.Extensions.PlatformAbstractions;
+using System.Threading.Tasks;
 
 namespace PhotoLibraryImageService.Controllers
 {
-    public class ImageController : ApiController
-    {
-//		public HttpResponseMessage Get(string id, int size)
-        public HttpResponseMessage GetPath(string path, int size)
+	[Route("api/[controller]")]
+	public class ImageController : Controller
+	{
+		private readonly AppSettings _appSettings;
+		private readonly IApplicationEnvironment _appEnvironment;
+		public ImageController(IOptions<AppSettings> options, IApplicationEnvironment appEnvironment)
 		{
+			_appSettings = options.Value;
+			_appEnvironment = appEnvironment;
+		}
+
+		public async Task<IActionResult> Get(string path, int size)
+		{
+			System.Console.WriteLine("Folder is " + _appEnvironment.ApplicationBasePath);
 			if (string.IsNullOrWhiteSpace(path))
 			{
-				return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Have not provided this for non-temporary files yet");
+				return new ObjectResult("Have not provided this for non-temporary files yet") { StatusCode = (int)HttpStatusCode.Forbidden };
 			}
 
-			var rootPath = ConfigurationManager.AppSettings["LibraryPath"];
-			path = path.Replace("/", "\\");
+			var rootPath = _appSettings.LibraryPath;
 			path = Path.Combine(rootPath, path);
-
-			if (File.Exists(path))
+			if (System.IO.File.Exists(path))
 			{
-				var bytes = ImageResizeService.ProcessImage(path, size);
-				if (bytes != null)
-				{
-					var result = new HttpResponseMessage(HttpStatusCode.OK);
-					var stream = new MemoryStream(bytes);
-					result.Content = new StreamContent(stream);
-					result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpg");
-					return result;
-				}
+				var placeHolderPath = Path.Combine(_appEnvironment.ApplicationBasePath, "placeholder-1200x1080.jpg");
+				var bytes = await ImageResizeService.ProcessImage(path, size, placeHolderPath);
+				
+				var ms = new MemoryStream(bytes);
+				return new FileResultFromStream("out.jpg", ms, "image/jpg");
 			}
+
 //            var localId = Path.GetFileNameWithoutExtension(id);
 
 //            var imgName = localId + "_" + size + ".jpg";
@@ -57,7 +62,7 @@ namespace PhotoLibraryImageService.Controllers
 //                ImageResizeService.ProcessImage(id, size, filePath);
 //            }
 
-            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Image not found");
-        }
-    }
+			return new ObjectResult("Image not found: " + path) { StatusCode = (int)HttpStatusCode.NotFound };
+		}
+	}
 }

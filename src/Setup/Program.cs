@@ -1,18 +1,20 @@
-﻿using ErrorReporting;
-using Shared;
 using System;
 using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using ErrorReporting;
+using Shared;
 
 namespace Setup
 {
-	class Program
-	{
-		static void Main(string[] args)
-		{
-			var initializer = new DatabaseInitializer();
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+			var appSettings = SharedConfiguration.GetAppSettings();
+
+            var initializer = new DatabaseInitializer();
 
 			try
 			{
@@ -36,6 +38,6 @@ namespace Setup
 
 			Console.WriteLine("Press <Enter> to close...");
 			Console.ReadLine();
-		}
-	}
+        }
+    }
 }

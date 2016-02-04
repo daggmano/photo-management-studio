@@ -1,0 +1,31 @@
+{
+  "version": "1.0.0-*",
+  "description": "Setup Console Application",
+  "authors": [ "" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "compilationOptions": {
+    "emitEntryPoint": true
+  },
+
+  "tooling": {
+    "defaultNamespace": "Setup"
+  },
+
+  "dependencies": {
+	  "DataTypes": "1.0.0-*",
+	  "MyCouch": "4.0.0",
+	  "ErrorReporting": "1.0.0-*",
+	  "Shared": "1.0.0-*"
+  },
+
+  "commands": {
+    "Setup": "Setup"
+  },
+
+  "frameworks": {
+    "dnx451": { }
+  }
+}

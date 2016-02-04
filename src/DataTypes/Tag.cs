@@ -1,4 +1,4 @@
-﻿namespace DataTypes
+namespace DataTypes
 {
 	public class Tag
 	{

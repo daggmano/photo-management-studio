@@ -1,51 +1,49 @@
-﻿using System.Reflection;
-using System.Web.Http;
-using Autofac;
-using Autofac.Integration.WebApi;
-using Owin;
+using Microsoft.AspNet.Builder;
+using Microsoft.AspNet.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using PhotoLibraryImageService.Data;
 using PhotoLibraryImageService.Data.Interfaces;
-using Microsoft.AspNet.WebApi.MessageHandlers.Compression;
-using Microsoft.AspNet.WebApi.MessageHandlers.Compression.Compressors;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using Shared;
 
 namespace PhotoLibraryImageService
 {
     public class Startup
     {
-        // This code configures Web API. The Startup class is specified as a type
-        // parameter in the WebApp.Start method.
-        public void Configuration(IAppBuilder appBuilder)
+        public Startup(IHostingEnvironment env)
         {
-            var builder = new ContainerBuilder();
-            builder.RegisterType<DataService>().As<IDataService>();
+            // Set up configuration sources.
+            var builder = new ConfigurationBuilder()
+                .AddJsonFile("appSettings.json")
+                .AddEnvironmentVariables();
+            Configuration = builder.Build();
+        }
 
-            // Register your Web API controllers.
-            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+        public IConfigurationRoot Configuration { get; set; }
 
-            // Set the dependency resolver to be Autofac.
-            var container = builder.Build();
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            // Add framework services.
+            services.AddMvc();
 
-            // Configure Web API for self-host. 
-            var config = new HttpConfiguration();
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+			services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+			services.AddScoped<IDataService, DataService>();
+		}
 
-            config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        {
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
+			
+            app.UseIISPlatformHandler();
+            app.UseStaticFiles();
+            app.UseMvc();
+        }
 
-			var formatters = config.Formatters;
-			var jsonFormatter = formatters.JsonFormatter;
-			var settings = jsonFormatter.SerializerSettings;
-			settings.Formatting = Formatting.Indented;
-			settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-
-			config.MessageHandlers.Insert(0, new ServerCompressionHandler(new GZipCompressor(), new DeflateCompressor()));
-
-			appBuilder.UseWebApi(config);
-		} 
+        // Entry point for the application.
+        public static void Main(string[] args) => Microsoft.AspNet.Hosting.WebApplication.Run<Startup>(args);
     }
 }

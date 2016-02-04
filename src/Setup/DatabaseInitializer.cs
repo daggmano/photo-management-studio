@@ -1,21 +1,29 @@
-﻿using DataTypes;
+using DataTypes;
 using MyCouch;
 using Newtonsoft.Json;
 using System;
-using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
+using Shared;
 
 namespace Setup
 {
 	public class DatabaseInitializer
 	{
+		private AppSettings _appSettings;
+		
+		public DatabaseInitializer()
+		{
+			_appSettings = SharedConfiguration.GetAppSettings();
+		}
+		
 		public async Task Run()
 		{
 			string docString;
 
 			// Check for database existence
-			var dbPath = ConfigurationManager.AppSettings["CouchDbPath"];
+
+			var dbPath = _appSettings.CouchDbPath;
 			var uri = new Uri(dbPath);
 			var dbName = uri.GetComponents(UriComponents.Path, UriFormat.SafeUnescaped);
 			var dbRoot = uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.SafeUnescaped);

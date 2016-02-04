@@ -1,8 +1,8 @@
-﻿namespace Shared
+namespace Shared
 {
-    public class NetworkDiscoveryObject
-    {
-        public string Identifier { get; set; }
-        public int ClientSocketPort { get; set; }
-    }
+	public class NetworkDiscoveryObject
+	{
+		public string Identifier { get; set; }
+		public int ClientSocketPort { get; set; }
+	}
 }

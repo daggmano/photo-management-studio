@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0-*",
+  "description": "DataTypes Class Library",
+  "authors": [ "Class Library template" ],
+  "tags": [""],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "tooling": {
+    "defaultNamespace": "DataTypes"
+  },
+  "frameworks": {
+	"dnx451": { }
+  }
+}

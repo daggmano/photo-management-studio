@@ -267,7 +267,6 @@ namespace ExifProcessLib.Models
                             default:
                                 return obj.Value;
                         }
-                        break;
 
                     case IFDType.IFD_GPS:
                         switch (obj.GPSTag)
@@ -366,7 +365,6 @@ namespace ExifProcessLib.Models
                             default:
                                 return obj.Value;
                         }
-                        break;
 
                     default:
                         return obj.Value;

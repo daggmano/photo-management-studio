@@ -1,15 +1,16 @@
-﻿using PhotoLibraryImageService.Jobs;
+using PhotoLibraryImageService.Jobs;
 using PhotoLibraryImageService.Services;
 using System;
 using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNet.Mvc;
 
 namespace PhotoLibraryImageService.Controllers
 {
-	public class JobsController : ApiController
+	[Route("api/[controller]")]
+	public class JobsController : Controller
 	{
-		public HttpResponseMessage Get(Guid id)
+		[HttpGet]
+		public IActionResult Get(Guid id)
 		{
 			JobStates state;
 			int progress;
@@ -18,10 +19,10 @@ namespace PhotoLibraryImageService.Controllers
 			{
 				if (state == JobStates.Tombstoned)
 				{
-					return Request.CreateErrorResponse(HttpStatusCode.Gone, "Job no longer available");
+					return new ObjectResult("Job no longer available") { StatusCode = (int)HttpStatusCode.Gone };
 				}
 
-				return Request.CreateResponse(HttpStatusCode.OK, new
+				return new ObjectResult(new
 				{
 					jobId = id,
 					status = state.ToString().ToLower(),
@@ -29,7 +30,7 @@ namespace PhotoLibraryImageService.Controllers
 				});
 			}
 
-			return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No such job");
+			return new ObjectResult("No such job") { StatusCode = (int)HttpStatusCode.NotFound };
 		}
 	}
 }

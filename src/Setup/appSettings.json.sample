@@ -1,0 +1,9 @@
+{
+  "AppSettings": {
+	"CouchDbPath": "http://localhost:5984/photos",
+	"Rollbar": {
+		"AccessToken": "<rollbar token>",
+		"Environment": "development"
+	}
+  }
+}
