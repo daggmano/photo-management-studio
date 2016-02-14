@@ -2,5 +2,4 @@ use_frameworks!
 
 target 'Photo Management Studio' do
     pod 'CocoaAsyncSocket'
-    pod 'Gloss', '~> 0.6'
 end

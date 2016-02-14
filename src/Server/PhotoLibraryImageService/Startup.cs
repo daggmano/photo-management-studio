@@ -84,9 +84,11 @@ namespace PhotoLibraryImageService
 						Console.WriteLine("IP Address: " + groupEp.Address);
 						Console.WriteLine("Socket Port: " + discoveryObject.ClientSocketPort);
 
+						var localIpAddress = GetLocalIpAddress();
+
 						var serverSpecification = new ServerSpecificationObject
 						{
-							ServerAddress = "127.0.0.1",
+							ServerAddress = localIpAddress,
 							ServerPort = _photoServerPort
 						};
 						var networkMessage = new NetworkMessageObject<ServerSpecificationObject>
@@ -109,6 +111,19 @@ namespace PhotoLibraryImageService
 				listener.Close();
 				Console.WriteLine("UDP Listener closed");
 			}
+		}
+
+		public static string GetLocalIpAddress()
+		{
+			var host = Dns.GetHostEntry(Dns.GetHostName());
+			foreach (var ip in host.AddressList)
+			{
+				if (ip.AddressFamily == AddressFamily.InterNetwork)
+				{
+					return ip.ToString();
+				}
+			}
+			throw new Exception("Local IP Address Not Found!");
 		}
 	}
 }
