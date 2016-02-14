@@ -10,14 +10,14 @@ using Shared;
 
 namespace FileManager
 {
-    public class FileManagementService
-    {
+	public class FileManagementService
+	{
 		private readonly string _couchDbName;
 		private readonly string _couchDbRoot;
 		private readonly AppSettings _appSettings;
 
-        public FileManagementService()
-        {
+		public FileManagementService()
+		{
 			_appSettings = SharedConfiguration.GetAppSettings();
 
 			var dbPath = _appSettings.CouchDbPath;
@@ -27,33 +27,33 @@ namespace FileManager
 		}
 
 		public IEnumerable<string> GetFileList(string rootFolder)
-        {
-            var result = new List<string>();
+		{
+			var result = new List<string>();
 
-            try
-            {
-                var files = Directory.GetFiles(rootFolder, "*.*", SearchOption.AllDirectories);
-                result.AddRange(files.Select(x => x.Replace(rootFolder, "")));
+			try
+			{
+				var files = Directory.GetFiles(rootFolder, "*.*", SearchOption.AllDirectories);
+				result.AddRange(files.Select(x => x.Replace(rootFolder, "")));
 			}
 			catch (UnauthorizedAccessException ex)
-            {
+			{
 				ErrorReporter.SendException(ex);
 			}
 
-            return result;
-        }
+			return result;
+		}
 
-        public async Task<IEnumerable<Media>> GetAllPhotoPaths()
-        {
-            using (var store = new MyCouchStore(_couchDbRoot, _couchDbName))
-            {
+		public async Task<IEnumerable<Media>> GetAllPhotoPaths()
+		{
+			using (var store = new MyCouchStore(_couchDbRoot, _couchDbName))
+			{
 				var mediaQuery = new Query("media", "all");
 
 				var mediaRows = await store.QueryAsync<Media>(mediaQuery);
-                var media = mediaRows.Select(x => x.Value).ToList();
+				var media = mediaRows.Select(x => x.Value).ToList();
 
-                return media;
-            }
-        }
-    }
+				return media;
+			}
+		}
+	}
 }

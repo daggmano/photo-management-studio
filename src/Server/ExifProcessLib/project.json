@@ -9,9 +9,9 @@
     "defaultNamespace": "ExifProcessLib"
   },
   "dependencies": {
-	  "Unofficial.Ionic.Zip": "1.9.1.8",
-	  "ErrorReporting": "1.0.0-*",
-	  "Newtonsoft.Json": "8.0.2"
+    "Unofficial.Ionic.Zip": "1.9.1.8",
+    "ErrorReporting": "1.0.0-*",
+    "Newtonsoft.Json": "8.0.2"
   },
   "frameworks": {
     "dnx451": { }

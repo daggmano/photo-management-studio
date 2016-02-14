@@ -16,15 +16,15 @@ namespace Shared
 		public string AccessToken { get; set; }
 		public string Environment { get; set; }
 	}
-	
+
 	public static class SharedConfiguration
 	{
 		public static AppSettings GetAppSettings()
 		{
 			var builder = new ConfigurationBuilder()
-                .AddJsonFile("appSettings.json");
-            var Configuration = builder.Build();
-			
+				.AddJsonFile("appSettings.json");
+			var Configuration = builder.Build();
+
 			var appSettings = ConfigurationBinder.Get<AppSettings>(Configuration.GetSection("AppSettings"));
 
 			return appSettings;

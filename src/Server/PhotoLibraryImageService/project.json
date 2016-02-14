@@ -1,40 +1,42 @@
 {
   "version": "1.0.0-*",
+
   "compilationOptions": {
     "emitEntryPoint": true
   },
+
   "tooling": {
     "defaultNamespace": "PhotoLibraryImageService"
   },
 
   "dependencies": {
-	"Microsoft.AspNet.IISPlatformHandler": "1.0.0-rc1-final",
-	"Microsoft.AspNet.Hosting": "1.0.0-rc1-final",
-	"Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
-	"Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final",
-	"Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final",
-	"Microsoft.Extensions.Logging": "1.0.0-rc1-final",
-	"Microsoft.Extensions.Logging.Console": "1.0.0-rc1-final",
-	"Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final",
-	"MyCouch": "4.0.0",
-	"DataTypes": "1.0.0-*",
-	"ErrorReporting": "1.0.0-*",
-	"FileManager": "1.0.0-*",
-	"Shared": "1.0.0-*"
+    "Microsoft.AspNet.IISPlatformHandler": "1.0.0-rc1-final",
+    "Microsoft.AspNet.Hosting": "1.0.0-rc1-final",
+    "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
+    "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final",
+    "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final",
+    "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
+    "Microsoft.Extensions.Logging.Console": "1.0.0-rc1-final",
+    "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final",
+    "MyCouch": "4.0.0",
+    "DataTypes": "1.0.0-*",
+    "ErrorReporting": "1.0.0-*",
+    "FileManager": "1.0.0-*",
+    "Shared": "1.0.0-*"
   },
 
   "commands": {
     "web": "Microsoft.AspNet.Server.Kestrel",
-	"debug": "Microsoft.AspNet.Hosting --ASPNET_ENV Debug --server Microsoft.AspNet.Server.Kestrel --server.urls http://localhost:5000"
+    "debug": "Microsoft.AspNet.Hosting --ASPNET_ENV Debug --server Microsoft.AspNet.Server.Kestrel --server.urls http://localhost:5000"
   },
 
   "frameworks": {
-	"dnx451": {
-		"frameworkAssemblies": {
-			"System.Net.Http": "4.0.0.0",
-			"System.Web.Http": "4.0.0.0"
-		}
-	}
+    "dnx451": {
+      "frameworkAssemblies": {
+        "System.Net.Http": "4.0.0.0",
+        "System.Web.Http": "4.0.0.0"
+      }
+    }
   },
 
   "exclude": [
@@ -42,6 +44,7 @@
     "node_modules",
     "bower_components"
   ],
+
   "publishExclude": [
     "**.user",
     "**.vspscc"

@@ -8,15 +8,13 @@
   "tooling": {
     "defaultNamespace": "ErrorReporting"
   },
-  
+
   "dependencies": {
-	  "RollbarSharp.Unofficial": "0.4.1",
-	  "Shared": "1.0.0-*"
+    "RollbarSharp.Unofficial": "0.4.1",
+    "Shared": "1.0.0-*"
   },
 
   "frameworks": {
-	"dnx451": {
-		
-	}
+    "dnx451": { }
   }
 }

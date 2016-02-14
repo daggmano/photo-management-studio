@@ -9,6 +9,6 @@
     "defaultNamespace": "DataTypes"
   },
   "frameworks": {
-	"dnx451": { }
+    "dnx451": { }
   }
 }

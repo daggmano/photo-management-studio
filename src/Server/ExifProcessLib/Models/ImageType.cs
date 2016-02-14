@@ -1,13 +1,13 @@
 ﻿namespace ExifProcessLib.Models
 {
-    public enum ImageType
-    {
-        Unknown,
-        Jpeg,
-        Png,
-        Tiff,
-        Cr2,
-        Dng,
-        Mp4
-    }
+	public enum ImageType
+	{
+		Unknown,
+		Jpeg,
+		Png,
+		Tiff,
+		Cr2,
+		Dng,
+		Mp4
+	}
 }

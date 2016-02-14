@@ -4,8 +4,8 @@ using ExifProcessLib.Models;
 
 namespace ExifProcessLib.Processors
 {
-    public interface IExtractExif
-    {
-        IEnumerable<ExifData> Extract(Stream stream);
-    }
+	public interface IExtractExif
+	{
+		IEnumerable<ExifData> Extract(Stream stream);
+	}
 }

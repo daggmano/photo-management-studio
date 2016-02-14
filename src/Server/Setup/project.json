@@ -15,10 +15,10 @@
   },
 
   "dependencies": {
-	  "DataTypes": "1.0.0-*",
-	  "MyCouch": "4.0.0",
-	  "ErrorReporting": "1.0.0-*",
-	  "Shared": "1.0.0-*"
+    "DataTypes": "1.0.0-*",
+    "MyCouch": "4.0.0",
+    "ErrorReporting": "1.0.0-*",
+    "Shared": "1.0.0-*"
   },
 
   "commands": {

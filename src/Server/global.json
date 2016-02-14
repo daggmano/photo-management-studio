@@ -1,7 +1,18 @@
 {
-	"authors": [ "Darren Oster <darren.oster@gmail.com>" ],
-	"projects": [ "PhotoLibraryImageService", "DataTypes", "ErrorReporting”, “ExifProcessLib", "FileManagementTest", "FileManager", "Setup", "Shared" ],
-	"frameworks": {
-		"dnx451": { }
-	}
+  "authors": [ "Darren Oster <darren.oster@gmail.com>" ],
+
+  "projects": [
+    "PhotoLibraryImageService",
+    "DataTypes",
+    "ErrorReporting",
+    "ExifProcessLib",
+    "FileManagementTest",
+    "FileManager",
+    "Setup",
+    "Shared"
+  ],
+
+  "frameworks": {
+    "dnx451": { }
+  }
 }

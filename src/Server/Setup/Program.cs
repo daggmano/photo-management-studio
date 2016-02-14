@@ -8,13 +8,13 @@ using Shared;
 
 namespace Setup
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
+	public class Program
+	{
+		public static void Main(string[] args)
+		{
 			var appSettings = SharedConfiguration.GetAppSettings();
 
-            var initializer = new DatabaseInitializer();
+			var initializer = new DatabaseInitializer();
 
 			try
 			{
@@ -38,6 +38,6 @@ namespace Setup
 
 			Console.WriteLine("Press <Enter> to close...");
 			Console.ReadLine();
-        }
-    }
+		}
+	}
 }
