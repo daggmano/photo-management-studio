@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Shared;
 using ErrorReporting;
 
@@ -12,8 +13,11 @@ namespace PhotoLibraryImageService
     {
         public static void Send(IPAddress ipAddress, int port, INetworkMessageObject value)
         {
-            var message = JsonConvert.SerializeObject(value);
-            message += "<EOF>";
+            var message = JsonConvert.SerializeObject(value, new JsonSerializerSettings 
+    		{ 
+        		ContractResolver = new CamelCasePropertyNamesContractResolver() 
+    		});
+//            message += "<EOF>";
             var bytes = new byte[1024];
 
             var remoteEp = new IPEndPoint(ipAddress, port);
