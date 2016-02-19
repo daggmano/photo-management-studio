@@ -27,7 +27,7 @@
 
   "commands": {
     "web": "Microsoft.AspNet.Server.Kestrel",
-    "debug": "Microsoft.AspNet.Hosting --ASPNET_ENV Debug --server Microsoft.AspNet.Server.Kestrel --server.urls http://localhost:5000"
+    "debug": "Microsoft.AspNet.Hosting --ASPNET_ENV Debug --server Microsoft.AspNet.Server.Kestrel --server.urls http://*:5000"
   },
 
   "frameworks": {

@@ -8,28 +8,34 @@
 
 import Foundation
 
-class PingResponseObject : ResponseObject<PingResponseData> {}
+class PingResponseObject : ResponseObject<PingResponseData> {
+    required init(json: [String : AnyObject]) {
+        super.init(json: json)
+    }
+}
 
 class PingResponseData : JsonProtocol {
-    var _serverDateTime: NSDate?
+    var _serverDateTime: String?
 
-    init(serverDateTime: NSDate) {
+    init(serverDateTime: String) {
         _serverDateTime = serverDateTime
     }
     
     required init(json: [String: AnyObject]) {
-        if let serverDateTime = json["serverDateTime"] as? String {
-            _serverDateTime = NSDate.dateFromISOString(serverDateTime)
-        }
+        _serverDateTime = json["serverDateTime"] as? String
     }
     
     func toJSON() -> [String: AnyObject] {
         var result = [String: AnyObject]()
         
         if let serverDateTime = _serverDateTime {
-            result["serverDateTime"] = NSDate.ISOStringFromDate(serverDateTime)
+            result["serverDateTime"] = serverDateTime
         }
         
         return result
+    }
+    
+    func serverDateTime() -> String? {
+        return _serverDateTime
     }
 }

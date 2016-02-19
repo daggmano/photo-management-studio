@@ -29,12 +29,12 @@ class NetworkSupervisor : NSObject, ServerInfoReceivedDelegate {
     
     var _serverPort: UInt16!
     
-    var _imageServerAddress: String?
-    var _imageServerPort: Int32
+    var _imageServerAddress: String!
+    var _imageServerPort: UInt16!
     
     required override init() {
         _connectionStatus = .Disconnected
-        _imageServerAddress = nil
+        _imageServerAddress = ""
         _imageServerPort = 0
 
         super.init();
@@ -43,12 +43,18 @@ class NetworkSupervisor : NSObject, ServerInfoReceivedDelegate {
         _serverPort = _socketIn.getPort()
         NSLog("Server Port is \(_serverPort)")
         _socketOut = OutSocket.init(ipAddress: "255.255.255.255", port: Config.udpSearchPort)
+        
+        setupWatchdog(500, repeats: true)
     }
     
-    func initialize() {
-        let watchdogTimeout = Config.watchdogTimeout
-  
-        _watchdogTimer = NSTimer.scheduledTimerWithTimeInterval(Double(watchdogTimeout) / 1000.0, target: self, selector: "onWatchdogTimer:", userInfo: nil, repeats: true)
+    private func setupWatchdog(timeout: Int, repeats: Bool) {
+        dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+            if let watchdogTimer = self._watchdogTimer {
+                watchdogTimer.invalidate()
+            }
+            
+            self._watchdogTimer = NSTimer.scheduledTimerWithTimeInterval(Double(timeout) / 1000.0, target: self, selector: "onWatchdogTimer:", userInfo: nil, repeats: repeats)
+        }
     }
     
     func onWatchdogTimer(sender: NSTimer!) {
@@ -59,19 +65,19 @@ class NetworkSupervisor : NSObject, ServerInfoReceivedDelegate {
             attemptConnection()
             break;
             
-        case .Connected:
-            print(".Connected")
+        case .Connecting:
+            print(".Connecting")
             pingServer()
             break
             
-        default:
+        case .Connected:
+            print(".Connected")
+            pingServer()
             break
         }
     }
     
     func onServerInfoReceived(message: NSData) {
-        _connectionStatus = .Connecting
-        
         do {
             if let json = try NSJSONSerialization.JSONObjectWithData(message, options: .AllowFragments) as? [String: AnyObject] {
                 let networkMessage = NetworkMessageObject.init(json: json)
@@ -81,29 +87,23 @@ class NetworkSupervisor : NSObject, ServerInfoReceivedDelegate {
                         case .ServerSpecification:
                             let serverSpec = NetworkMessageObjectGeneric<ServerSpecificationObject>.init(json: json)
                             
-                            guard let message = serverSpec.message() else {
-                                _connectionStatus = .Disconnected
-                                break
-                            }
-                            guard let serverPort = message.serverPort() else {
-                                _connectionStatus = .Disconnected
+                            guard let message = serverSpec.message(),
+                                let serverAddress = message.serverAddress(),
+                                let serverPort = message.serverPort() else {
                                 break
                             }
                             
-                            _serverPort = serverPort
-                            _connectionStatus = .Connected
-                            break;
+                            _imageServerAddress = serverAddress
+                            _imageServerPort = serverPort
+                            _connectionStatus = .Connecting
+                            break
                 
                         default:
-                            _connectionStatus = .Disconnected
+                            break
                     }
                 }
-            } else {
-                _connectionStatus = .Disconnected
             }
-        } catch {
-            _connectionStatus = .Disconnected
-        }
+        } catch {}
     }
     
     func attemptConnection() {
@@ -115,7 +115,46 @@ class NetworkSupervisor : NSObject, ServerInfoReceivedDelegate {
         print("pingServer...")
         
         let url = "http://\(_imageServerAddress):\(_imageServerPort)/api/ping"
-        print(url)
+        
+        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
+        let session = NSURLSession.sharedSession()
+        
+        let task = session.dataTaskWithRequest(request, completionHandler: {(data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+            do {
+                if let data = data {
+                    if let json = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? [String: AnyObject] {
+                        let pingResponse = PingResponseObject(json: json)
+
+                        if let responseData = pingResponse.data() {
+                            print(responseData.serverDateTime())
+                            self._connectionStatus = .Connected
+                            
+                            self.setupWatchdog(5000, repeats: false)
+                        } else {
+                            self._connectionStatus = .Disconnected
+                            self.setupWatchdog(500, repeats: true)
+                            print("unable to get responseData")
+                        }
+                    } else {
+                        self._connectionStatus = .Disconnected
+                        self.setupWatchdog(500, repeats: true)
+                        print("unable to decode responseObject")
+                    }
+                } else {
+                    self._connectionStatus = .Disconnected
+                    self.setupWatchdog(500, repeats: true)
+                    print("ping response data is null")
+                }
+            } catch {
+                self._connectionStatus = .Disconnected
+                self.setupWatchdog(500, repeats: true)
+            }
+        })
+        task.resume()
+        
+        // Note: if Ping returns OK, _connectionStatus = .Connected
+        // Also: let watchdogTimeout = Config.watchdogTimeout
+        //       setupWatchdog(watchdogTimeout, false)
         
         /*
         var client = new HttpClient();
@@ -225,7 +264,6 @@ class InSocket : NSObject, GCDAsyncSocketDelegate {
     
     func socket(sock: GCDAsyncSocket!, didReadData data: NSData!, withTag tag: Int) {
         
-        //Yes, I know this wastefully allocates RAM, so I'll fix it later.
         if var string = NSString(data: data, encoding: NSASCIIStringEncoding)?
             .stringByReplacingOccurrencesOfString("\t", withString: "")
             .stringByReplacingOccurrencesOfString("\0", withString: "") {

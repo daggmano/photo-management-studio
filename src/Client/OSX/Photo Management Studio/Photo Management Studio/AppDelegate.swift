@@ -17,7 +17,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Insert code here to initialize your application
         
         _networkSupervisor = NetworkSupervisor();
-        _networkSupervisor?.initialize();
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {

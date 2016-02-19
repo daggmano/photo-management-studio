@@ -9,6 +9,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using PhotoLibraryImageService.Data;
 using PhotoLibraryImageService.Data.Interfaces;
 using ErrorReporting;
@@ -43,7 +44,10 @@ namespace PhotoLibraryImageService
 		public void ConfigureServices(IServiceCollection services)
 		{
 			// Add framework services.
-			services.AddMvc();
+			services.AddMvc().AddJsonOptions(options =>
+			{
+				options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+			});
 
 			services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 			services.AddScoped<IDataService, DataService>();
