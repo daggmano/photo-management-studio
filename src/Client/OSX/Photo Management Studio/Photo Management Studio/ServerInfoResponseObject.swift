@@ -8,7 +8,11 @@
 
 import Foundation
 
-class ServerInfoResponseObject : ResponseObject<ServerDatabaseIdentifierObject> {}
+class ServerInfoResponseObject : ResponseObject<ServerDatabaseIdentifierObject> {
+    required init(json: [String : AnyObject]) {
+        super.init(json: json)
+    }
+}
 
 class ServerDatabaseIdentifierObject : JsonProtocol {
     var _serverId: String?

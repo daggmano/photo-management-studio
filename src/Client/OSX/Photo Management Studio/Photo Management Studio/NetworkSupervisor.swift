@@ -17,6 +17,7 @@ enum ConnectionState {
 
 protocol ServerInfoReceivedDelegate {
     func onServerInfoReceived(message: NSData)
+    func onDbServerInfoReceived(message: ServerInfoResponseObject)
 }
 
 class NetworkSupervisor : NSObject, ServerInfoReceivedDelegate {
@@ -106,6 +107,13 @@ class NetworkSupervisor : NSObject, ServerInfoReceivedDelegate {
         } catch {}
     }
     
+    func onDbServerInfoReceived(message: ServerInfoResponseObject) {
+        print(message.data()?._serverId)
+        print(message.data()?._serverName)
+        
+        _connectionStatus = .Connected
+    }
+    
     func attemptConnection() {
         let discoveryObject = NetworkDiscoveryObject(identifier: "Photo.Management.Studio", clientSocketPort: _serverPort)
         _socketOut!.send(discoveryObject.toJSON());
@@ -127,9 +135,13 @@ class NetworkSupervisor : NSObject, ServerInfoReceivedDelegate {
 
                         if let responseData = pingResponse.data() {
                             print(responseData.serverDateTime())
-                            self._connectionStatus = .Connected
                             
-                            self.setupWatchdog(5000, repeats: false)
+                            if (self._connectionStatus == .Connecting) {
+                                self.getDbServerId()
+                                self.setupWatchdog(1000, repeats: false)
+                            } else {
+                                self.setupWatchdog(5000, repeats: false)
+                            }
                         } else {
                             self._connectionStatus = .Disconnected
                             self.setupWatchdog(500, repeats: true)
@@ -151,62 +163,70 @@ class NetworkSupervisor : NSObject, ServerInfoReceivedDelegate {
             }
         })
         task.resume()
-        
-        // Note: if Ping returns OK, _connectionStatus = .Connected
-        // Also: let watchdogTimeout = Config.watchdogTimeout
-        //       setupWatchdog(watchdogTimeout, false)
-        
-        /*
-        var client = new HttpClient();
-        var url = $"http://{_imageServerAddress}:{_imageServerPort}/api/ping";
-        Debug.WriteLine($"Requesting {url}");
-        
-        var request = new HttpRequestMessage()
-        {
-        RequestUri = new Uri(url),
-        Method = HttpMethod.Get
-        };
-        request.Headers.Add("Connection", new[] {"Keep-Alive"});
-        
-        try
-        {
-        var response = await client.SendAsync(request);
-        
-        if (response.StatusCode != HttpStatusCode.OK)
-        {
-        Debug.WriteLine($"Client disconnected, status code: {response.StatusCode}");
-        _connectionStatus = ConnectionState.Disconnected;
-        _imageServerAddress = null;
-        _imageServerPort = 0;
-        
-        if (OnServerInfoChanged != null)
-        {
-        OnServerInfoChanged(this, new ServerInfoEventArgs
-        {
-        Address = null,
-        Port = 0
-        });
-        }
-        }
-        else
-        {
-        var json = await response.Content.ReadAsStringAsync();
-        var pingObject = JsonConvert.DeserializeObject<PingResponseObject>(json);
-        Debug.WriteLine($"Client received OK from ping at {pingObject.Data.ServerDateTime}");
-        }
-        
-        }
-        catch (Exception ex)
-        {
-        Debug.WriteLine($"Client disconnected, exception: {ex}");
-        ErrorReporter.SendException(ex);
-        _connectionStatus = ConnectionState.Disconnected;
-        _imageServerAddress = null;
-        _imageServerPort = 0;
-        }
-
-        */
     }
+    
+    func getDbServerId() {
+        print("getDbServerId...")
+        
+        let url = "http://\(_imageServerAddress):\(_imageServerPort)/api/serverInfo"
+        
+        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
+        let session = NSURLSession.sharedSession()
+        
+        let task = session.dataTaskWithRequest(request, completionHandler: {(data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+            do {
+                if let data = data {
+                    if let json = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? [String: AnyObject] {
+                        let serverInfoResponse = ServerInfoResponseObject(json: json)
+                        self.onDbServerInfoReceived(serverInfoResponse)
+                    }
+                }
+            } catch {}
+        })
+        task.resume()
+    }
+    
+    
+    /*
+    public async Task<ServerInfoResponseObject> GetDbServerId()
+    {
+    var client = new HttpClient();
+    var url = String.Format("http://{0}:{1}/api/serverInfo", _imageServerAddress, _imageServerPort);
+    Debug.WriteLine("Requesting " + url);
+    
+    var request = new HttpRequestMessage()
+    {
+    RequestUri = new Uri(url),
+    Method = HttpMethod.Get
+    };
+    request.Headers.Add("Connection", new[] { "Keep-Alive" });
+    
+    try
+    {
+    var response = await client.SendAsync(request);
+    
+    if (response.StatusCode != HttpStatusCode.OK)
+    {
+    Debug.WriteLine($"Client disconnected, status code: {response.StatusCode}");
+    }
+    else
+    {
+    var json = await response.Content.ReadAsStringAsync();
+    var serverIdObject = JsonConvert.DeserializeObject<ServerInfoResponseObject>(json);
+    return serverIdObject;
+    }
+    }
+    catch (Exception ex)
+    {
+    Debug.WriteLine($"Client disconnected, exception: {ex}");
+				ErrorReporter.SendException(ex);
+    _connectionStatus = ConnectionState.Disconnected;
+    _imageServerAddress = null;
+    _imageServerPort = 0;
+    }
+    
+    return null;
+    }*/
 }
 
 class InSocket : NSObject, GCDAsyncSocketDelegate {
