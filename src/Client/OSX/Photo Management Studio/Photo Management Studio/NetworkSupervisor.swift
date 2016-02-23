@@ -9,10 +9,12 @@
 import Foundation
 import CocoaAsyncSocket
 
-enum ConnectionState {
-    case Disconnected
-    case Connecting
-    case Connected
+enum ConnectionState: String {
+    var description: String { return self.rawValue }
+    
+    case Disconnected = "Disconnected"
+    case Connecting = "Connecting"
+    case Connected = "Connected"
 }
 
 protocol ServerInfoReceivedDelegate {
@@ -20,7 +22,13 @@ protocol ServerInfoReceivedDelegate {
     func onDbServerInfoReceived(message: ServerInfoResponseObject)
 }
 
+protocol NetworkConnectionStatusDelegate {
+    func onServerConnectionStatusChanged(status: ConnectionState)
+}
+
 class NetworkSupervisor : NSObject, ServerInfoReceivedDelegate {
+    
+    var _delegate: NetworkConnectionStatusDelegate
     
     var _connectionStatus: ConnectionState
     var _watchdogTimer: NSTimer?
@@ -33,13 +41,17 @@ class NetworkSupervisor : NSObject, ServerInfoReceivedDelegate {
     var _imageServerAddress: String!
     var _imageServerPort: UInt16!
     
-    required override init() {
+    required init(delegate: NetworkConnectionStatusDelegate) {
+        _delegate = delegate
+        
         _connectionStatus = .Disconnected
+        _delegate.onServerConnectionStatusChanged(_connectionStatus)
+
         _imageServerAddress = ""
         _imageServerPort = 0
 
-        super.init();
-        
+        super.init()
+
         _socketIn = InSocket.init(delegate: self, port: 0)
         _serverPort = _socketIn.getPort()
         NSLog("Server Port is \(_serverPort)")
@@ -97,6 +109,7 @@ class NetworkSupervisor : NSObject, ServerInfoReceivedDelegate {
                             _imageServerAddress = serverAddress
                             _imageServerPort = serverPort
                             _connectionStatus = .Connecting
+                            _delegate.onServerConnectionStatusChanged(_connectionStatus)
                             break
                     }
                 }
@@ -111,6 +124,7 @@ class NetworkSupervisor : NSObject, ServerInfoReceivedDelegate {
         if let serverId = message.data()?._serverId {
             DatabaseManager.setupReplication(_imageServerAddress, serverId: serverId)
             _connectionStatus = .Connected
+            _delegate.onServerConnectionStatusChanged(_connectionStatus)
         }
     }
     
@@ -145,21 +159,25 @@ class NetworkSupervisor : NSObject, ServerInfoReceivedDelegate {
                         } else {
                             self._connectionStatus = .Disconnected
                             self.setupWatchdog(500, repeats: true)
+                            self._delegate.onServerConnectionStatusChanged(self._connectionStatus)
                             print("unable to get responseData")
                         }
                     } else {
                         self._connectionStatus = .Disconnected
                         self.setupWatchdog(500, repeats: true)
+                        self._delegate.onServerConnectionStatusChanged(self._connectionStatus)
                         print("unable to decode responseObject")
                     }
                 } else {
                     self._connectionStatus = .Disconnected
                     self.setupWatchdog(500, repeats: true)
+                    self._delegate.onServerConnectionStatusChanged(self._connectionStatus)
                     print("ping response data is null")
                 }
             } catch {
                 self._connectionStatus = .Disconnected
                 self.setupWatchdog(500, repeats: true)
+                self._delegate.onServerConnectionStatusChanged(self._connectionStatus)
             }
         })
         task.resume()
@@ -185,48 +203,6 @@ class NetworkSupervisor : NSObject, ServerInfoReceivedDelegate {
         })
         task.resume()
     }
-    
-    
-    /*
-    public async Task<ServerInfoResponseObject> GetDbServerId()
-    {
-    var client = new HttpClient();
-    var url = String.Format("http://{0}:{1}/api/serverInfo", _imageServerAddress, _imageServerPort);
-    Debug.WriteLine("Requesting " + url);
-    
-    var request = new HttpRequestMessage()
-    {
-    RequestUri = new Uri(url),
-    Method = HttpMethod.Get
-    };
-    request.Headers.Add("Connection", new[] { "Keep-Alive" });
-    
-    try
-    {
-    var response = await client.SendAsync(request);
-    
-    if (response.StatusCode != HttpStatusCode.OK)
-    {
-    Debug.WriteLine($"Client disconnected, status code: {response.StatusCode}");
-    }
-    else
-    {
-    var json = await response.Content.ReadAsStringAsync();
-    var serverIdObject = JsonConvert.DeserializeObject<ServerInfoResponseObject>(json);
-    return serverIdObject;
-    }
-    }
-    catch (Exception ex)
-    {
-    Debug.WriteLine($"Client disconnected, exception: {ex}");
-				ErrorReporter.SendException(ex);
-    _connectionStatus = ConnectionState.Disconnected;
-    _imageServerAddress = null;
-    _imageServerPort = 0;
-    }
-    
-    return null;
-    }*/
 }
 
 class InSocket : NSObject, GCDAsyncSocketDelegate {
@@ -304,13 +280,6 @@ class InSocket : NSObject, GCDAsyncSocketDelegate {
             _connectedSockets.removeAtIndex(idx)
         }
     }
-    
-    
-//    func udpSocket(sock: GCDAsyncUdpSocket!, didReceiveData data: NSData!, fromAddress address: NSData!, withFilterContext filterContext: AnyObject!) {
-//        print("incoming message: \(data)")
-        
-//        _delegate.onServerInfoChanged("Hello World", port: 5678)
-//    }
 }
 
 class OutSocket : NSObject, GCDAsyncUdpSocketDelegate {
@@ -369,163 +338,3 @@ class OutSocket : NSObject, GCDAsyncUdpSocketDelegate {
         print("didNotSendDataWithTag \(error)")
     }
 }
-
-
-/*
-
-public event ServerInfoChangedEventHandler OnServerInfoChanged;
-
-public void Initialize()
-{
-var watchdogTimeout = Int32.Parse(ConfigurationManager.AppSettings["WatchdogTimeout"]);
-
-_connectionStatus = ConnectionState.Disconnected;
-_imageServerAddress = null;
-_imageServerPort = 0;
-
-_watchdogTimer = new Timer(OnWatchdogTimer, null, 0, watchdogTimeout);
-
-_socketServer = new SocketServer();
-_socketServer.OnServerInfoChanged += _socketServer_OnServerInfoChanged;
-_socketServerThread = new Thread(_socketServer.StartListening);
-_socketServerThread.Start();
-}
-
-private void _socketServer_OnServerInfoChanged(object sender, ServerInfoEventArgs e)
-{
-_imageServerAddress = e.Address;
-_imageServerPort = e.Port;
-
-if (OnServerInfoChanged != null)
-{
-OnServerInfoChanged(this, new ServerInfoEventArgs
-{
-Address = _imageServerAddress,
-Port = _imageServerPort
-});
-}
-
-_connectionStatus = ConnectionState.Connected;
-}
-
-
-private void AttemptConnection()
-{
-if (_socketServer.SocketPort == 0)
-{
-return;
-}
-
-// Send UDP request out to server
-var udpSearchPort = Int32.Parse(ConfigurationManager.AppSettings["UdpSearchPort"]);
-
-var s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-s.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Broadcast, 1);
-s.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.DontRoute, 1);
-
-var discoveryObject = new NetworkDiscoveryObject
-{
-Identifier = "Photo.Management.Studio",
-ClientSocketPort = _socketServer.SocketPort
-};
-
-var sendbuf = Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(discoveryObject));
-var ep = new IPEndPoint(IPAddress.Broadcast, udpSearchPort);
-
-s.SendTo(sendbuf, ep);
-}
-
-private async void PingServer()
-{
-var client = new HttpClient();
-var url = $"http://{_imageServerAddress}:{_imageServerPort}/api/ping";
-Debug.WriteLine($"Requesting {url}");
-
-var request = new HttpRequestMessage()
-{
-RequestUri = new Uri(url),
-Method = HttpMethod.Get
-};
-request.Headers.Add("Connection", new[] {"Keep-Alive"});
-
-try
-{
-var response = await client.SendAsync(request);
-
-if (response.StatusCode != HttpStatusCode.OK)
-{
-Debug.WriteLine($"Client disconnected, status code: {response.StatusCode}");
-_connectionStatus = ConnectionState.Disconnected;
-_imageServerAddress = null;
-_imageServerPort = 0;
-
-if (OnServerInfoChanged != null)
-{
-OnServerInfoChanged(this, new ServerInfoEventArgs
-{
-Address = null,
-Port = 0
-});
-}
-}
-else
-{
-var json = await response.Content.ReadAsStringAsync();
-var pingObject = JsonConvert.DeserializeObject<PingResponseObject>(json);
-Debug.WriteLine($"Client received OK from ping at {pingObject.Data.ServerDateTime}");
-}
-
-}
-catch (Exception ex)
-{
-Debug.WriteLine($"Client disconnected, exception: {ex}");
-ErrorReporter.SendException(ex);
-_connectionStatus = ConnectionState.Disconnected;
-_imageServerAddress = null;
-_imageServerPort = 0;
-}
-}
-
-public async Task<ServerInfoResponseObject> GetDbServerId()
-{
-var client = new HttpClient();
-var url = String.Format("http://{0}:{1}/api/serverInfo", _imageServerAddress, _imageServerPort);
-Debug.WriteLine("Requesting " + url);
-
-var request = new HttpRequestMessage()
-{
-RequestUri = new Uri(url),
-Method = HttpMethod.Get
-};
-request.Headers.Add("Connection", new[] { "Keep-Alive" });
-
-try
-{
-var response = await client.SendAsync(request);
-
-if (response.StatusCode != HttpStatusCode.OK)
-{
-Debug.WriteLine($"Client disconnected, status code: {response.StatusCode}");
-}
-else
-{
-var json = await response.Content.ReadAsStringAsync();
-var serverIdObject = JsonConvert.DeserializeObject<ServerInfoResponseObject>(json);
-return serverIdObject;
-}
-}
-catch (Exception ex)
-{
-Debug.WriteLine($"Client disconnected, exception: {ex}");
-ErrorReporter.SendException(ex);
-_connectionStatus = ConnectionState.Disconnected;
-_imageServerAddress = null;
-_imageServerPort = 0;
-}
-
-return null;
-}
-}
-}
-
-*/

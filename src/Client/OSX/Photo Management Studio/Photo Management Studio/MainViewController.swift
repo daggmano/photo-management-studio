@@ -8,10 +8,21 @@
 
 import Cocoa
 
-class ViewController: NSViewController {
+class MainViewController: NSViewController {
+    
+    @IBOutlet var statusLabel: NSTextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Event.register("connection-status-changed") { status -> Void in
+            print("Hey, here is \(status)")
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.statusLabel.stringValue = status as! String
+            })
+            
+        }
 
         // Do any additional setup after loading the view.
     }
