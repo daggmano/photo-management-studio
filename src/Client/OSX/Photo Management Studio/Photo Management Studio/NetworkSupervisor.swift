@@ -98,9 +98,6 @@ class NetworkSupervisor : NSObject, ServerInfoReceivedDelegate {
                             _imageServerPort = serverPort
                             _connectionStatus = .Connecting
                             break
-                
-                        default:
-                            break
                     }
                 }
             }
@@ -111,7 +108,10 @@ class NetworkSupervisor : NSObject, ServerInfoReceivedDelegate {
         print(message.data()?._serverId)
         print(message.data()?._serverName)
         
-        _connectionStatus = .Connected
+        if let serverId = message.data()?._serverId {
+            DatabaseManager.setupReplication(_imageServerAddress, serverId: serverId)
+            _connectionStatus = .Connected
+        }
     }
     
     func attemptConnection() {
