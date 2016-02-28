@@ -2,4 +2,6 @@ use_frameworks!
 
 target 'Photo Management Studio' do
     pod 'CocoaAsyncSocket'
+    pod 'Fabric'
+    pod 'Crashlytics'
 end

@@ -7,6 +7,8 @@
 //
 
 import Cocoa
+import Fabric
+import Crashlytics
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NetworkConnectionStatusDelegate {
@@ -15,6 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NetworkConnectionStatusDeleg
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Insert code here to initialize your application
+        Fabric.with([Crashlytics.self])
         
         _networkSupervisor = NetworkSupervisor(delegate: self);
     }
@@ -28,4 +31,3 @@ class AppDelegate: NSObject, NSApplicationDelegate, NetworkConnectionStatusDeleg
         Event.emit("connection-status-changed", obj: status.description)
     }
 }
-

@@ -238,3 +238,5 @@ Carthage/Build
 
 fastlane/report.xml
 fastlane/screenshots
+Fabric.debug.xcconfig
+Fabric.release.xcconfig

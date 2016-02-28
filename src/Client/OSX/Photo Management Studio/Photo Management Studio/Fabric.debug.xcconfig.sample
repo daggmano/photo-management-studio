@@ -1,0 +1,4 @@
+#include "../Pods/Target Support Files/Pods-Photo Management Studio/Pods-Photo Management Studio.debug.xcconfig"
+
+FABRIC_PRIVATE_KEY=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+FABRIC_API_KEY=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
