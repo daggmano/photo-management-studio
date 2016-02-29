@@ -59,6 +59,12 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="File" id="bib-Uj-vzu">
                                     <items>
+                                        <menuItem title="Import..." keyEquivalent="i" id="bjo-81-K55">
+                                            <connections>
+                                                <action selector="importPhotos:" target="Ady-hI-5gd" id="1ga-oc-UiY"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="dmH-RD-H5m"/>
                                         <menuItem title="New" keyEquivalent="n" id="Was-JA-tGl">
                                             <connections>
                                                 <action selector="newDocument:" target="Ady-hI-5gd" id="4Si-XN-c54"/>
@@ -650,76 +656,162 @@
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
             <objects>
-                <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                <windowController showSeguePresentationStyle="single" id="B8D-0N-5wS" customClass="MainWindowController" customModule="Photo_Management_Studio" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="default" id="IQv-IB-iLA">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <toolbar key="toolbar" implicitIdentifier="3E501A75-A148-4666-8FDD-75ED65A966FC" autosavesConfiguration="NO" displayMode="iconOnly" sizeMode="small" id="eLe-Tv-iCC">
+                            <allowedToolbarItems>
+                                <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="J0M-SK-V7K"/>
+                                <toolbarItem implicitItemIdentifier="0033A3D2-FE00-4C48-8735-10C0C827205E" label="Status" paletteLabel="Status" tag="-1" image="NSStatusUnavailable" id="5z8-R2-ets"/>
+                                <toolbarItem implicitItemIdentifier="E089B6D2-61AE-42B4-859C-24B9F0FCD14D" label="Status Label" paletteLabel="Status Label" id="1S4-1K-608">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="90" height="17"/>
+                                    <size key="maxSize" width="90" height="17"/>
+                                    <textField key="view" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="cXl-R5-Rdk">
+                                        <rect key="frame" x="0.0" y="14" width="90" height="17"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Network Status" id="MZs-ap-Uhw">
+                                            <font key="font" metaFont="system" size="12"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="2AC3A2B3-E01F-4DD2-9442-6A15F0E26F2B" label="Title" paletteLabel="Title" id="n7B-KT-c6y">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="170" height="17"/>
+                                    <size key="maxSize" width="170" height="17"/>
+                                    <textField key="view" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="xDb-7H-gF3">
+                                        <rect key="frame" x="0.0" y="14" width="170" height="17"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Photo Management Studio" id="bmR-SO-Fro">
+                                            <font key="font" metaFont="systemBold" size="12"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </toolbarItem>
+                            </allowedToolbarItems>
+                            <defaultToolbarItems>
+                                <toolbarItem reference="n7B-KT-c6y"/>
+                                <toolbarItem reference="J0M-SK-V7K"/>
+                                <toolbarItem reference="1S4-1K-608"/>
+                                <toolbarItem reference="5z8-R2-ets"/>
+                            </defaultToolbarItems>
+                        </toolbar>
                     </window>
                     <connections>
-                        <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
+                        <outlet property="statusIcon" destination="5z8-R2-ets" id="Y30-eb-SJO"/>
+                        <outlet property="toolBar" destination="eLe-Tv-iCC" id="hpE-fs-L4c"/>
+                        <segue destination="UHY-5Q-31q" kind="relationship" relationship="window.shadowedContentViewController" id="iZm-qJ-bvg"/>
                     </connections>
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="250"/>
+            <point key="canvasLocation" x="74" y="214"/>
         </scene>
         <!--Main View Controller-->
-        <scene sceneID="hIz-AP-VOD">
+        <scene sceneID="3hy-PB-ebl">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="MainViewController" customModule="Photo_Management_Studio" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                <tabViewController selectedTabViewItemIndex="0" tabStyle="unspecified" canPropagateSelectedChildViewControllerTitle="NO" id="UHY-5Q-31q" customClass="MainViewController" customModule="Photo_Management_Studio" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabViewItems>
+                        <tabViewItem identifier="" id="evu-7n-WNQ"/>
+                        <tabViewItem identifier="" id="kDo-Nj-JPA"/>
+                    </tabViewItems>
+                    <tabView key="tabView" type="noTabsNoBorder" id="pC1-OZ-x90">
+                        <rect key="frame" x="0.0" y="0.0" width="509" height="396"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <font key="font" metaFont="message"/>
+                        <tabViewItems>
+                            <tabViewItem label="Item 0" identifier="" id="c2D-es-KTH">
+                                <view key="view" id="2qr-CJ-6dE">
+                                    <rect key="frame" x="0.0" y="0.0" width="505" height="392"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </view>
+                            </tabViewItem>
+                            <tabViewItem label="Item 1" identifier="" id="cVd-X3-hXD">
+                                <view key="view" id="jOc-qr-duu">
+                                    <rect key="frame" x="0.0" y="0.0" width="509" height="396"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </view>
+                            </tabViewItem>
+                        </tabViewItems>
+                    </tabView>
+                    <connections>
+                        <segue destination="sV6-rE-Egd" kind="relationship" relationship="tabItems" id="uH1-03-0GY"/>
+                        <segue destination="NdA-6N-Y0a" kind="relationship" relationship="tabItems" id="R7i-BB-H7f"/>
+                    </connections>
+                </tabViewController>
+                <customObject id="wsI-2W-iDD" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="74.5" y="731"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="4FA-be-XjC">
+            <objects>
+                <viewController id="sV6-rE-Egd" sceneMemberID="viewController">
+                    <view key="view" id="sFr-EW-QZl">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AxG-SV-3Lb">
-                                <rect key="frame" x="425" y="233" width="37" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="JjR-tQ-uRr">
-                                    <font key="font" metaFont="systemBold"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xpw-t0-u27">
-                                <rect key="frame" x="374" y="233" width="47" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Status:" id="vtf-US-JS1">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fdf-RA-Vjp">
+                                <rect key="frame" x="120" y="190" width="37" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="ILR-ER-bFS">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="tMg-ZD-5Ug">
-                                <rect key="frame" x="0.0" y="0.0" width="480" height="225"/>
+                        </subviews>
+                    </view>
+                </viewController>
+                <customObject id="4Ix-RR-hcA" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="776" y="496"/>
+        </scene>
+        <!--Import View Controller-->
+        <scene sceneID="wzV-pX-N9d">
+            <objects>
+                <viewController id="NdA-6N-Y0a" customClass="ImportViewController" customModule="Photo_Management_Studio" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="DU0-0Z-zqK" customClass="I">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="6hn-iA-els" propertyAccessControl="localizable">
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="263"/>
+                                <subviews>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RK8-dI-tNb" propertyAccessControl="none">
+                                        <rect key="frame" x="14" y="215" width="422" height="32"/>
+                                        <buttonCell key="cell" type="push" title="Get Importable Images" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3Bd-zl-iQh">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="RK8-dI-tNb" firstAttribute="leading" secondItem="6hn-iA-els" secondAttribute="leading" constant="20" id="6l9-hk-b9i"/>
+                                    <constraint firstItem="RK8-dI-tNb" firstAttribute="top" secondItem="6hn-iA-els" secondAttribute="top" constant="20" id="Ggf-hE-ySe"/>
+                                    <constraint firstAttribute="trailing" secondItem="RK8-dI-tNb" secondAttribute="trailing" constant="20" id="bfv-0T-G68"/>
+                                </constraints>
                             </customView>
-                            <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="3BK-gZ-fUd">
-                                <rect key="frame" x="0.0" y="222" width="480" height="5"/>
-                                <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                                <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <font key="titleFont" metaFont="system"/>
-                            </box>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="AxG-SV-3Lb" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="1gA-vB-OuE"/>
-                            <constraint firstItem="AxG-SV-3Lb" firstAttribute="leading" secondItem="Xpw-t0-u27" secondAttribute="trailing" constant="8" id="Xml-9W-7xg"/>
-                            <constraint firstItem="tMg-ZD-5Ug" firstAttribute="top" secondItem="Xpw-t0-u27" secondAttribute="bottom" constant="8" id="bTN-ht-VsY"/>
-                            <constraint firstAttribute="trailing" secondItem="AxG-SV-3Lb" secondAttribute="trailing" constant="20" id="eWt-D7-TnS"/>
-                            <constraint firstItem="3BK-gZ-fUd" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="f7X-qx-50Y"/>
-                            <constraint firstItem="tMg-ZD-5Ug" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="fhX-aD-7nP"/>
-                            <constraint firstItem="Xpw-t0-u27" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="iNB-hH-xiR"/>
-                            <constraint firstAttribute="trailing" secondItem="3BK-gZ-fUd" secondAttribute="trailing" id="kGq-sy-097"/>
-                            <constraint firstItem="3BK-gZ-fUd" firstAttribute="top" secondItem="Xpw-t0-u27" secondAttribute="bottom" constant="8" id="pF5-7A-nC9"/>
-                            <constraint firstAttribute="bottom" secondItem="tMg-ZD-5Ug" secondAttribute="bottom" id="tsu-AK-xjC"/>
-                            <constraint firstAttribute="trailing" secondItem="tMg-ZD-5Ug" secondAttribute="trailing" id="yLM-VS-T2m"/>
+                            <constraint firstItem="6hn-iA-els" firstAttribute="leading" secondItem="DU0-0Z-zqK" secondAttribute="leading" id="8HV-gb-FnM"/>
+                            <constraint firstAttribute="trailing" secondItem="6hn-iA-els" secondAttribute="trailing" id="BFU-6s-duB"/>
+                            <constraint firstAttribute="bottom" secondItem="6hn-iA-els" secondAttribute="bottom" id="SKd-ZG-4uj"/>
+                            <constraint firstItem="6hn-iA-els" firstAttribute="top" secondItem="DU0-0Z-zqK" secondAttribute="top" constant="37" id="uN6-90-HVi"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="statusLabel" destination="AxG-SV-3Lb" id="YNE-i6-g4h"/>
-                    </connections>
                 </viewController>
-                <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <customObject id="oVr-Gg-AUe" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="655"/>
+            <point key="canvasLocation" x="776" y="857"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="NSStatusUnavailable" width="16" height="16"/>
+    </resources>
 </document>

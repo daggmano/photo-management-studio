@@ -17,6 +17,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NetworkConnectionStatusDeleg
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Insert code here to initialize your application
+        
+        NSUserDefaults.standardUserDefaults().registerDefaults(["NSApplicationCrashOnExceptions": true])
         Fabric.with([Crashlytics.self])
         
         _networkSupervisor = NetworkSupervisor(delegate: self);
@@ -30,4 +32,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NetworkConnectionStatusDeleg
         print("new status: \(status)")
         Event.emit("connection-status-changed", obj: status.description)
     }
+    
+    
 }

@@ -8,25 +8,30 @@
 
 import Cocoa
 
-class MainViewController: NSViewController {
+class MainViewController: NSTabViewController {
     
     @IBOutlet var statusLabel: NSTextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Event.register("connection-status-changed") { status -> Void in
-            print("Hey, here is \(status)")
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.statusLabel.stringValue = status as! String
-            })
-            
-        }
+        
 
         // Do any additional setup after loading the view.
     }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        
+        self.view.window?.titleVisibility = .Hidden
+        self.view.window?.titlebarAppearsTransparent = true
+        self.view.window?.movableByWindowBackground = true
+    }
 
+    @IBAction func importPhotos(sender: AnyObject?) {
+        self.tabView.selectTabViewItemAtIndex(1)
+    }
+    
     override var representedObject: AnyObject? {
         didSet {
         // Update the view, if already loaded.

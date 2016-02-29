@@ -18,6 +18,8 @@
 		513474801C65FF8300B75244 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5134747E1C65FF8300B75244 /* Main.storyboard */; };
 		513474881C65FFD200B75244 /* NetworkSupervisor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513474871C65FFD200B75244 /* NetworkSupervisor.swift */; };
 		51362BDF1C81BD7300E354D2 /* Icons in Resources */ = {isa = PBXBuildFile; fileRef = 51362BDE1C81BD7300E354D2 /* Icons */; };
+		51362BE41C82F4F400E354D2 /* ImportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51362BE31C82F4F400E354D2 /* ImportViewController.swift */; };
+		51362BE61C843DD600E354D2 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51362BE51C843DD600E354D2 /* MainWindowController.swift */; };
 		516F3C4E1C673EAE00483761 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516F3C4D1C673EAE00483761 /* Config.swift */; };
 		516F3C501C674B2900483761 /* PortHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516F3C4F1C674B2900483761 /* PortHelper.swift */; };
 		516F3C531C6C9B6000483761 /* NetworkDiscoveryObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516F3C521C6C9B6000483761 /* NetworkDiscoveryObject.swift */; };
@@ -50,6 +52,8 @@
 		51362BDE1C81BD7300E354D2 /* Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Icons; sourceTree = "<group>"; };
 		51362BE01C81C24E00E354D2 /* Fabric.debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Fabric.debug.xcconfig; sourceTree = "<group>"; };
 		51362BE11C82DF8900E354D2 /* Fabric.release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Fabric.release.xcconfig; sourceTree = "<group>"; };
+		51362BE31C82F4F400E354D2 /* ImportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportViewController.swift; sourceTree = "<group>"; };
+		51362BE51C843DD600E354D2 /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		516F3C4D1C673EAE00483761 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		516F3C4F1C674B2900483761 /* PortHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PortHelper.swift; sourceTree = "<group>"; };
 		516F3C521C6C9B6000483761 /* NetworkDiscoveryObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkDiscoveryObject.swift; sourceTree = "<group>"; };
@@ -111,12 +115,12 @@
 		513474771C65FF8300B75244 /* Photo Management Studio */ = {
 			isa = PBXGroup;
 			children = (
+				51362BE21C82F4D200E354D2 /* ViewControllers */,
 				51362BDE1C81BD7300E354D2 /* Icons */,
 				51327F4F1C7877D2002C1013 /* Libraries */,
 				51AC71F21C6F4550002C8EF9 /* Extensions */,
 				516F3C511C6C9B3F00483761 /* Models */,
 				513474781C65FF8300B75244 /* AppDelegate.swift */,
-				5134747A1C65FF8300B75244 /* MainViewController.swift */,
 				5134747C1C65FF8300B75244 /* Assets.xcassets */,
 				5134747E1C65FF8300B75244 /* Main.storyboard */,
 				513474811C65FF8300B75244 /* Info.plist */,
@@ -128,6 +132,16 @@
 				51362BE11C82DF8900E354D2 /* Fabric.release.xcconfig */,
 			);
 			path = "Photo Management Studio";
+			sourceTree = "<group>";
+		};
+		51362BE21C82F4D200E354D2 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				5134747A1C65FF8300B75244 /* MainViewController.swift */,
+				51362BE31C82F4F400E354D2 /* ImportViewController.swift */,
+				51362BE51C843DD600E354D2 /* MainWindowController.swift */,
+			);
+			name = ViewControllers;
 			sourceTree = "<group>";
 		};
 		516F3C511C6C9B3F00483761 /* Models */ = {
@@ -310,6 +324,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				516F3C611C6DE39A00483761 /* ServerInfoResponseObject.swift in Sources */,
+				51362BE61C843DD600E354D2 /* MainWindowController.swift in Sources */,
 				51327F551C787A1C002C1013 /* QueryString.swift in Sources */,
 				516F3C5B1C6DE0DA00483761 /* ImportPhotosRequestObject.swift in Sources */,
 				5124C4F01C7C7E490018F759 /* PubSub.swift in Sources */,
@@ -328,6 +343,7 @@
 				516F3C571C6DDFD500483761 /* LinksObject.swift in Sources */,
 				5134747B1C65FF8300B75244 /* MainViewController.swift in Sources */,
 				516F3C591C6DE03400483761 /* ImportableListObject.swift in Sources */,
+				51362BE41C82F4F400E354D2 /* ImportViewController.swift in Sources */,
 				516F3C531C6C9B6000483761 /* NetworkDiscoveryObject.swift in Sources */,
 				513474791C65FF8300B75244 /* AppDelegate.swift in Sources */,
 			);
