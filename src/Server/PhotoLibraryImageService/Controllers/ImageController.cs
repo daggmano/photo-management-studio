@@ -14,6 +14,7 @@ namespace PhotoLibraryImageService.Controllers
 	{
 		private readonly AppSettings _appSettings;
 		private readonly IApplicationEnvironment _appEnvironment;
+
 		public ImageController(IOptions<AppSettings> options, IApplicationEnvironment appEnvironment)
 		{
 			_appSettings = options.Value;
@@ -34,7 +35,7 @@ namespace PhotoLibraryImageService.Controllers
 			{
 				var placeHolderPath = Path.Combine(_appEnvironment.ApplicationBasePath, "placeholder-1200x1080.jpg");
 				var bytes = await ImageResizeService.ProcessImage(path, size, placeHolderPath);
-				
+
 				var ms = new MemoryStream(bytes);
 				return new FileResultFromStream("out.jpg", ms, "image/jpg");
 			}

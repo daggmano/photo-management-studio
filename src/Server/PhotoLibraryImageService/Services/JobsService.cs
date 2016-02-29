@@ -3,6 +3,7 @@ using Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.OptionsModel;
 
 namespace PhotoLibraryImageService.Services
 {
@@ -25,12 +26,12 @@ namespace PhotoLibraryImageService.Services
 			_jobExpiredList = new Dictionary<Guid, DateTime>();
 		}
 
-		public Guid? SubmitJob(JobTypes jobType)
+		public Guid? SubmitJob(JobTypes jobType, IOptions<AppSettings> appSettings)
 		{
-			return SubmitJob(jobType, "");
+			return SubmitJob(jobType, "", appSettings);
 		}
 
-		public Guid? SubmitJob<T>(JobTypes jobType, T arg) where T : class
+		public Guid? SubmitJob<T>(JobTypes jobType, T arg, IOptions<AppSettings> appSettings) where T : class
 		{
 			Job job = null;
 			var newJobId = Guid.NewGuid();
@@ -38,13 +39,13 @@ namespace PhotoLibraryImageService.Services
 			switch (jobType)
 			{
 				case JobTypes.ImportableList:
-					job = new ImportableListJob(newJobId);
+					job = new ImportableListJob(newJobId, appSettings);
 					break;
 
 				case JobTypes.ImportPhotos:
 					if (typeof(IEnumerable<string>).IsAssignableFrom(typeof(T)))
 					{
-						job = new ImportJob(newJobId, arg as IEnumerable<string>);
+						job = new ImportJob(newJobId, arg as IEnumerable<string>, appSettings);
 					}
 					break;
 

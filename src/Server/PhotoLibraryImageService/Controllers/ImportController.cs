@@ -4,16 +4,24 @@ using Shared;
 using System;
 using System.Net;
 using Microsoft.AspNet.Mvc;
+using Microsoft.Extensions.OptionsModel;
 
 namespace PhotoLibraryImageService.Controllers
 {
 	[Route("api/[controller]")]
 	public class ImportController : Controller
 	{
+		private readonly IOptions<AppSettings> _appSettings;
+
+		public ImportController(IOptions<AppSettings> appSettings)
+		{
+			_appSettings = appSettings;
+		}
+
 		[HttpPost]
 		public IActionResult Post([FromBody] ImportPhotosRequestObject request)
 		{
-			var id = JobsService.GetInstance().SubmitJob(JobTypes.ImportPhotos, request.PhotoPaths);
+			var id = JobsService.GetInstance().SubmitJob(JobTypes.ImportPhotos, request.PhotoPaths, _appSettings);
 
 			if (!id.HasValue)
 			{

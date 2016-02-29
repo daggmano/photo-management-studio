@@ -14,6 +14,8 @@ namespace PhotoLibraryImageService.Jobs
 {
 	public class ImportJob : Job
 	{
+		private readonly IOptions<AppSettings> _appSettings;
+
 		private readonly object _lock;
 		private int _progress;
 
@@ -27,18 +29,17 @@ namespace PhotoLibraryImageService.Jobs
 
 		[FromServices]
 		public IDataService _dataService { get; set; }
-		
-		[FromServices]
-		public IOptions<AppSettings> _appSettings { get; set; }
+
 
 //		private ImportableListJobResult _result;
 
 		BackgroundWorker _worker;
 
-		public ImportJob(Guid id, IEnumerable<string> args) : base(id)
+		public ImportJob(Guid id, IEnumerable<string> args, IOptions<AppSettings> appSettings) : base(id)
 		{
 			_args = args.ToList();
 			_lock = new object();
+			_appSettings = appSettings;
 
 			_progress = 0;
 //			_result = null;

@@ -18,6 +18,8 @@ namespace PhotoLibraryImageService.Jobs
 
 	public class ImportableListJob : Job
 	{
+		private readonly IOptions<AppSettings> _appSettings;
+
 		private int _progress;
 		private string _couchDbName;
 		private string _couchDbRoot;
@@ -27,14 +29,12 @@ namespace PhotoLibraryImageService.Jobs
 		private ImportableListJobResult _result;
 
 		BackgroundWorker _worker;
-		
-		[FromServices]
-		public IOptions<AppSettings> _appSettings { get; set; }
 
-		public ImportableListJob(Guid id) : base(id)
+		public ImportableListJob(Guid id, IOptions<AppSettings> appSettings) : base(id)
 		{
 			_progress = 0;
 			_result = null;
+			_appSettings = appSettings;
 
 			_fileManagementService = new FileManagementService();
 
@@ -79,20 +79,19 @@ namespace PhotoLibraryImageService.Jobs
 			var dbMediaTask = _fileManagementService.GetAllPhotoPaths();
 			Task.WaitAll(dbMediaTask);
 			var dbMediaList = dbMediaTask.Result;
-	
+
 			var dbMediaFiles = dbMediaList.Select(x => new Tuple<string, string>(x.MediaId, x.FullFilePath)).ToList();
 			var dbLoweredMediaFiles = dbMediaFiles.Select(x => x.Item1).ToList();
 			worker.ReportProgress(33);
 
 			// Get list of files from file system
 			var rootPath = _appSettings.Value.LibraryPath;
-			if (!rootPath.EndsWith("\\"))
+			if (!rootPath.EndsWith("/"))
 			{
-				rootPath += "\\";
+				rootPath += "/";
 			}
 			var diskFileList = _fileManagementService.GetFileList(rootPath);
-
-			var diskFiles = diskFileList.Select(x => new Tuple<string, string>(x.ToLowerInvariant().Replace("\\", "/"), x)).ToList();
+			var diskFiles = diskFileList.Where(x => !x.Equals(".DS_Store")).Select(x => new Tuple<string, string>(x.ToLowerInvariant(), x)).ToList();
 			var loweredDiskFiles = diskFiles.Select(x => x.Item1).ToList();
 
 			worker.ReportProgress(66);

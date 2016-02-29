@@ -5,16 +5,24 @@ using System;
 using System.Linq;
 using System.Net;
 using Microsoft.AspNet.Mvc;
+using Microsoft.Extensions.OptionsModel;
 
 namespace PhotoLibraryImageService.Controllers
 {
-	[Route("api/[controller]")]
 	public class ImportListController : Controller
 	{
+		private readonly IOptions<AppSettings> _appSettings;
+
+		public ImportListController(IOptions<AppSettings> appSettings)
+		{
+			_appSettings = appSettings;
+		}
+
 		[HttpGet]
+		[Route("api/importlist")]
 		public IActionResult Get()
 		{
-			var id = JobsService.GetInstance().SubmitJob(JobTypes.ImportableList);
+			var id = JobsService.GetInstance().SubmitJob(JobTypes.ImportableList, _appSettings);
 
 			if (!id.HasValue)
 			{
@@ -25,7 +33,8 @@ namespace PhotoLibraryImageService.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Get(Guid id)
+		[Route("api/importlist/{id}")]
+		public IActionResult GetResult(Guid id)
 		{
 			JobStates state;
 			int progress;
