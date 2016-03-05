@@ -8,38 +8,30 @@
 
 import Foundation
 
-class ServerSpecificationObject : JsonProtocol {
-    var _serverAddress: String?
-    var _serverPort: UInt16?
+class ServerSpecificationObject : NSObject, JsonProtocol {
+    internal private(set) var serverAddress: String?
+    internal private(set) var serverPort: UInt16?
     
     init(serverAddress: String, serverPort: UInt16) {
-        _serverAddress = serverAddress
-        _serverPort = serverPort
+        self.serverAddress = serverAddress
+        self.serverPort = serverPort
     }
 
     required init(json: [String: AnyObject]) {
-        _serverAddress = json["serverAddress"] as? String
+        self.serverAddress = json["serverAddress"] as? String
         if let serverPort = json["serverPort"] as? Int {
-            _serverPort = UInt16(serverPort)
+            self.serverPort = UInt16(serverPort)
         }
     }
     
     func toJSON() -> [String: AnyObject] {
         var result = [String: AnyObject]()
         
-        result["serverAddress"] = _serverAddress
-        if let serverPort = _serverPort {
+        result["serverAddress"] = self.serverAddress
+        if let serverPort = self.serverPort {
             result["serverPort"] = Int(serverPort)
         }
         
         return result
-    }
-    
-    func serverAddress() -> String? {
-        return _serverAddress
-    }
-    
-    func serverPort() -> UInt16? {
-        return _serverPort
     }
 }

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="MainWindowController" customModule="Photo_Management_Studio" customModuleProvider="target">
+            <connections>
+                <outlet property="statusIcon" destination="IQp-X3-xO3" id="K5Z-PR-DzI"/>
+                <outlet property="window" destination="uMy-sL-QiV" id="6cb-EK-CaF"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" frameAutosaveName="" animationBehavior="default" id="uMy-sL-QiV">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="246" width="960" height="589"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1200"/>
+            <view key="contentView" id="vhb-0I-UEP">
+                <rect key="frame" x="0.0" y="0.0" width="960" height="589"/>
+                <autoresizingMask key="autoresizingMask"/>
+            </view>
+            <toolbar key="toolbar" implicitIdentifier="DA8AB512-BE7E-4881-8C2C-FA04480CC354" autosavesConfiguration="NO" displayMode="iconOnly" sizeMode="small" id="ZP7-sO-LHE">
+                <allowedToolbarItems>
+                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="Cgz-s9-8sw"/>
+                    <toolbarItem implicitItemIdentifier="27FE3ED9-674E-40BA-961E-D809EA34EEF6" label="Network Status" paletteLabel="Network Status" tag="-1" image="NSStatusUnavailable" id="IQp-X3-xO3"/>
+                    <toolbarItem implicitItemIdentifier="100F1E39-B7FF-40AC-AC88-C62556975A65" label="Title Label" paletteLabel="Title Label" id="QdS-8g-ueb">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="180" height="17"/>
+                        <size key="maxSize" width="184" height="17"/>
+                        <textField key="view" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="dgk-Dw-HxY">
+                            <rect key="frame" x="0.0" y="14" width="184" height="17"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Photo Management Studio" id="Wqe-Zx-X1g">
+                                <font key="font" metaFont="systemBold"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="91BC6EC6-7477-44F2-9590-7C5E002906CD" label="Status Label" paletteLabel="Status Label" id="IKZ-oH-Ln1">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="95" height="17"/>
+                        <size key="maxSize" width="99" height="17"/>
+                        <textField key="view" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="3ys-5i-5x4">
+                            <rect key="frame" x="0.0" y="14" width="99" height="17"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Network Status" id="cvi-DW-sQo">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                    </toolbarItem>
+                </allowedToolbarItems>
+                <defaultToolbarItems>
+                    <toolbarItem reference="QdS-8g-ueb"/>
+                    <toolbarItem reference="Cgz-s9-8sw"/>
+                    <toolbarItem reference="IKZ-oH-Ln1"/>
+                    <toolbarItem reference="IQp-X3-xO3"/>
+                </defaultToolbarItems>
+            </toolbar>
+            <point key="canvasLocation" x="700" y="625.5"/>
+        </window>
+    </objects>
+    <resources>
+        <image name="NSStatusUnavailable" width="16" height="16"/>
+    </resources>
+</document>

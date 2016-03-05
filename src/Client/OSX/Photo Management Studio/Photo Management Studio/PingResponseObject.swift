@@ -14,28 +14,24 @@ class PingResponseObject : ResponseObject<PingResponseData> {
     }
 }
 
-class PingResponseData : JsonProtocol {
-    var _serverDateTime: String?
+class PingResponseData : NSObject, JsonProtocol {
+    internal private(set) var serverDateTime: String?
 
     init(serverDateTime: String) {
-        _serverDateTime = serverDateTime
+        self.serverDateTime = serverDateTime
     }
     
     required init(json: [String: AnyObject]) {
-        _serverDateTime = json["serverDateTime"] as? String
+        self.serverDateTime = json["serverDateTime"] as? String
     }
     
     func toJSON() -> [String: AnyObject] {
         var result = [String: AnyObject]()
         
-        if let serverDateTime = _serverDateTime {
+        if let serverDateTime = self.serverDateTime {
             result["serverDateTime"] = serverDateTime
         }
         
         return result
-    }
-    
-    func serverDateTime() -> String? {
-        return _serverDateTime
     }
 }

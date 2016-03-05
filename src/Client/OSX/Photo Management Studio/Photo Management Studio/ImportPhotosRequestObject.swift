@@ -8,21 +8,21 @@
 
 import Foundation
 
-class ImportPhotosRequestObject : JsonProtocol {
-    var _photoPaths: [String]?
+class ImportPhotosRequestObject : NSObject, JsonProtocol {
+    internal private(set) var photoPaths: [String]?
     
     init(photoPaths: [String]) {
-        _photoPaths = photoPaths
+        self.photoPaths = photoPaths
     }
     
     required init(json: [String: AnyObject]) {
-        _photoPaths = json["photoPaths"] as? [String]
+        self.photoPaths = json["photoPaths"] as? [String]
     }
     
     func toJSON() -> [String: AnyObject] {
         var result = [String: AnyObject]()
         
-        if let photoPaths = _photoPaths {
+        if let photoPaths = self.photoPaths {
             result["photoPaths"] = photoPaths
         }
         

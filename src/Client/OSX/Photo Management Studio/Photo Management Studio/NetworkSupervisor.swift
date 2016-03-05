@@ -24,6 +24,7 @@ protocol ServerInfoReceivedDelegate {
 
 protocol NetworkConnectionStatusDelegate {
     func onServerConnectionStatusChanged(status: ConnectionState)
+    func setServerUrl(url: String)
 }
 
 class NetworkSupervisor : NSObject, ServerInfoReceivedDelegate {
@@ -95,14 +96,14 @@ class NetworkSupervisor : NSObject, ServerInfoReceivedDelegate {
             if let json = try NSJSONSerialization.JSONObjectWithData(message, options: .AllowFragments) as? [String: AnyObject] {
                 let networkMessage = NetworkMessageObject.init(json: json)
             
-                if let messageType = networkMessage.messageType() {
+                if let messageType = networkMessage.messageType {
                     switch (messageType) {
                         case .ServerSpecification:
                             let serverSpec = NetworkMessageObjectGeneric<ServerSpecificationObject>.init(json: json)
                             
-                            guard let message = serverSpec.message(),
-                                let serverAddress = message.serverAddress(),
-                                let serverPort = message.serverPort() else {
+                            guard let message = serverSpec.message,
+                                let serverAddress = message.serverAddress,
+                                let serverPort = message.serverPort else {
                                 break
                             }
                             
@@ -118,13 +119,14 @@ class NetworkSupervisor : NSObject, ServerInfoReceivedDelegate {
     }
     
     func onDbServerInfoReceived(message: ServerInfoResponseObject) {
-        print(message.data()?._serverId)
-        print(message.data()?._serverName)
+        print(message.data?.serverId)
+        print(message.data?.serverName)
         
-        if let serverId = message.data()?._serverId {
+        if let serverId = message.data?.serverId {
             DatabaseManager.setupReplication(_imageServerAddress, serverId: serverId)
             _connectionStatus = .Connected
             _delegate.onServerConnectionStatusChanged(_connectionStatus)
+            _delegate.setServerUrl("http://\(_imageServerAddress):\(_imageServerPort)")
         }
     }
     
@@ -147,8 +149,8 @@ class NetworkSupervisor : NSObject, ServerInfoReceivedDelegate {
                     if let json = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? [String: AnyObject] {
                         let pingResponse = PingResponseObject(json: json)
 
-                        if let responseData = pingResponse.data() {
-                            print(responseData.serverDateTime())
+                        if let responseData = pingResponse.data {
+                            print(responseData.serverDateTime)
                             
                             if (self._connectionStatus == .Connecting) {
                                 self.getDbServerId()

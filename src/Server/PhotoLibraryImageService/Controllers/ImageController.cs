@@ -1,11 +1,12 @@
 using System.IO;
 using System.Net;
 using Microsoft.AspNet.Mvc;
-using PhotoLibraryImageService.Services;
-using Shared;
 using Microsoft.Extensions.OptionsModel;
 using Microsoft.Extensions.PlatformAbstractions;
 using System.Threading.Tasks;
+using PhotoLibraryImageService.Helpers;
+using PhotoLibraryImageService.Services;
+using Shared;
 
 namespace PhotoLibraryImageService.Controllers
 {
@@ -31,10 +32,22 @@ namespace PhotoLibraryImageService.Controllers
 
 			var rootPath = _appSettings.LibraryPath;
 			path = Path.Combine(rootPath, path);
+
+			var hash = Hashing.GetStringSha256Hash(path);
+
+			var cachedImage = Caching.Instance.GetCachedItem<byte[]>(hash);
+			if (cachedImage != null)
+			{
+				var ms = new MemoryStream(cachedImage);
+				return new FileResultFromStream("out.jpg", ms, "image/jpg");
+			}
+
 			if (System.IO.File.Exists(path))
 			{
 				var placeHolderPath = Path.Combine(_appEnvironment.ApplicationBasePath, "placeholder-1200x1080.jpg");
 				var bytes = await ImageResizeService.ProcessImage(path, size, placeHolderPath);
+
+				Caching.Instance.AddToCache(hash, bytes);
 
 				var ms = new MemoryStream(bytes);
 				return new FileResultFromStream("out.jpg", ms, "image/jpg");

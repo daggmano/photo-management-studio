@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="HomeViewController" customModule="Photo_Management_Studio" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="c22-O7-iKe" id="m7p-7g-2Ob"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="813" height="597"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="SNb-ub-LBm">
+                    <rect key="frame" x="0.0" y="0.0" width="813" height="559"/>
+                    <subviews>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r12-Vp-dD7">
+                            <rect key="frame" x="738" y="-7" width="81" height="32"/>
+                            <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Hth-Fz-AAh">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="q3p-Ac-vGI">
+                            <rect key="frame" x="-6" y="531" width="81" height="32"/>
+                            <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="i1f-Lg-3ZK">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="q3p-Ac-vGI" firstAttribute="top" secondItem="SNb-ub-LBm" secondAttribute="top" id="Xe8-xX-vgx"/>
+                        <constraint firstItem="q3p-Ac-vGI" firstAttribute="leading" secondItem="SNb-ub-LBm" secondAttribute="leading" id="iJ7-OF-rQ0"/>
+                        <constraint firstAttribute="trailing" secondItem="r12-Vp-dD7" secondAttribute="trailing" id="xmG-so-YUk"/>
+                        <constraint firstAttribute="bottom" secondItem="r12-Vp-dD7" secondAttribute="bottom" id="ztR-8D-klp"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="SNb-ub-LBm" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="GK9-Kr-BWi"/>
+                <constraint firstAttribute="bottom" secondItem="SNb-ub-LBm" secondAttribute="bottom" id="M80-LI-tsG"/>
+                <constraint firstItem="SNb-ub-LBm" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="38" id="U0a-Vm-SV9"/>
+                <constraint firstAttribute="trailing" secondItem="SNb-ub-LBm" secondAttribute="trailing" id="pIo-Rk-1ca"/>
+            </constraints>
+            <point key="canvasLocation" x="731.5" y="616.5"/>
+        </customView>
+    </objects>
+</document>

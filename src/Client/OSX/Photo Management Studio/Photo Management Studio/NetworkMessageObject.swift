@@ -13,75 +13,63 @@ enum NetworkMessageType: Int {
 }
 
 protocol INetworkMessageObject {
-    var _messageType: NetworkMessageType? { get set }
+    var messageType: NetworkMessageType? { get }
 }
 
-class NetworkMessageObject : INetworkMessageObject, JsonProtocol {
-    var _messageType: NetworkMessageType?
+class NetworkMessageObject : NSObject, INetworkMessageObject, JsonProtocol {
+    internal private(set) var messageType: NetworkMessageType?
     
     init(messageType: NetworkMessageType) {
-        _messageType = messageType
+        self.messageType = messageType
     }
     
     required init(json: [String: AnyObject]) {
         if let messageType = json["messageType"] as? Int {
-            _messageType = NetworkMessageType(rawValue: messageType)
+            self.messageType = NetworkMessageType(rawValue: messageType)
         }
     }
     
     func toJSON() -> [String: AnyObject] {
         var result = [String: AnyObject]()
 
-        if let messageType = _messageType {
+        if let messageType = self.messageType {
             result["messageType"] = messageType.rawValue
         }
         
         return result
     }
-    
-    func messageType() -> NetworkMessageType? {
-        return _messageType
-    }
 }
 
-class NetworkMessageObjectGeneric<T : JsonProtocol> : INetworkMessageObject, JsonProtocol {
-    var _messageType: NetworkMessageType?
-    var _message: T?
+class NetworkMessageObjectGeneric<T : JsonProtocol> : NSObject, INetworkMessageObject, JsonProtocol {
+    internal private(set) var messageType: NetworkMessageType?
+    internal private(set) var message: T?
     
     init(messageType: NetworkMessageType, message: T) {
-        _messageType = messageType
-        _message = message
+        self.messageType = messageType
+        self.message = message
     }
     
     required init(json: [String: AnyObject]) {
         if let messageType = json["messageType"] as? Int {
-            _messageType = NetworkMessageType(rawValue: messageType)
+            self.messageType = NetworkMessageType(rawValue: messageType)
         }
         if let message = json["message"] as? [String: AnyObject] {
             let m = T(json: message)
             print(m)
-            _message = T(json: message)
+            self.message = T(json: message)
         }
     }
     
     func toJSON() -> [String: AnyObject] {
         var result = [String: AnyObject]()
 
-        if let messageType = _messageType {
+        if let messageType = self.messageType {
             result["messageType"] = messageType.rawValue
         }
-        if let message = _message {
+        if let message = self.message {
             result["message"] = message.toJSON()
         }
         
         return result
-    }
-    
-    func messageType() -> NetworkMessageType? {
-        return _messageType
-    }
-    
-    func message() -> T? {
-        return _message
     }
 }

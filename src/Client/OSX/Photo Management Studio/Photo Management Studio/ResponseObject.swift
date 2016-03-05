@@ -8,63 +8,55 @@
 
 import Foundation
 
-class ResponseObject<T : JsonProtocol> : JsonProtocol {
-    var _links: LinksObject?
-    var _data: T?
+class ResponseObject<T : JsonProtocol> : NSObject, JsonProtocol {
+    internal private(set) var links: LinksObject?
+    internal private(set) var data: T?
     
     init(links: LinksObject, data: T) {
-        _links = links
-        _data = data
+        self.links = links
+        self.data = data
     }
     
     required init(json: [String: AnyObject]) {
         if let links = json["links"] as? [String: AnyObject] {
-            _links = LinksObject(json: links)
+            self.links = LinksObject(json: links)
         }
         if let data = json["data"] as? [String: AnyObject] {
-            _data = T(json: data)
+            self.data = T(json: data)
         }
     }
     
     func toJSON() -> [String: AnyObject] {
         var result = [String: AnyObject]()
 
-        if let links = _links {
+        if let links = self.links {
             result["links"] = links.toJSON()
         }
-        if let data = _data {
+        if let data = self.data {
             result["data"] = data.toJSON()
         }
         
         return result
     }
-    
-    func links() -> LinksObject? {
-        return _links
-    }
-    
-    func data() -> T? {
-        return _data
-    }
 }
 
-class ResponseListObject<T : JsonProtocol> : JsonProtocol {
-    var _links: LinksObject?
-    var _data: Array<T>?
+class ResponseListObject<T : JsonProtocol> : NSObject, JsonProtocol {
+    internal private(set) var links: LinksObject?
+    internal private(set) var data: Array<T>?
     
     init(links: LinksObject, data: Array<T>) {
-        _links = links
-        _data = data
+        self.links = links
+        self.data = data
     }
     
     required init(json: [String: AnyObject]) {
         if let links = json["links"] as? [String: AnyObject] {
-            _links = LinksObject(json: links)
+            self.links = LinksObject(json: links)
         }
         if let dataArray = json["data"] as? [[String: AnyObject]] {
-            _data = [T]()
+            self.data = [T]()
             for data in dataArray {
-                _data!.append(T(json: data))
+                self.data!.append(T(json: data))
             }
         }
     }
@@ -72,10 +64,10 @@ class ResponseListObject<T : JsonProtocol> : JsonProtocol {
     func toJSON() -> [String: AnyObject] {
         var result = [String: AnyObject]()
 
-        if let links = _links {
+        if let links = self.links {
             result["links"] = links.toJSON()
         }
-        if let data = _data {
+        if let data = self.data {
             var array = [[String: AnyObject]]()
             for dataItem in data {
                 array.append(dataItem.toJSON())

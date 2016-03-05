@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <collectionViewItem id="Xi4-i2-pDS" customClass="PhotoViewItem" customModule="Photo_Management_Studio" customModuleProvider="target">
+            <connections>
+                <outlet property="imageView" destination="Zvn-J6-M0v" id="w3O-Zd-mTn"/>
+                <outlet property="label" destination="83Z-BX-DUv" id="Lwm-wg-3Xl"/>
+                <outlet property="view" destination="9cI-Hz-Npr" id="QYq-GM-p2M"/>
+            </connections>
+        </collectionViewItem>
+        <customView id="9cI-Hz-Npr" customClass="PhotoViewItemView" customModule="Photo_Management_Studio" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="250" height="280"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="cQE-bB-awC">
+                    <rect key="frame" x="0.0" y="0.0" width="250" height="280"/>
+                    <subviews>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zvn-J6-M0v">
+                            <rect key="frame" x="10" y="40" width="230" height="230"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="Zvn-J6-M0v" secondAttribute="height" multiplier="1:1" id="EbQ-Ll-Hiv"/>
+                            </constraints>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyUpOrDown" id="yXQ-f2-XSw"/>
+                        </imageView>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="83Z-BX-DUv">
+                            <rect key="frame" x="8" y="10" width="234" height="17"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="17" id="gnF-Aw-fwg"/>
+                            </constraints>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="akA-Pj-e9I">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                            <connections>
+                                <binding destination="Xi4-i2-pDS" name="value" keyPath="representedObject.filename" id="KOf-Fe-e2f"/>
+                            </connections>
+                        </textField>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="83Z-BX-DUv" secondAttribute="trailing" constant="10" id="EaV-fR-rQG"/>
+                        <constraint firstItem="83Z-BX-DUv" firstAttribute="leading" secondItem="cQE-bB-awC" secondAttribute="leading" constant="10" id="Mx5-Xm-7zB"/>
+                        <constraint firstItem="Zvn-J6-M0v" firstAttribute="top" secondItem="cQE-bB-awC" secondAttribute="top" constant="10" id="QUr-co-y55"/>
+                        <constraint firstAttribute="trailing" secondItem="Zvn-J6-M0v" secondAttribute="trailing" constant="10" id="Znc-Ed-6mN"/>
+                        <constraint firstItem="Zvn-J6-M0v" firstAttribute="leading" secondItem="cQE-bB-awC" secondAttribute="leading" constant="10" id="p7T-WT-Cu6"/>
+                        <constraint firstAttribute="bottom" secondItem="83Z-BX-DUv" secondAttribute="bottom" constant="10" id="rf3-gY-hDk"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="cQE-bB-awC" secondAttribute="bottom" id="075-kE-Q8s"/>
+                <constraint firstItem="cQE-bB-awC" firstAttribute="top" secondItem="9cI-Hz-Npr" secondAttribute="top" id="D42-w0-hpb"/>
+                <constraint firstItem="cQE-bB-awC" firstAttribute="leading" secondItem="9cI-Hz-Npr" secondAttribute="leading" id="EE3-ZY-DKE"/>
+                <constraint firstAttribute="trailing" secondItem="cQE-bB-awC" secondAttribute="trailing" id="FiN-G5-hkO"/>
+            </constraints>
+            <point key="canvasLocation" x="274" y="344"/>
+        </customView>
+    </objects>
+</document>

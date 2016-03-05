@@ -8,22 +8,22 @@
 
 import Foundation
 
-class ImportableListObject : JsonProtocol {
-    var _itemCount: Int?
-    var _importablePhotos: [ImportableItem]?
+class ImportableListObject : NSObject, JsonProtocol {
+    internal private(set) var itemCount: Int?
+    internal private(set) var importablePhotos: [ImportableItem]?
     
     init(itemCount: Int, importablePhotos: [ImportableItem]) {
-        _itemCount = itemCount
-        _importablePhotos = importablePhotos
+        self.itemCount = itemCount
+        self.importablePhotos = importablePhotos
     }
     
     required init(json: [String: AnyObject]) {
-        _itemCount = json["itemCount"] as? Int
+        self.itemCount = json["itemCount"] as? Int
         if let importablePhotos = json["importablePhotos"] as? [[String: AnyObject]] {
-            _importablePhotos = [ImportableItem]()
+            self.importablePhotos = [ImportableItem]()
             
             for item in importablePhotos {
-                _importablePhotos!.append(ImportableItem(json: item))
+                self.importablePhotos!.append(ImportableItem(json: item))
             }
          }
     }
@@ -31,10 +31,10 @@ class ImportableListObject : JsonProtocol {
     func toJSON() -> [String: AnyObject] {
         var result = [String: AnyObject]()
 
-        if let itemCount = _itemCount {
+        if let itemCount = self.itemCount {
             result["itemCount"] = itemCount
         }
-        if let importablePhotos = _importablePhotos {
+        if let importablePhotos = self.importablePhotos {
             var array = [[String: AnyObject]]()
             for item in importablePhotos {
                 array.append(item.toJSON())
@@ -46,33 +46,33 @@ class ImportableListObject : JsonProtocol {
     }
 }
 
-class ImportableItem : JsonProtocol {
-    var _filename: String?
-    var _fullPath: String?
-    var _thumbUrl: String?
+class ImportableItem : NSObject, JsonProtocol {
+    internal private(set) var filename: String?
+    internal private(set) var fullPath: String?
+    internal private(set) var thumbUrl: String?
     
     init(filename: String, fullPath: String, thumbUrl: String) {
-        _filename = filename
-        _fullPath = fullPath
-        _thumbUrl = thumbUrl
+        self.filename = filename
+        self.fullPath = fullPath
+        self.thumbUrl = thumbUrl
     }
     
     required init(json: [String: AnyObject]) {
-        _filename = json["filename"] as? String
-        _fullPath = json["fullPath"] as? String
-        _thumbUrl = json["thumbUrl"] as? String
+        self.filename = json["filename"] as? String
+        self.fullPath = json["fullPath"] as? String
+        self.thumbUrl = json["thumbUrl"] as? String
     }
     
     func toJSON() -> [String: AnyObject] {
         var result = [String: AnyObject]()
 
-        if let filename = _filename {
+        if let filename = self.filename {
             result["filename"] = filename
         }
-        if let fullPath = _fullPath {
+        if let fullPath = self.fullPath {
             result["fullPath"] = fullPath
         }
-        if let thumbUrl = _thumbUrl {
+        if let thumbUrl = self.thumbUrl {
             result["thumbUrl"] = thumbUrl
         }
         

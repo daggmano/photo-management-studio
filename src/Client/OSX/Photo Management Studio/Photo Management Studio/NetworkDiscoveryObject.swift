@@ -8,29 +8,29 @@
 
 import Foundation
 
-class NetworkDiscoveryObject : JsonProtocol {
-    var _identifier: String?
-    var _clientSocketPort: UInt16?
+class NetworkDiscoveryObject : NSObject, JsonProtocol {
+    internal private(set) var identifier: String?
+    internal private(set) var clientSocketPort: UInt16?
     
     init(identifier: String, clientSocketPort: UInt16) {
-        _identifier = identifier
-        _clientSocketPort = clientSocketPort
+        self.identifier = identifier
+        self.clientSocketPort = clientSocketPort
     }
     
     required init(json: [String: AnyObject]) {
-        _identifier = json["identifier"] as? String
+        self.identifier = json["identifier"] as? String
         if let clientSocketPort = json["clientSocketPort"] as? Int {
-            _clientSocketPort = UInt16(clientSocketPort)
+            self.clientSocketPort = UInt16(clientSocketPort)
         }
     }
     
     func toJSON() -> [String: AnyObject] {
         var result = [String: AnyObject]()
 
-        if let identifier = _identifier {
+        if let identifier = self.identifier {
             result["identifier"] = identifier
         }
-        if let clientSocketPort = _clientSocketPort {
+        if let clientSocketPort = self.clientSocketPort {
             result["clientSocketPort"] = Int(clientSocketPort)
         }
         

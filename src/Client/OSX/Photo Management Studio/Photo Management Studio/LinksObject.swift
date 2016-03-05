@@ -8,34 +8,34 @@
 
 import Foundation
 
-class LinksObject : JsonProtocol {
-    var _self: String?
-    var _next: String?
-    var _prev: String?
+class LinksObject : NSObject, JsonProtocol {
+    internal private(set) var linkSelf: String?
+    internal private(set) var linkNext: String?
+    internal private(set) var linkPrev: String?
     
     init(myself: String, next: String, prev: String) {
-        _self = myself
-        _next = next
-        _prev = prev
+        self.linkSelf = myself
+        self.linkNext = next
+        self.linkPrev = prev
     }
     
     required init(json: [String: AnyObject]) {
-        _self = json["self"] as? String
-        _next = json["next"] as? String
-        _prev = json["prev"] as? String
+        self.linkSelf = json["self"] as? String
+        self.linkNext = json["next"] as? String
+        self.linkPrev = json["prev"] as? String
     }
     
     func toJSON() -> [String: AnyObject] {
         var result = [String: AnyObject]()
 
-        if let myself = _self {
-            result["self"] = myself
+        if let linkSelf = self.linkSelf {
+            result["self"] = linkSelf
         }
-        if let next = _next {
-            result["next"] = next
+        if let linkNext = self.linkNext {
+            result["next"] = linkNext
         }
-        if let prev = _prev {
-            result["prev"] = prev
+        if let linkPrev = self.linkPrev {
+            result["prev"] = linkPrev
         }
         
         return result

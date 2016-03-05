@@ -72,7 +72,7 @@ namespace PhotoLibraryImageService.Controllers
 					{
 						FullPath = x,
 						Filename = x.Split('/').Last(),
-						ThumbUrl = $"{urlBase}/api/image?path={Uri.EscapeDataString(x)}&size=200"
+						ThumbUrl = $"{urlBase}/api/image?path={Uri.EscapeDataString(x)}"
 					}).ToList()
 				};
 

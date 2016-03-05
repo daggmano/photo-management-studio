@@ -18,6 +18,7 @@
     "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
     "Microsoft.Extensions.Logging.Console": "1.0.0-rc1-final",
     "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final",
+    "Microsoft.Framework.Caching.Memory": "1.0.0-beta8",
     "MyCouch": "4.0.0",
     "DataTypes": "1.0.0-*",
     "ErrorReporting": "1.0.0-*",

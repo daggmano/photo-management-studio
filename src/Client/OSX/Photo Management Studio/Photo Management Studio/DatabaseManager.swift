@@ -71,34 +71,3 @@ public class DatabaseManager {
         }
     }
 }
-/*
-
-var request1 = new ReplicateDatabaseRequest(remoteToLocalName, remote, local)
-{
-Continuous = true,
-CreateTarget = true
-};
-
-var request2 = new ReplicateDatabaseRequest(localToRemoteName, local, remote)
-{
-Continuous = true,
-CreateTarget = false
-};
-
-try
-{
-await client.Replicator.ReplicateAsync(request1);
-await client.Replicator.ReplicateAsync(request2);
-}
-catch (Exception ex)
-{
-Debug.WriteLine("Exception: " + ex.Message);
-ErrorReporter.SendException(ex);
-}
-}
-
-}
-}
-}
-
-*/

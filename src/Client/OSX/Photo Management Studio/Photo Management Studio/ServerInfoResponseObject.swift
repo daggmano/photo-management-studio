@@ -14,20 +14,20 @@ class ServerInfoResponseObject : ResponseObject<ServerDatabaseIdentifierObject> 
     }
 }
 
-class ServerDatabaseIdentifierObject : JsonProtocol {
-    var _serverId: String?
-    var _serverName: String?
+class ServerDatabaseIdentifierObject : NSObject, JsonProtocol {
+    internal private(set) var serverId: String?
+    internal private(set) var serverName: String?
     
     required init(json: [String: AnyObject]) {
-        _serverId = json["serverId"] as? String
-        _serverName = json["serverName"] as? String
+        self.serverId = json["serverId"] as? String
+        self.serverName = json["serverName"] as? String
     }
     
     func toJSON() -> [String: AnyObject] {
         var result = [String: AnyObject]()
         
-        result["serverId"] = _serverId
-        result["serverName"] = _serverName
+        result["serverId"] = self.serverId
+        result["serverName"] = self.serverName
         
         return result
     }
