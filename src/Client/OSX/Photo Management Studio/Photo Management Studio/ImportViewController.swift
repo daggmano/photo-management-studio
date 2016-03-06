@@ -14,6 +14,7 @@ class ImportViewController : NSViewController, NSCollectionViewDataSource {
     @IBOutlet weak var collectionView: NSCollectionView!
     @IBOutlet weak var getImportablePhotosButton: NSButton!
     @IBOutlet weak var progressIndicator: ITProgressIndicator!
+    @IBOutlet var sortDescriptor: NSSortDescriptor!
     
     var itemSize: NSSize!
     var importablePhotoArray: NSMutableArray!
@@ -28,6 +29,8 @@ class ImportViewController : NSViewController, NSCollectionViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.sortDescriptor = NSSortDescriptor(key: "filename", ascending: true, selector: "localizedCaseInsensitiveCompare:")
 
         self.itemSize = NSSize(width: 150, height: 180)
         self.importablePhotoArray = NSMutableArray()
@@ -52,7 +55,12 @@ class ImportViewController : NSViewController, NSCollectionViewDataSource {
     }
     
     func collectionView(collectionView: NSCollectionView, itemForRepresentedObjectAtIndexPath indexPath: NSIndexPath) -> NSCollectionViewItem {
+        
         let item = collectionView.makeItemWithIdentifier("PhotoViewItem", forIndexPath: indexPath)
+        
+        let t = self.importablePhotoArray.objectAtIndex(indexPath.item) as? ImportableItem
+        print("Item is \(t?.filename) for index \(indexPath.item)")
+        
         item.representedObject = self.importablePhotoArray.objectAtIndex(indexPath.item)
         
         item.view.setFrameSize(itemSize)

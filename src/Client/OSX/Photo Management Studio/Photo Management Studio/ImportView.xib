@@ -115,12 +115,14 @@
             </constraints>
             <point key="canvasLocation" x="675" y="522"/>
         </customView>
-        <arrayController objectClassName="ImportableItem" id="MRm-5N-dPS">
+        <arrayController objectClassName="ImportableItem" avoidsEmptySelection="NO" automaticallyRearrangesObjects="YES" id="MRm-5N-dPS" customClass="ImportArrayController" customModule="Photo_Management_Studio" customModuleProvider="target">
             <declaredKeys>
                 <string>filename</string>
+                <string>thumbUrl</string>
             </declaredKeys>
             <connections>
                 <binding destination="-2" name="contentArray" keyPath="importablePhotoArray" id="tXb-oQ-0vg"/>
+                <binding destination="-2" name="sortDescriptors" keyPath="sortDescriptor" id="mPt-kv-0Dq"/>
             </connections>
         </arrayController>
     </objects>

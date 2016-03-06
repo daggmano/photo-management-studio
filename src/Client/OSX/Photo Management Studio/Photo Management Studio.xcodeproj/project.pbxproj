@@ -40,6 +40,7 @@
 		516F3C631C6DE40C00483761 /* ServerSpecificationObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516F3C621C6DE40C00483761 /* ServerSpecificationObject.swift */; };
 		516F3C651C6ED5D200483761 /* JsonProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516F3C641C6ED5D200483761 /* JsonProtocol.swift */; };
 		51AC71F41C6F455B002C8EF9 /* NSDateISO8601.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AC71F31C6F455B002C8EF9 /* NSDateISO8601.swift */; };
+		51FBD61C1C8C3FCD000EA051 /* ImportArrayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51FBD61B1C8C3FCD000EA051 /* ImportArrayController.swift */; };
 		B23E721D4B6E81D3A3E813B6 /* Pods_Photo_Management_Studio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3BFB7FC19AD7455D9139AFD /* Pods_Photo_Management_Studio.framework */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +82,7 @@
 		516F3C621C6DE40C00483761 /* ServerSpecificationObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerSpecificationObject.swift; sourceTree = "<group>"; };
 		516F3C641C6ED5D200483761 /* JsonProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonProtocol.swift; sourceTree = "<group>"; };
 		51AC71F31C6F455B002C8EF9 /* NSDateISO8601.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateISO8601.swift; sourceTree = "<group>"; };
+		51FBD61B1C8C3FCD000EA051 /* ImportArrayController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportArrayController.swift; sourceTree = "<group>"; };
 		52C541E28D039FDE78C1A8C4 /* Pods-Photo Management Studio.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Photo Management Studio.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Photo Management Studio/Pods-Photo Management Studio.debug.xcconfig"; sourceTree = "<group>"; };
 		BFC5099B83469DAEBA54296E /* Pods-Photo Management Studio.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Photo Management Studio.release.xcconfig"; path = "Pods/Target Support Files/Pods-Photo Management Studio/Pods-Photo Management Studio.release.xcconfig"; sourceTree = "<group>"; };
 		F3BFB7FC19AD7455D9139AFD /* Pods_Photo_Management_Studio.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Photo_Management_Studio.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,6 +106,7 @@
 				511FAC051C858F3E008EE11A /* PhotoViewItem.xib */,
 				511FAC321C8675A5008EE11A /* PhotoViewItem.swift */,
 				511FAC341C86F38F008EE11A /* PhotoViewItemView.swift */,
+				51FBD61B1C8C3FCD000EA051 /* ImportArrayController.swift */,
 			);
 			name = Temp;
 			sourceTree = "<group>";
@@ -377,6 +380,7 @@
 				513474881C65FFD200B75244 /* NetworkSupervisor.swift in Sources */,
 				516F3C551C6CAD7700483761 /* NetworkMessageObject.swift in Sources */,
 				51327F531C78783F002C1013 /* CouchDB.swift in Sources */,
+				51FBD61C1C8C3FCD000EA051 /* ImportArrayController.swift in Sources */,
 				516F3C4E1C673EAE00483761 /* Config.swift in Sources */,
 				51AC71F41C6F455B002C8EF9 /* NSDateISO8601.swift in Sources */,
 				51327F511C7877E8002C1013 /* HTTP.swift in Sources */,

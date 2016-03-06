@@ -10,21 +10,51 @@ import Cocoa
 
 class PhotoViewItem: NSCollectionViewItem {
     
-    override func viewWillAppear() {
+    private func updateView() {
+        let uuid = NSUUID().UUIDString
+        
         super.viewWillAppear()
         
-        if let item = importableItem {
+        self.imageView?.image = NSImage(named: "placeholder")
+        self.label.stringValue = ""
+        
+        if let item = self.importableItem {
+            
+            if let filename = item.filename {
+                self.label.stringValue = filename
+            }
+            
             if let thumbUrl = item.thumbUrl {
                 let url = "\(thumbUrl)&size=500"
-                self.imageView?.image = NSImage(contentsOfURL: NSURL(string: url)!)
+                    
+                dispatch_async(dispatch_queue_create("getAsyncPhotosGDQueue", nil), { () -> Void in
+                    if let url = NSURL(string: url) {
+                        if let image = NSImage(contentsOfURL: url) {
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                self.imageView?.image = image
+                                self.imageView?.needsDisplay = true
+                            })
+                        }
+                    }
+                })
             }
         }
     }
-
+    
     // MARK: properties
     
     var importableItem: ImportableItem? {
         return representedObject as? ImportableItem
+    }
+    
+    override var representedObject: AnyObject? {
+        didSet {
+            super.representedObject = representedObject
+
+            if let _ = representedObject as? ImportableItem {
+                self.updateView()
+            }
+        }
     }
     
     override var selected: Bool {
@@ -41,7 +71,6 @@ class PhotoViewItem: NSCollectionViewItem {
     
     // MARK: outlets
     
-//    @IBOutlet weak var image: NSImage!
     @IBOutlet weak var label: NSTextField!
     
     // MARK: NSResponder
