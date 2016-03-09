@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Net;
 using Microsoft.AspNet.Mvc;
@@ -22,7 +23,7 @@ namespace PhotoLibraryImageService.Controllers
 			_appEnvironment = appEnvironment;
 		}
 
-		public async Task<IActionResult> Get(string path, int size)
+		public async Task<IActionResult> Get(string path, int size, int w, int h)
 		{
 			System.Console.WriteLine("Folder is " + _appEnvironment.ApplicationBasePath);
 			if (string.IsNullOrWhiteSpace(path))
@@ -30,10 +31,16 @@ namespace PhotoLibraryImageService.Controllers
 				return new ObjectResult("Have not provided this for non-temporary files yet") { StatusCode = (int)HttpStatusCode.Forbidden };
 			}
 
+			if (w == 0 || h == 0)
+			{
+				w = size;
+				h = size;
+			}
+
 			var rootPath = _appSettings.LibraryPath;
 			path = Path.Combine(rootPath, path);
 
-			var hash = Hashing.GetStringSha256Hash(path);
+			var hash = Hashing.GetStringSha256Hash($"{path}_{w}x{h}");
 
 			var cachedImage = Caching.Instance.GetCachedItem<byte[]>(hash);
 			if (cachedImage != null)
@@ -45,7 +52,7 @@ namespace PhotoLibraryImageService.Controllers
 			if (System.IO.File.Exists(path))
 			{
 				var placeHolderPath = Path.Combine(_appEnvironment.ApplicationBasePath, "placeholder-1200x1080.jpg");
-				var bytes = await ImageResizeService.ProcessImage(path, size, placeHolderPath);
+				var bytes = await ImageResizeService.ProcessImage(path, w, h, placeHolderPath);
 
 				Caching.Instance.AddToCache(hash, bytes);
 

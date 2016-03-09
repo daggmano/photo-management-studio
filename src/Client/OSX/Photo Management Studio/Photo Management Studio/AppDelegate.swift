@@ -18,7 +18,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NetworkConnectionStatusDeleg
     
     var _connectionStatus: ConnectionState!
     var _serverUrl: String?
-
+    
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Insert code here to initialize your application
         

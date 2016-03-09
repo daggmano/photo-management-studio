@@ -11,8 +11,6 @@ import Cocoa
 class PhotoViewItem: NSCollectionViewItem {
     
     private func updateView() {
-        let uuid = NSUUID().UUIDString
-        
         super.viewWillAppear()
         
         self.imageView?.image = NSImage(named: "placeholder")
@@ -77,7 +75,11 @@ class PhotoViewItem: NSCollectionViewItem {
     
     override func mouseDown(theEvent: NSEvent) {
         if theEvent.clickCount == 2 {
-            print("Double click \(importableItem!.fullPath)")
+            if let thumbUrl = importableItem?.thumbUrl {
+                print("Double click \(importableItem!.fullPath)")
+            
+                Event.emit("display-preview", obj: thumbUrl)
+            }
         } else {
             super.mouseDown(theEvent)
         }

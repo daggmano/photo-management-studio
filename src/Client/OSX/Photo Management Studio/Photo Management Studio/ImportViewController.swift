@@ -172,9 +172,6 @@ class ImportViewController : NSViewController, NSCollectionViewDataSource {
         }
     }
     
-    
-    //{"itemCount":12,"importablePhotos":[{"filename":"1.dng","fullPath":"1.dng","thumbUrl":"http://10.0.0.30:5000/api/image?path=1.dng&size=200"},{"filename":"2.CR2","fullPath":"2.CR2","thumbUrl":"http://10.0.0.30:5000/api/image?path=2.CR2&size=200"},{"filename":"3.CR2","fullPath":"3.CR2","thumbUrl":"http://10.0.0.30:5000/api/image?path=3.CR2&size=200"},{"filename":"4.CR2","fullPath":"4.CR2","thumbUrl":"http://10.0.0.30:5000/api/image?path=4.CR2&size=200"},{"filename":"5.JPG","fullPath":"5.JPG","thumbUrl":"http://10.0.0.30:5000/api/image?path=5.JPG&size=200"},{"filename":"6.MOV","fullPath":"6.MOV","thumbUrl":"http://10.0.0.30:5000/api/image?path=6.MOV&size=200"},{"filename":"7.png","fullPath":"7.png","thumbUrl":"http://10.0.0.30:5000/api/image?path=7.png&size=200"},{"filename":"AndroidPhoto.jpg","fullPath":"AndroidPhoto.jpg","thumbUrl":"http://10.0.0.30:5000/api/image?path=AndroidPhoto.jpg&size=200"},{"filename":"AndroidVideo.mp4","fullPath":"AndroidVideo.mp4","thumbUrl":"http://10.0.0.30:5000/api/image?path=AndroidVideo.mp4&size=200"},{"filename":"WP_Pro.mp4","fullPath":"WP_Pro.mp4","thumbUrl":"http://10.0.0.30:5000/api/image?path=WP_Pro.mp4&size=200"},{"filename":"WP_Raw.jpg","fullPath":"WP_Raw.jpg","thumbUrl":"http://10.0.0.30:5000/api/image?path=WP_Raw.jpg&size=200"},{"filename":"WP_Raw_highres.dng","fullPath":"WP_Raw_highres.dng","thumbUrl":"http://10.0.0.30:5000/api/image?path=WP_Raw_highres.dng&size=200"}]}
-    
     private func showProgressIndicator(show: Bool) {
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             self.progressIndicator.hidden = !show

@@ -23,7 +23,7 @@ namespace PhotoLibraryImageService.Services
 //            }
 //        }
 
-		public async static Task<byte[]> ProcessImage(string path, int maxDimension, string placeholderPath)
+		public async static Task<byte[]> ProcessImage(string path, int maxWidth, int maxHeight, string placeholderPath)
 		{
 			try {
 				Console.WriteLine($"Path: {path}");
@@ -34,7 +34,14 @@ namespace PhotoLibraryImageService.Services
 
 				var psi = new ProcessStartInfo();
 				psi.FileName = "convert";
-				psi.Arguments = $"\"{path}\" -resize {maxDimension}x{maxDimension} jpeg:-";
+				if (maxWidth > 0 && maxHeight > 0)
+				{
+					psi.Arguments = $"\"{path}\" -resize {maxWidth}x{maxHeight}> jpeg:-";
+				}
+				else
+				{
+					psi.Arguments = $"\"{path}\" jpeg:-";
+				}
 
 				var ms = await ReadProcessOutput(psi);
 
@@ -50,7 +57,14 @@ namespace PhotoLibraryImageService.Services
 
 				var processStartInfo = new ProcessStartInfo();
 				processStartInfo.FileName = "convert";
-				processStartInfo.Arguments = $"\"{placeholderPath}\" -resize {maxDimension}x{maxDimension} jpeg:-";
+				if (maxWidth > 0 && maxHeight > 0)
+				{
+					processStartInfo.Arguments = $"\"{placeholderPath}\" -resize {maxWidth}x{maxHeight}> jpeg:-";
+				}
+				else
+				{
+					processStartInfo.Arguments = $"\"{placeholderPath}\" jpeg:-";
+				}
 
 				var ms = await ReadProcessOutput(processStartInfo);
 

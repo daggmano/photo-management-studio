@@ -15,6 +15,8 @@ class MainWindowController : NSWindowController {
     var _homeViewController: HomeViewController!
     var _importViewController: ImportViewController!
     
+    var _previewWindowController: PreviewWindowController!
+    
     override func windowDidLoad() {
         super.windowDidLoad()
         
@@ -22,7 +24,7 @@ class MainWindowController : NSWindowController {
         self.window?.titlebarAppearsTransparent = true
         self.window?.movableByWindowBackground = true
         
-        Event.register("connection-status-changed") { status -> Void in
+        Event.register("connection-status-changed") { (status) -> Void in
             print("Hey, here is \(status)")
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -42,6 +44,19 @@ class MainWindowController : NSWindowController {
                     }
                 }
             })
+        }
+        
+        Event.register("display-preview") { (imageUrl) -> Void in
+            if let imageUrl = imageUrl as? String {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    if (self._previewWindowController == nil) {
+                        self._previewWindowController = PreviewWindowController(windowNibName: "PreviewWindow")
+                    }
+                
+                    self._previewWindowController.setImageUrl(imageUrl)
+                    self._previewWindowController.showWindow(self)
+                })
+            }
         }
         
         _homeViewController = HomeViewController(nibName: "HomeView", bundle: nil)

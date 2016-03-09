@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="PreviewWindowController" customModule="Photo_Management_Studio" customModuleProvider="target">
+            <connections>
+                <outlet property="imageView" destination="Akm-yd-M8F" id="ipd-7o-mMW"/>
+                <outlet property="progressBar" destination="Ub1-nV-XKP" id="GCu-b9-5Xh"/>
+                <outlet property="window" destination="Q5N-yF-jIH" id="JPq-iV-rgL"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Preview" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" frameAutosaveName="" animationBehavior="default" id="Q5N-yF-jIH">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES" texturedBackground="YES" unifiedTitleAndToolbar="YES" fullSizeContentView="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="246" width="480" height="270"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1200"/>
+            <view key="contentView" wantsLayer="YES" id="mmS-HD-8Wb">
+                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Akm-yd-M8F">
+                        <rect key="frame" x="-3" y="-3" width="486" height="276"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" imageFrameStyle="photo" id="0xN-Mz-FDc"/>
+                    </imageView>
+                    <progressIndicator wantsLayer="YES" maxValue="100" indeterminate="YES" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="Ub1-nV-XKP">
+                        <rect key="frame" x="20" y="19" width="440" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="EIj-ms-1Ox"/>
+                        </constraints>
+                    </progressIndicator>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="Ub1-nV-XKP" secondAttribute="trailing" constant="20" id="6HJ-Qe-Ocg"/>
+                    <constraint firstItem="Akm-yd-M8F" firstAttribute="top" secondItem="mmS-HD-8Wb" secondAttribute="top" id="KLp-cp-en9"/>
+                    <constraint firstItem="Akm-yd-M8F" firstAttribute="leading" secondItem="mmS-HD-8Wb" secondAttribute="leading" id="Kxg-az-YfD"/>
+                    <constraint firstItem="Ub1-nV-XKP" firstAttribute="leading" secondItem="mmS-HD-8Wb" secondAttribute="leading" constant="20" id="XWm-JM-UgY"/>
+                    <constraint firstAttribute="bottom" secondItem="Akm-yd-M8F" secondAttribute="bottom" id="YjU-LE-2Fv"/>
+                    <constraint firstAttribute="trailing" secondItem="Akm-yd-M8F" secondAttribute="trailing" id="ie2-dH-E6O"/>
+                    <constraint firstAttribute="bottom" secondItem="Ub1-nV-XKP" secondAttribute="bottom" constant="20" id="is3-y8-jkx"/>
+                </constraints>
+            </view>
+            <point key="canvasLocation" x="457" y="389"/>
+        </window>
+    </objects>
+</document>
