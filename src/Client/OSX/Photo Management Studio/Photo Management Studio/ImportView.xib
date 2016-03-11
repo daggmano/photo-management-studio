@@ -82,7 +82,7 @@
                             <rect key="frame" x="98" y="333" width="37" height="17"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="0" id="bax-7A-11o">
                                 <font key="font" metaFont="system"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
@@ -98,7 +98,7 @@
                             <rect key="frame" x="98" y="308" width="37" height="17"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="0" id="F1e-O6-pZk">
                                 <font key="font" metaFont="system"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
