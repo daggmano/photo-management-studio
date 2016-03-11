@@ -9,12 +9,17 @@
 import SwiftHTTP
 import ITProgressIndicator
 
-class ImportViewController : NSViewController, NSCollectionViewDataSource {
+class ImportViewController : NSViewController, NSCollectionViewDataSource, NSCollectionViewDelegate {
  
-    @IBOutlet weak var collectionView: NSCollectionView!
-    @IBOutlet weak var getImportablePhotosButton: NSButton!
+    @IBOutlet weak var collectionView: ImportCollectionView!
     @IBOutlet weak var progressIndicator: ITProgressIndicator!
+    
     @IBOutlet var sortDescriptor: NSSortDescriptor!
+    var selectedIndexes: NSIndexSet!
+    
+    @IBOutlet weak var selectedLabel: NSTextField!
+    @IBOutlet weak var totalLabel: NSTextField!
+    @IBOutlet weak var importButton: NSButton!
     
     var itemSize: NSSize!
     var importablePhotoArray: NSMutableArray!
@@ -31,6 +36,7 @@ class ImportViewController : NSViewController, NSCollectionViewDataSource {
         super.viewDidLoad()
         
         self.sortDescriptor = NSSortDescriptor(key: "filename", ascending: true, selector: "localizedCaseInsensitiveCompare:")
+        self.selectedIndexes = NSIndexSet()
 
         self.itemSize = NSSize(width: 150, height: 180)
         self.importablePhotoArray = NSMutableArray()
@@ -48,6 +54,13 @@ class ImportViewController : NSViewController, NSCollectionViewDataSource {
         
         self.collectionView.minItemSize = itemSize
         self.collectionView.maxItemSize = itemSize
+    }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        
+        self.importButton.enabled = false
+        self.getImportablePhotos()
     }
     
     func collectionView(collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -88,8 +101,18 @@ class ImportViewController : NSViewController, NSCollectionViewDataSource {
         self.collectionView.maxItemSize = self.itemSize
     }
     
-    @IBAction func getImportablePhotos(sender: AnyObject) {
-//        self.importablePhotoArray.removeAllObjects()
+    @IBAction func beginImport(sender: AnyObject?) {
+        
+        print("Going to import the following items:")
+        self.selectedIndexes.forEach { (idx) -> () in
+            if let item = self.importablePhotoArray.objectAtIndex(idx) as? ImportableItem {
+                print("    \(item.filename!)")
+            }
+        }
+    }
+    
+    func getImportablePhotos() {
+
         self.showProgressIndicator(true)
         
         do {
@@ -175,7 +198,20 @@ class ImportViewController : NSViewController, NSCollectionViewDataSource {
     private func showProgressIndicator(show: Bool) {
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             self.progressIndicator.hidden = !show
-            self.getImportablePhotosButton.enabled = !show
         }
+    }
+    
+    func collectionView(collectionView: NSCollectionView, didSelectItemsAtIndexPaths indexPaths: Set<NSIndexPath>) {
+        self.updateSelectedIndexes()
+    }
+    
+    func collectionView(collectionView: NSCollectionView, didDeselectItemsAtIndexPaths indexPaths: Set<NSIndexPath>) {
+        self.updateSelectedIndexes()
+    }
+    
+    private func updateSelectedIndexes() {
+        self.selectedLabel.stringValue = "\(collectionView.selectionIndexes.count)"
+        self.importButton.enabled = collectionView.selectionIndexes.count > 0
+        self.selectedIndexes = collectionView.selectionIndexes
     }
 }

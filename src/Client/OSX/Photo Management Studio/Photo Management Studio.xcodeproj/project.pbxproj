@@ -40,6 +40,7 @@
 		516F3C631C6DE40C00483761 /* ServerSpecificationObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516F3C621C6DE40C00483761 /* ServerSpecificationObject.swift */; };
 		516F3C651C6ED5D200483761 /* JsonProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516F3C641C6ED5D200483761 /* JsonProtocol.swift */; };
 		51AC71F41C6F455B002C8EF9 /* NSDateISO8601.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AC71F31C6F455B002C8EF9 /* NSDateISO8601.swift */; };
+		51F7FB751C9192CA00CBD199 /* ImportCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F7FB741C9192CA00CBD199 /* ImportCollectionView.swift */; };
 		51FBD61C1C8C3FCD000EA051 /* ImportArrayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51FBD61B1C8C3FCD000EA051 /* ImportArrayController.swift */; };
 		51FBD61E1C8D98BD000EA051 /* PreviewWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51FBD61D1C8D98BD000EA051 /* PreviewWindow.xib */; };
 		51FBD6201C8D9A7E000EA051 /* PreviewWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51FBD61F1C8D9A7E000EA051 /* PreviewWindowController.swift */; };
@@ -84,6 +85,7 @@
 		516F3C621C6DE40C00483761 /* ServerSpecificationObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerSpecificationObject.swift; sourceTree = "<group>"; };
 		516F3C641C6ED5D200483761 /* JsonProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonProtocol.swift; sourceTree = "<group>"; };
 		51AC71F31C6F455B002C8EF9 /* NSDateISO8601.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateISO8601.swift; sourceTree = "<group>"; };
+		51F7FB741C9192CA00CBD199 /* ImportCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportCollectionView.swift; sourceTree = "<group>"; };
 		51FBD61B1C8C3FCD000EA051 /* ImportArrayController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportArrayController.swift; sourceTree = "<group>"; };
 		51FBD61D1C8D98BD000EA051 /* PreviewWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewWindow.xib; sourceTree = "<group>"; };
 		51FBD61F1C8D9A7E000EA051 /* PreviewWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewWindowController.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				511FAC301C865405008EE11A /* ImportView.xib */,
 				51FBD61B1C8C3FCD000EA051 /* ImportArrayController.swift */,
 				51362BE31C82F4F400E354D2 /* ImportViewController.swift */,
+				51F7FB741C9192CA00CBD199 /* ImportCollectionView.swift */,
 			);
 			name = ImportView;
 			sourceTree = "<group>";
@@ -406,6 +409,7 @@
 				51FBD61C1C8C3FCD000EA051 /* ImportArrayController.swift in Sources */,
 				516F3C4E1C673EAE00483761 /* Config.swift in Sources */,
 				51AC71F41C6F455B002C8EF9 /* NSDateISO8601.swift in Sources */,
+				51F7FB751C9192CA00CBD199 /* ImportCollectionView.swift in Sources */,
 				51327F511C7877E8002C1013 /* HTTP.swift in Sources */,
 				5131AEB11C884D7F00E6B547 /* JobResponseObject.swift in Sources */,
 				516F3C631C6DE40C00483761 /* ServerSpecificationObject.swift in Sources */,

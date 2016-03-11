@@ -8,8 +8,10 @@
         <customObject id="-2" userLabel="File's Owner" customClass="ImportViewController" customModule="Photo_Management_Studio" customModuleProvider="target">
             <connections>
                 <outlet property="collectionView" destination="Ltj-aS-2Ko" id="AjG-Wz-kfN"/>
-                <outlet property="getImportablePhotosButton" destination="xuH-lS-QOM" id="z2f-4V-Wsl"/>
+                <outlet property="importButton" destination="wFL-hh-jvd" id="fow-Cy-c7r"/>
                 <outlet property="progressIndicator" destination="TyX-VQ-VuI" id="wTj-h9-kL2"/>
+                <outlet property="selectedLabel" destination="EN6-Rj-ejR" id="tRo-Bi-qgI"/>
+                <outlet property="totalLabel" destination="8Ue-qD-PVh" id="mj1-0j-hFX"/>
                 <outlet property="view" destination="c22-O7-iKe" id="oW1-lf-G8O"/>
             </connections>
         </customObject>
@@ -22,24 +24,14 @@
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="Ie7-Eb-Gir">
                     <rect key="frame" x="0.0" y="0.0" width="700" height="370"/>
                     <subviews>
-                        <button horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xuH-lS-QOM">
-                            <rect key="frame" x="14" y="322" width="576" height="32"/>
-                            <buttonCell key="cell" type="push" title="Get Importable Photos" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zWs-Yx-ri1">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="getImportablePhotos:" target="-2" id="yty-wJ-ix7"/>
-                            </connections>
-                        </button>
                         <scrollView autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lpe-Ak-TCF">
-                            <rect key="frame" x="20" y="20" width="660" height="289"/>
+                            <rect key="frame" x="150" y="20" width="530" height="330"/>
                             <clipView key="contentView" id="c5a-cv-GkQ">
-                                <rect key="frame" x="1" y="1" width="658" height="287"/>
+                                <rect key="frame" x="1" y="1" width="528" height="328"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <collectionView wantsLayer="YES" selectable="YES" allowsMultipleSelection="YES" id="Ltj-aS-2Ko">
-                                        <rect key="frame" x="0.0" y="0.0" width="658" height="287"/>
+                                    <collectionView wantsLayer="YES" selectable="YES" allowsMultipleSelection="YES" id="Ltj-aS-2Ko" customClass="ImportCollectionView" customModule="Photo_Management_Studio" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="542" height="328"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <collectionViewGridLayout key="collectionViewLayout" id="a0q-VG-9Go">
                                             <size key="minimumItemSize" width="100" height="100"/>
@@ -48,13 +40,16 @@
                                         <color key="primaryBackgroundColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <binding destination="MRm-5N-dPS" name="content" keyPath="arrangedObjects" id="deF-vR-wh7"/>
+                                            <binding destination="MRm-5N-dPS" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="deF-vR-wh7" id="fKM-oq-cFG"/>
                                             <outlet property="dataSource" destination="-2" id="roH-bc-53q"/>
+                                            <outlet property="delegate" destination="-2" id="ZGE-wJ-llc"/>
                                         </connections>
                                     </collectionView>
                                 </subviews>
+                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </clipView>
-                            <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="8Uo-Eb-d8E">
-                                <rect key="frame" x="1" y="144" width="233" height="15"/>
+                            <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="8Uo-Eb-d8E">
+                                <rect key="frame" x="1" y="313" width="528" height="16"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </scroller>
                             <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="k9X-Nh-6Ws">
@@ -62,26 +57,6 @@
                                 <autoresizingMask key="autoresizingMask"/>
                             </scroller>
                         </scrollView>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hgx-lp-Oeb">
-                            <rect key="frame" x="639" y="322" width="47" height="32"/>
-                            <buttonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="f73-Oj-YVW">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="zoomOut:" target="-2" id="7Zk-Ym-lDB"/>
-                            </connections>
-                        </button>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7rT-75-YrS">
-                            <rect key="frame" x="590" y="322" width="49" height="32"/>
-                            <buttonCell key="cell" type="push" title="+" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gFa-ND-TnG">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="zoomIn:" target="-2" id="nnm-Fh-J2P"/>
-                            </connections>
-                        </button>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="TyX-VQ-VuI" customClass="ITProgressIndicator">
                             <rect key="frame" x="300" y="135" width="100" height="100"/>
                             <constraints>
@@ -89,20 +64,73 @@
                                 <constraint firstAttribute="height" constant="100" id="Zbm-q5-1mf"/>
                             </constraints>
                         </customView>
+                        <box horizontalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="yk6-l1-lPh">
+                            <rect key="frame" x="139" y="20" width="5" height="330"/>
+                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <font key="titleFont" metaFont="system"/>
+                        </box>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uWr-7E-V1o">
+                            <rect key="frame" x="18" y="333" width="68" height="17"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Selected:" id="d2h-EA-1Pj">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="knobColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EN6-Rj-ejR">
+                            <rect key="frame" x="98" y="333" width="37" height="17"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="0" id="bax-7A-11o">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jR4-TI-czb">
+                            <rect key="frame" x="18" y="308" width="79" height="17"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Available:" id="FEP-Kf-R2J">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="knobColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Ue-qD-PVh">
+                            <rect key="frame" x="98" y="308" width="37" height="17"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="0" id="F1e-O6-pZk">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                            <connections>
+                                <binding destination="MRm-5N-dPS" name="value" keyPath="arrangedObjects.@count" id="Nob-aX-ddP"/>
+                            </connections>
+                        </textField>
+                        <box verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="vCr-Bo-L9g">
+                            <rect key="frame" x="12" y="297" width="121" height="5"/>
+                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <font key="titleFont" metaFont="system"/>
+                        </box>
+                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wFL-hh-jvd">
+                            <rect key="frame" x="6" y="261" width="133" height="32"/>
+                            <buttonCell key="cell" type="push" title="Begin Import" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="z1f-jB-PV1">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="beginImport:" target="-2" id="cFD-uj-Qb5"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="Lpe-Ak-TCF" secondAttribute="bottom" constant="20" id="CpV-70-o3F"/>
-                        <constraint firstAttribute="trailing" secondItem="hgx-lp-Oeb" secondAttribute="trailing" constant="20" id="T6Q-KE-D7y"/>
-                        <constraint firstItem="xuH-lS-QOM" firstAttribute="top" secondItem="Ie7-Eb-Gir" secondAttribute="top" constant="20" id="Usc-oD-S7z"/>
-                        <constraint firstItem="Lpe-Ak-TCF" firstAttribute="top" secondItem="xuH-lS-QOM" secondAttribute="bottom" constant="20" id="VH4-5o-wIU"/>
-                        <constraint firstItem="Lpe-Ak-TCF" firstAttribute="leading" secondItem="Ie7-Eb-Gir" secondAttribute="leading" constant="20" id="WpB-bO-jSv"/>
-                        <constraint firstItem="xuH-lS-QOM" firstAttribute="leading" secondItem="Ie7-Eb-Gir" secondAttribute="leading" constant="20" id="gvB-D7-x6n"/>
-                        <constraint firstItem="7rT-75-YrS" firstAttribute="top" secondItem="Ie7-Eb-Gir" secondAttribute="top" constant="20" id="j39-Fo-zqP"/>
+                        <constraint firstAttribute="bottom" secondItem="yk6-l1-lPh" secondAttribute="bottom" constant="20" id="N9r-Ng-RGa"/>
+                        <constraint firstItem="Lpe-Ak-TCF" firstAttribute="leading" secondItem="Ie7-Eb-Gir" secondAttribute="leading" constant="150" id="WpB-bO-jSv"/>
+                        <constraint firstItem="yk6-l1-lPh" firstAttribute="top" secondItem="Ie7-Eb-Gir" secondAttribute="top" constant="20" id="Xt6-uL-uqO"/>
+                        <constraint firstItem="Lpe-Ak-TCF" firstAttribute="leading" secondItem="yk6-l1-lPh" secondAttribute="trailing" constant="8" id="h9w-2K-ndO"/>
                         <constraint firstItem="TyX-VQ-VuI" firstAttribute="centerY" secondItem="Ie7-Eb-Gir" secondAttribute="centerY" id="je1-NK-mox"/>
-                        <constraint firstItem="hgx-lp-Oeb" firstAttribute="leading" secondItem="7rT-75-YrS" secondAttribute="trailing" constant="12" id="kDj-8G-Nr5"/>
-                        <constraint firstItem="7rT-75-YrS" firstAttribute="leading" secondItem="xuH-lS-QOM" secondAttribute="trailing" constant="12" id="ol7-gr-zgS"/>
+                        <constraint firstItem="Lpe-Ak-TCF" firstAttribute="top" secondItem="Ie7-Eb-Gir" secondAttribute="top" constant="20" id="o0v-ks-dg8"/>
                         <constraint firstAttribute="trailing" secondItem="Lpe-Ak-TCF" secondAttribute="trailing" constant="20" id="sEd-Dh-M0v"/>
-                        <constraint firstItem="hgx-lp-Oeb" firstAttribute="top" secondItem="Ie7-Eb-Gir" secondAttribute="top" constant="20" id="xhf-Ij-1Jd"/>
                         <constraint firstItem="TyX-VQ-VuI" firstAttribute="centerX" secondItem="Ie7-Eb-Gir" secondAttribute="centerX" id="yOF-Vt-8lv"/>
                     </constraints>
                 </customView>
@@ -121,8 +149,9 @@
                 <string>thumbUrl</string>
             </declaredKeys>
             <connections>
-                <binding destination="-2" name="contentArray" keyPath="importablePhotoArray" id="tXb-oQ-0vg"/>
-                <binding destination="-2" name="sortDescriptors" keyPath="sortDescriptor" id="mPt-kv-0Dq"/>
+                <binding destination="-2" name="contentArray" keyPath="importablePhotoArray" id="pKG-uW-DVa"/>
+                <binding destination="-2" name="selectionIndexes" keyPath="selectedIndexes" id="t6A-kP-WbJ"/>
+                <binding destination="-2" name="sortDescriptors" keyPath="sortDescriptor" previousBinding="t6A-kP-WbJ" id="wNp-NI-WTx"/>
             </connections>
         </arrayController>
     </objects>

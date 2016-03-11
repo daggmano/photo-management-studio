@@ -7,7 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication"/>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application">
+        <customObject id="-3" userLabel="Application" customClass="NSObject">
             <connections>
                 <outlet property="delegate" destination="Ozk-6g-I9I" id="6nw-fO-dRY"/>
             </connections>
@@ -68,6 +68,7 @@
                                     <action selector="importPhotos:" target="-1" id="c5Y-ZU-s28"/>
                                 </connections>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="oDQ-Zv-fWs"/>
                             <menuItem title="New" keyEquivalent="n" id="Was-JA-tGl">
                                 <connections>
                                     <action selector="newDocument:" target="-1" id="4Si-XN-c54"/>
@@ -613,6 +614,17 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="View" id="HyV-fh-RgO">
                         <items>
+                            <menuItem title="Zoom In" keyEquivalent="]" id="8qQ-WI-Ddr">
+                                <connections>
+                                    <action selector="zoomIn:" target="-1" id="ee8-Cy-R8n"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Zoom Out" keyEquivalent="[" id="c3z-fE-dIT">
+                                <connections>
+                                    <action selector="zoomOut:" target="-1" id="hpd-Pv-Mof"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="vLl-75-wDm"/>
                             <menuItem title="Show Toolbar" keyEquivalent="t" id="snW-S8-Cw5">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>

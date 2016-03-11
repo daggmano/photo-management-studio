@@ -9,6 +9,8 @@
 import Cocoa
 
 class PhotoViewItemView: NSView {
+    
+    @IBOutlet var innerView: NSView!
 
     // MARK: properties
     
@@ -35,12 +37,12 @@ class PhotoViewItemView: NSView {
     }
     
     override func updateLayer() {
+        self.innerView.layer!.cornerRadius = 5
+
         if selected {
-//            self.layer?.cornerRadius = 10
-            layer!.backgroundColor = NSColor(red: 0.5, green: 0.5, blue: 0.8, alpha: 1.0).CGColor
+            self.innerView.layer!.backgroundColor = NSColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 1.0).CGColor
         } else {
-//            self.layer?.cornerRadius = 10
-            layer!.backgroundColor = NSColor.lightGrayColor().CGColor
+            self.innerView.layer!.backgroundColor = NSColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1.0).CGColor
         }
     }
     
