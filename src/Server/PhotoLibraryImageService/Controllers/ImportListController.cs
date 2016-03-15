@@ -49,13 +49,13 @@ namespace PhotoLibraryImageService.Controllers
 				case JobStates.Tombstoned:
 					return new ObjectResult("Job no longer available") { StatusCode = (int)HttpStatusCode.Gone };
 				case JobStates.Error:
-					return new ObjectResult("Job is in error state") { StatusCode = (int)HttpStatusCode.PreconditionFailed };
+					return new ObjectResult("Job is in error state") { StatusCode = (int)HttpStatusCode.InternalServerError };
 				case JobStates.Running:
 					return new ObjectResult("Job is still running") { StatusCode = (int)HttpStatusCode.PreconditionFailed };
 				case JobStates.Submitted:
 					return new ObjectResult("Job has not started yet") { StatusCode = (int)HttpStatusCode.PreconditionFailed };
 				case JobStates.Unknown:
-					return new ObjectResult("Job is in an unknown state") { StatusCode = (int)HttpStatusCode.PreconditionFailed };
+					return new ObjectResult("Job is in an unknown state") { StatusCode = (int)HttpStatusCode.ExpectationFailed };
 				default:
 					break;
 			}

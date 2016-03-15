@@ -8,7 +8,6 @@ using Microsoft.Extensions.OptionsModel;
 
 namespace PhotoLibraryImageService.Controllers
 {
-	[Route("api/[controller]")]
 	public class ImportController : Controller
 	{
 		private readonly IOptions<AppSettings> _appSettings;
@@ -19,6 +18,7 @@ namespace PhotoLibraryImageService.Controllers
 		}
 
 		[HttpPost]
+		[Route("api/import")]
 		public IActionResult Post([FromBody] ImportPhotosRequestObject request)
 		{
 			var id = JobsService.GetInstance().SubmitJob(JobTypes.ImportPhotos, request.PhotoPaths, _appSettings);
@@ -32,7 +32,8 @@ namespace PhotoLibraryImageService.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Get(Guid id)
+		[Route("api/import/{id}")]
+		public IActionResult GetResult(Guid id)
 		{
 			JobStates state;
 			int progress;
@@ -47,37 +48,33 @@ namespace PhotoLibraryImageService.Controllers
 				case JobStates.Tombstoned:
 					return new ObjectResult("Job no longer available") { StatusCode = (int)HttpStatusCode.Gone };
 				case JobStates.Error:
-					return new ObjectResult("Job is in error state") { StatusCode = (int)HttpStatusCode.PreconditionFailed };
+					return new ObjectResult("Job is in error state") { StatusCode = (int)HttpStatusCode.InternalServerError };
 				case JobStates.Running:
 					return new ObjectResult("Job is still running") { StatusCode = (int)HttpStatusCode.PreconditionFailed };
 				case JobStates.Submitted:
 					return new ObjectResult("Job has not started yet") { StatusCode = (int)HttpStatusCode.PreconditionFailed };
 				case JobStates.Unknown:
-					return new ObjectResult("Job is in an unknown state") { StatusCode = (int)HttpStatusCode.PreconditionFailed };
+					return new ObjectResult("Job is in an unknown state") { StatusCode = (int)HttpStatusCode.ExpectationFailed };
 				default:
 					break;
 			}
 
-			//var jobResult = JobsService.GetInstance().GetResult<ImportableListJobResult>(id);
+			var jobResult = JobsService.GetInstance().GetResult<ImportJobResult>(id);
 
-			//if (jobResult != null)
-			//{
-			//	var urlBase = Request.RequestUri.GetComponents(UriComponents.SchemeAndServer, UriFormat.SafeUnescaped);
-			//	var result = new ImportableListObject
-			//	{
-			//		ItemCount = jobResult.ImportableFiles.Count,
-			//		ImportablePhotos = jobResult.ImportableFiles.Select(x => new ImportableItem
-			//		{
-			//			FullPath = x,
-			//			Filename = x.Split('/').Last(),
-			//			ThumbUrl = $"{urlBase}/api/image?path={Uri.EscapeDataString(x)}&size=200"
-			//		}).ToList()
-			//	};
+			if (jobResult != null)
+			{
+				var result = new ImportedFilesObject
+				{
+					ItemCount = jobResult.ImportedFiles.Count,
+					ImportedPhotos = jobResult.ImportedFiles
+				};
 
-			//	return Request.CreateResponse(HttpStatusCode.OK, result);
-			//}
+				Console.WriteLine($"ItemCount: {result.ItemCount}");
 
-			return new ObjectResult("Job complete without error, but no result available") { StatusCode = (int)HttpStatusCode.InternalServerError };
+				return new ObjectResult(result);
+			}
+
+			return new ObjectResult("Job complete without error, but no result available") { StatusCode = (int)HttpStatusCode.OK };
 		}
 	}
 }

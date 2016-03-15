@@ -6,7 +6,7 @@
 //  Copyright © 2016 Darren Oster. All rights reserved.
 //
 
-import SwiftHTTP
+import Alamofire
 import ITProgressIndicator
 
 class ImportViewController : NSViewController, NSCollectionViewDataSource, NSCollectionViewDelegate {
@@ -103,11 +103,111 @@ class ImportViewController : NSViewController, NSCollectionViewDataSource, NSCol
     
     @IBAction func beginImport(sender: AnyObject?) {
         
-        print("Going to import the following items:")
+        var photoPaths: [String] = [];
         self.selectedIndexes.forEach { (idx) -> () in
             if let item = self.importablePhotoArray.objectAtIndex(idx) as? ImportableItem {
-                print("    \(item.filename!)")
+                if let fullPath = item.fullPath {
+                    photoPaths.append(fullPath)
+                }
             }
+        }
+        
+        let request = ImportPhotosRequestObject(photoPaths: photoPaths)
+        
+        self.showProgressIndicator(true)
+        
+        let app = NSApplication.sharedApplication().delegate as? AppDelegate
+        
+        if let serverUrl = app?.getServerUrl() {
+            Alamofire.request(.POST, "\(serverUrl)/api/import", parameters: request.toJSON(), encoding: .JSON).responseJSON { response in
+                
+                var statusCode = 0
+                if let response: NSHTTPURLResponse = response.response! as NSHTTPURLResponse {
+                    statusCode = response.statusCode
+                }
+                
+                if statusCode == HTTPStatusCode.OK.rawValue {
+                    self.processImportResponse(response.data!)
+                } else {
+                    self.showProgressIndicator(false)
+                }
+            }
+        } else {
+            self.showProgressIndicator(false)
+        }
+    }
+    
+    private func processImportResponse(message: NSData) {
+        do {
+            if let json = try NSJSONSerialization.JSONObjectWithData(message, options: .AllowFragments) as? [String: AnyObject] {
+                let jobResponse = JobResponseObject.init(json: json)
+                if jobResponse.status == "submitted" {
+                    if let jobId = jobResponse.jobId {
+                        self.checkImportJobCompletion(jobId)
+                    }
+                }
+            }
+        } catch {
+            self.showProgressIndicator(false)
+        }
+    }
+    
+    private func checkImportJobCompletion(jobId: String) {
+
+        let app = NSApplication.sharedApplication().delegate as? AppDelegate
+        if let serverUrl = app?.getServerUrl() {
+                
+            Alamofire.request(.GET, "\(serverUrl)/api/import/\(jobId)").responseJSON { response in
+                
+                var statusCode = 0
+                if let response: NSHTTPURLResponse = response.response! as NSHTTPURLResponse {
+                    statusCode = response.statusCode
+                }
+                
+                if statusCode == HTTPStatusCode.PreconditionFailed.rawValue {
+                    let delay_time = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
+                    dispatch_after(delay_time, dispatch_get_main_queue(), { () -> Void in
+                        self.checkImportJobCompletion(jobId)
+                    })
+                } else if statusCode == HTTPStatusCode.OK.rawValue {
+                    self.processImport(response.data!)
+                } else {
+                    self.showProgressIndicator(false)
+                }
+            }
+        } else {
+            self.showProgressIndicator(false)
+        }
+    }
+    
+    private func processImport(message: NSData) {
+        do {
+            if let json = try NSJSONSerialization.JSONObjectWithData(message, options: .AllowFragments) as? [String: AnyObject] {
+                let importedList = ImportedFilesObject.init(json: json)
+                
+                if let importedPhotos = importedList.importedPhotos {
+                    
+                    print(importedPhotos)
+                    
+                    let pred = NSPredicate { (obj, _) in
+                        return !importedPhotos.contains(obj.fullPath!!)
+                    }
+                    
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        let array = self.mutableArrayValueForKey("importablePhotoArray")
+                        array.filterUsingPredicate(pred)
+                        
+                        self.collectionView.reloadData()
+                        self.collectionView.deselectItemsAtIndexPaths(Set<NSIndexPath>())
+                        
+                        self.updateSelectedIndexes()
+                    })
+                }
+                
+                self.showProgressIndicator(false)
+            }
+        } catch {
+            self.showProgressIndicator(false)
         }
     }
     
@@ -115,24 +215,23 @@ class ImportViewController : NSViewController, NSCollectionViewDataSource, NSCol
 
         self.showProgressIndicator(true)
         
-        do {
-            let app = NSApplication.sharedApplication().delegate as? AppDelegate
-            if let serverUrl = app?.getServerUrl() {
-                let opt = try SwiftHTTP.HTTP.GET("\(serverUrl)/api/importlist")
-                opt.start { response in
-                    if let err = response.error {
-                        print("error: \(err.localizedDescription)")
-                        self.showProgressIndicator(false)
-                        return
-                    }
-                    
-                    self.processImportListResponse(response.data)
+        let app = NSApplication.sharedApplication().delegate as? AppDelegate
+        
+        if let serverUrl = app?.getServerUrl() {
+            Alamofire.request(.GET, "\(serverUrl)/api/importlist").responseJSON { response in
+                        
+                var statusCode = 0
+                if let response: NSHTTPURLResponse = response.response! as NSHTTPURLResponse {
+                    statusCode = response.statusCode
                 }
-            } else {
-                self.showProgressIndicator(false)
+                
+                if (statusCode == HTTPStatusCode.OK.rawValue) {
+                    self.processImportListResponse(response.data!)
+                } else {
+                    self.showProgressIndicator(false)
+                }
             }
-        } catch let error {
-            print("got an error creating the request: \(error)")
+        } else {
             self.showProgressIndicator(false)
         }
     }
@@ -143,7 +242,7 @@ class ImportViewController : NSViewController, NSCollectionViewDataSource, NSCol
                 let jobResponse = JobResponseObject.init(json: json)
                 if jobResponse.status == "submitted" {
                     if let jobId = jobResponse.jobId {
-                        self.checkJobCompletion(jobId)
+                        self.checkImportListJobCompletion(jobId)
                     }
                 }
             }
@@ -152,25 +251,29 @@ class ImportViewController : NSViewController, NSCollectionViewDataSource, NSCol
         }
     }
     
-    private func checkJobCompletion(jobId: String) {
-        do {
-            let app = NSApplication.sharedApplication().delegate as? AppDelegate
-            if let serverUrl = app?.getServerUrl() {
-                let opt = try SwiftHTTP.HTTP.GET("\(serverUrl)/api/importlist/\(jobId)")
-                opt.start { response in
-                    if let err = response.error {
-                        print("error: \(err.localizedDescription)")
-                        self.showProgressIndicator(false)
-                        return
-                    }
-                    
-                    self.processImportList(response.data)
+    private func checkImportListJobCompletion(jobId: String) {
+
+        let app = NSApplication.sharedApplication().delegate as? AppDelegate
+        if let serverUrl = app?.getServerUrl() {
+            Alamofire.request(.GET, "\(serverUrl)/api/importlist/\(jobId)").responseJSON { response in
+                        
+                var statusCode = 0
+                if let response: NSHTTPURLResponse = response.response! as NSHTTPURLResponse {
+                    statusCode = response.statusCode
                 }
-            } else {
-                self.showProgressIndicator(false)
+                        
+                if (statusCode == HTTPStatusCode.PreconditionFailed.rawValue) {
+                    let delay_time = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
+                    dispatch_after(delay_time, dispatch_get_main_queue(), { () -> Void in
+                        self.checkImportListJobCompletion(jobId)
+                    })
+                } else if (statusCode == HTTPStatusCode.OK.rawValue) {
+                    self.processImportList(response.data!)
+                } else {
+                    self.showProgressIndicator(false)
+                }
             }
-        } catch let error {
-            print("got an error creating the request: \(error)")
+        } else {
             self.showProgressIndicator(false)
         }
     }

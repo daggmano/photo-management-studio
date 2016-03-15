@@ -6,6 +6,6 @@ target 'Photo Management Studio' do
     pod 'CocoaAsyncSocket'
     pod 'Fabric'
     pod 'Crashlytics'
-    pod 'SwiftHTTP', '~> 1.0.4'
+    pod 'Alamofire', '~> 3.0'
     pod 'ITProgressIndicator', '~>0.1'
 end

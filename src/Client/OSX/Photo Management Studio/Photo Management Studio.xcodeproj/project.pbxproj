@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		510943231C96D44200CF63A9 /* HTTPStatusCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510943221C96D44200CF63A9 /* HTTPStatusCodes.swift */; };
+		510943251C9812D600CF63A9 /* ImportedFilesObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510943241C9812D600CF63A9 /* ImportedFilesObject.swift */; };
 		511FAC061C858F3E008EE11A /* PhotoViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 511FAC051C858F3E008EE11A /* PhotoViewItem.xib */; };
 		511FAC101C85C974008EE11A /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 511FAC0F1C85C974008EE11A /* MainWindow.xib */; };
 		511FAC2B1C86486B008EE11A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 511FAC2A1C86486B008EE11A /* MainMenu.xib */; };
@@ -48,6 +50,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		510943221C96D44200CF63A9 /* HTTPStatusCodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPStatusCodes.swift; sourceTree = "<group>"; };
+		510943241C9812D600CF63A9 /* ImportedFilesObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportedFilesObject.swift; sourceTree = "<group>"; };
 		511FAC051C858F3E008EE11A /* PhotoViewItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PhotoViewItem.xib; sourceTree = "<group>"; };
 		511FAC0F1C85C974008EE11A /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		511FAC2A1C86486B008EE11A /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
@@ -121,6 +125,7 @@
 				51327F501C7877E8002C1013 /* HTTP.swift */,
 				51327F521C78783F002C1013 /* CouchDB.swift */,
 				51327F541C787A1C002C1013 /* QueryString.swift */,
+				510943221C96D44200CF63A9 /* HTTPStatusCodes.swift */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -182,6 +187,7 @@
 				516F3C621C6DE40C00483761 /* ServerSpecificationObject.swift */,
 				516F3C641C6ED5D200483761 /* JsonProtocol.swift */,
 				5131AEB01C884D7F00E6B547 /* JobResponseObject.swift */,
+				510943241C9812D600CF63A9 /* ImportedFilesObject.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -219,8 +225,8 @@
 			children = (
 				511FAC301C865405008EE11A /* ImportView.xib */,
 				51FBD61B1C8C3FCD000EA051 /* ImportArrayController.swift */,
-				51362BE31C82F4F400E354D2 /* ImportViewController.swift */,
 				51F7FB741C9192CA00CBD199 /* ImportCollectionView.swift */,
+				51362BE31C82F4F400E354D2 /* ImportViewController.swift */,
 			);
 			name = ImportView;
 			sourceTree = "<group>";
@@ -401,8 +407,10 @@
 				5124C4F01C7C7E490018F759 /* PubSub.swift in Sources */,
 				516F3C5F1C6DE17D00483761 /* ResponseObject.swift in Sources */,
 				516F3C5D1C6DE11400483761 /* PingResponseObject.swift in Sources */,
+				510943251C9812D600CF63A9 /* ImportedFilesObject.swift in Sources */,
 				51327F4E1C7866BA002C1013 /* DatabaseManager.swift in Sources */,
 				511FAC351C86F38F008EE11A /* PhotoViewItemView.swift in Sources */,
+				510943231C96D44200CF63A9 /* HTTPStatusCodes.swift in Sources */,
 				513474881C65FFD200B75244 /* NetworkSupervisor.swift in Sources */,
 				516F3C551C6CAD7700483761 /* NetworkMessageObject.swift in Sources */,
 				51327F531C78783F002C1013 /* CouchDB.swift in Sources */,

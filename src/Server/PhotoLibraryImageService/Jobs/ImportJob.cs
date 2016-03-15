@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FileManager;
 using System.Diagnostics;
+using PhotoLibraryImageService.Data;
 using PhotoLibraryImageService.Data.Interfaces;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
@@ -12,6 +13,11 @@ using Microsoft.Extensions.OptionsModel;
 
 namespace PhotoLibraryImageService.Jobs
 {
+	public class ImportJobResult
+	{
+		public List<string> ImportedFiles { get; set; }
+	}
+
 	public class ImportJob : Job
 	{
 		private readonly IOptions<AppSettings> _appSettings;
@@ -27,11 +33,9 @@ namespace PhotoLibraryImageService.Jobs
 
 		private FileProcessor _fileProcessor;
 
-		[FromServices]
-		public IDataService _dataService { get; set; }
+		private IDataService _dataService;
 
-
-//		private ImportableListJobResult _result;
+		private ImportJobResult _result;
 
 		BackgroundWorker _worker;
 
@@ -41,8 +45,10 @@ namespace PhotoLibraryImageService.Jobs
 			_lock = new object();
 			_appSettings = appSettings;
 
+			_dataService = new DataService(appSettings);
+
 			_progress = 0;
-//			_result = null;
+			_result = null;
 
 			var dbPath = _appSettings.Value.CouchDbPath;
 			var uri = new Uri(dbPath);
@@ -83,14 +89,20 @@ namespace PhotoLibraryImageService.Jobs
 
 		private void Worker_DoWork(object sender, DoWorkEventArgs e)
 		{
+			Console.WriteLine("ImportJob Worker");
+			Console.WriteLine("================");
+
 			var worker = sender as BackgroundWorker;
 			var rootPath = _appSettings.Value.LibraryPath;
-			if (!rootPath.EndsWith("\\"))
+			if (!rootPath.EndsWith("/"))
 			{
-				rootPath += "\\";
+				rootPath += "/";
 			}
+			Console.WriteLine($"rootPath: {rootPath}");
+
 			var progressStep = (int)Math.Ceiling(100.0 / _args.Count);
 			var progress = 0;
+			var importedFiles = new List<string>();
 
 			// Need to create import tag first...
 			var importTagTask = _dataService.CreateImportTag(_importTagId, DateTime.UtcNow);
@@ -99,29 +111,36 @@ namespace PhotoLibraryImageService.Jobs
 
 			foreach (var path in _args)
 			{
-				var fullPath = path.Replace("/", "\\");
+				try {
+					var media = _fileProcessor.ProcessFile(path, rootPath, new Guid(importTag.ImportId));
 
-				var media = _fileProcessor.ProcessFile(fullPath, rootPath, new Guid(importTag.ImportId));
+					// TODO: Check if file is already in db before importing (check loweredFileName).  May need to lock this to prevent clashing.
+					lock (_lock)
+					{
+						var mediaExistsTask = _dataService.MediaExists(media.MediaId);
+						Task.WaitAll(mediaExistsTask);
+						if (mediaExistsTask.Result)
+						{
+							Debug.WriteLine($"Media with path '{media.MediaId}' already in database, skipping.");
+						}
+						else
+						{
+							var insertMediaTask = _dataService.InsertMedia(media);
+							Task.WaitAll(insertMediaTask);
+							importedFiles.Add(path);
+						}
+					}
 
-				// TODO: Check if file is already in db before importing (check loweredFileName).  May need to lock this to prevent clashing.
-				lock (_lock)
-				{
-					var mediaExistsTask = _dataService.MediaExists(media.MediaId);
-					Task.WaitAll(mediaExistsTask);
-					if (mediaExistsTask.Result)
-					{
-						Debug.WriteLine($"Media with path '{media.MediaId}' already in database, skipping.");
-					}
-					else
-					{
-						var insertMediaTask = _dataService.InsertMedia(media);
-						Task.WaitAll(insertMediaTask);
-					}
+					progress = Math.Min(progress + progressStep, 100);
+					worker.ReportProgress(progress);
 				}
-
-				progress = Math.Min(progress + progressStep, 100);
-				worker.ReportProgress(progress);
+				catch (Exception ex)
+				{
+					Console.WriteLine($"Caught Exception: {ex.Message}");
+				}
 			}
+
+			_result = new ImportJobResult { ImportedFiles = importedFiles };
 		}
 
 		public override void GetJobStatus(out JobStates state, out int progress)
@@ -137,12 +156,11 @@ namespace PhotoLibraryImageService.Jobs
 
 		public override T GetResult<T>()
 		{
-			throw new NotImplementedException();
+			return _result as T;
 		}
 
 		public override void Cleanup()
 		{
-			throw new NotImplementedException();
 		}
 	}
 }
