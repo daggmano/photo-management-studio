@@ -7,6 +7,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="HomeViewController" customModule="Photo_Management_Studio" customModuleProvider="target">
             <connections>
+                <outlet property="_libraryFilterSplitView" destination="5Gs-ih-Q2B" id="A6U-WS-VBc"/>
+                <outlet property="_mainSplitView" destination="PB8-Rk-X7z" id="mJ1-qf-tZ3"/>
                 <outlet property="view" destination="c22-O7-iKe" id="m7p-7g-2Ob"/>
             </connections>
         </customObject>
@@ -19,26 +21,54 @@
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="SNb-ub-LBm">
                     <rect key="frame" x="0.0" y="0.0" width="813" height="559"/>
                     <subviews>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r12-Vp-dD7">
-                            <rect key="frame" x="738" y="-7" width="81" height="32"/>
-                            <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Hth-Fz-AAh">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                        </button>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="q3p-Ac-vGI">
-                            <rect key="frame" x="-6" y="531" width="81" height="32"/>
-                            <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="i1f-Lg-3ZK">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                        </button>
+                        <splitView arrangesAllSubviews="NO" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PB8-Rk-X7z" customClass="PMSSplitView" customModule="Photo_Management_Studio" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="813" height="559"/>
+                            <subviews>
+                                <customView id="tQO-8R-DaV">
+                                    <rect key="frame" x="0.0" y="0.0" width="413" height="559"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <splitView arrangesAllSubviews="NO" dividerStyle="thin" translatesAutoresizingMaskIntoConstraints="NO" id="5Gs-ih-Q2B" customClass="PMSSplitView" customModule="Photo_Management_Studio" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="413" height="559"/>
+                                            <subviews>
+                                                <customView identifier="FilterView" fixedFrame="YES" id="qAq-KN-pV7">
+                                                    <rect key="frame" x="0.0" y="0.0" width="413" height="268"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </customView>
+                                                <customView fixedFrame="YES" id="fnl-X7-sJg">
+                                                    <rect key="frame" x="0.0" y="269" width="413" height="290"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </customView>
+                                            </subviews>
+                                            <holdingPriorities>
+                                                <real value="250"/>
+                                                <real value="1"/>
+                                            </holdingPriorities>
+                                        </splitView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="5Gs-ih-Q2B" firstAttribute="top" secondItem="tQO-8R-DaV" secondAttribute="top" id="msN-Eg-tLT"/>
+                                        <constraint firstAttribute="bottom" secondItem="5Gs-ih-Q2B" secondAttribute="bottom" id="sxS-13-XXh"/>
+                                        <constraint firstAttribute="trailing" secondItem="5Gs-ih-Q2B" secondAttribute="trailing" id="tjk-ME-Ol7"/>
+                                        <constraint firstItem="5Gs-ih-Q2B" firstAttribute="leading" secondItem="tQO-8R-DaV" secondAttribute="leading" id="yQZ-6c-QTk"/>
+                                    </constraints>
+                                </customView>
+                                <customView fixedFrame="YES" id="pAa-qf-MJU">
+                                    <rect key="frame" x="414" y="0.0" width="399" height="559"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </customView>
+                            </subviews>
+                            <holdingPriorities>
+                                <real value="1"/>
+                                <real value="250"/>
+                            </holdingPriorities>
+                        </splitView>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="q3p-Ac-vGI" firstAttribute="top" secondItem="SNb-ub-LBm" secondAttribute="top" id="Xe8-xX-vgx"/>
-                        <constraint firstItem="q3p-Ac-vGI" firstAttribute="leading" secondItem="SNb-ub-LBm" secondAttribute="leading" id="iJ7-OF-rQ0"/>
-                        <constraint firstAttribute="trailing" secondItem="r12-Vp-dD7" secondAttribute="trailing" id="xmG-so-YUk"/>
-                        <constraint firstAttribute="bottom" secondItem="r12-Vp-dD7" secondAttribute="bottom" id="ztR-8D-klp"/>
+                        <constraint firstItem="PB8-Rk-X7z" firstAttribute="top" secondItem="SNb-ub-LBm" secondAttribute="top" id="90P-3Z-wBt"/>
+                        <constraint firstItem="PB8-Rk-X7z" firstAttribute="leading" secondItem="SNb-ub-LBm" secondAttribute="leading" id="9Ry-70-eR7"/>
+                        <constraint firstAttribute="trailing" secondItem="PB8-Rk-X7z" secondAttribute="trailing" id="CjB-rC-ivj"/>
+                        <constraint firstAttribute="bottom" secondItem="PB8-Rk-X7z" secondAttribute="bottom" id="hVM-d3-fnI"/>
                     </constraints>
                 </customView>
             </subviews>

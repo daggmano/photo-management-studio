@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="FilterViewController" customModule="Photo_Management_Studio" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="c22-O7-iKe" id="MjV-V1-SDq"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="863" height="40"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="gFU-qk-oec">
+                    <rect key="frame" x="353" y="0.0" width="157" height="40"/>
+                    <subviews>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e1w-V9-w3Y">
+                            <rect key="frame" x="18" y="11" width="48" height="17"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Rotate:" id="ype-he-x5g">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fbO-01-WMT" customClass="PMSHoverButton" customModule="Photo_Management_Studio" customModuleProvider="target">
+                            <rect key="frame" x="79" y="8" width="24" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="24" id="9JO-m0-xGM"/>
+                                <constraint firstAttribute="height" constant="24" id="yGZ-8Y-guA"/>
+                            </constraints>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="rotate-left" imagePosition="overlaps" alignment="center" alternateImage="rotate-left-hover" imageScaling="proportionallyDown" inset="2" id="nQ9-ZL-6j3">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="rotateImageLeft:" target="-1" id="Lqw-vu-URU"/>
+                            </connections>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5mq-RV-xBa" customClass="PMSHoverButton" customModule="Photo_Management_Studio" customModuleProvider="target">
+                            <rect key="frame" x="113" y="8" width="24" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="24" id="7Zo-zx-UtR"/>
+                                <constraint firstAttribute="height" constant="24" id="jE4-mJ-7Ke"/>
+                            </constraints>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="rotate-right" imagePosition="overlaps" alignment="center" alternateImage="rotate-right-hover" imageScaling="proportionallyDown" inset="2" id="59E-tH-SDZ">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="rotateImageRight:" target="-1" id="jad-0s-HjV"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="3BY-mC-bo6"/>
+                        <constraint firstItem="e1w-V9-w3Y" firstAttribute="centerY" secondItem="fbO-01-WMT" secondAttribute="centerY" id="8qt-oF-6iF"/>
+                        <constraint firstItem="5mq-RV-xBa" firstAttribute="centerY" secondItem="gFU-qk-oec" secondAttribute="centerY" id="AuE-Cb-KOu"/>
+                        <constraint firstItem="e1w-V9-w3Y" firstAttribute="leading" secondItem="gFU-qk-oec" secondAttribute="leading" constant="20" id="BXG-nL-PRg"/>
+                        <constraint firstItem="fbO-01-WMT" firstAttribute="centerY" secondItem="gFU-qk-oec" secondAttribute="centerY" id="U5v-pj-28j"/>
+                        <constraint firstItem="5mq-RV-xBa" firstAttribute="leading" secondItem="fbO-01-WMT" secondAttribute="trailing" constant="10" id="pZP-AP-hld"/>
+                        <constraint firstAttribute="width" constant="157" id="qRW-6U-wKN"/>
+                        <constraint firstAttribute="trailing" secondItem="5mq-RV-xBa" secondAttribute="trailing" constant="20" id="rIJ-Dl-jkm"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="gFU-qk-oec" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="frd-wd-JzG"/>
+                <constraint firstItem="gFU-qk-oec" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="uNj-dv-F6h"/>
+            </constraints>
+            <point key="canvasLocation" x="506.5" y="285"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="rotate-left" width="48" height="48"/>
+        <image name="rotate-left-hover" width="48" height="48"/>
+        <image name="rotate-right" width="48" height="48"/>
+        <image name="rotate-right-hover" width="48" height="48"/>
+    </resources>
+</document>

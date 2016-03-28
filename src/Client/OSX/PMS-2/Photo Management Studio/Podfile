@@ -1,0 +1,10 @@
+platform :osx, '10.10'
+use_frameworks!
+
+target 'Photo Management Studio' do
+  pod 'Alamofire'
+  pod 'Crashlytics'
+  pod 'Fabric'
+  pod 'INAppStoreWindow'
+end
+

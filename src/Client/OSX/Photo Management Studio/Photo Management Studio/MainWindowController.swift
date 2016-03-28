@@ -66,8 +66,10 @@ class MainWindowController : NSWindowController {
     }
     
     @IBAction func importPhotos(sender: AnyObject?) {
-        _importViewController = ImportViewController(nibName: "ImportView", bundle: nil)
-        _importViewController.view.autoresizingMask = [.ViewHeightSizable, .ViewWidthSizable]
+        if (_importViewController == nil) {
+            _importViewController = ImportViewController(nibName: "ImportView", bundle: nil)
+            _importViewController.view.autoresizingMask = [.ViewHeightSizable, .ViewWidthSizable]
+        }
         
         for view: NSView in (self.window?.contentView?.subviews)! {
             view.removeFromSuperview()
@@ -75,5 +77,19 @@ class MainWindowController : NSWindowController {
         
         self.window?.contentView?.addSubview(_importViewController.view)
         _importViewController.view.frame = (self.window?.contentView?.bounds)!
+    }
+    
+    @IBAction func goHome(sender: AnyObject?) {
+        if (_homeViewController == nil) {
+            _homeViewController = HomeViewController(nibName: "HomeView", bundle: nil)
+            _homeViewController.view.autoresizingMask = [.ViewHeightSizable, .ViewWidthSizable]
+        }
+        
+        for view: NSView in (self.window?.contentView?.subviews)! {
+            view.removeFromSuperview()
+        }
+        
+        self.window?.contentView?.addSubview(_homeViewController.view)
+        _homeViewController.view.frame = (self.window?.contentView?.bounds)!
     }
 }

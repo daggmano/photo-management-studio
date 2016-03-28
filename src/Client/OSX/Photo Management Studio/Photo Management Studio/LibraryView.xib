@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="LibraryViewController" customModule="Photo_Management_Studio" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="c22-O7-iKe" id="7vE-uP-H79"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="727" height="527"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eYn-Jz-JDB">
+                    <rect key="frame" x="5" y="35" width="717" height="487"/>
+                    <clipView key="contentView" id="BQ9-sc-vFb">
+                        <rect key="frame" x="0.0" y="0.0" width="717" height="487"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView id="b0l-O1-LhK" customClass="PMSCollectionView" customModule="Photo_Management_Studio" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="717" height="487"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </collectionView>
+                        </subviews>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="qcg-2q-Yh9">
+                        <rect key="frame" x="1" y="144" width="233" height="15"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="zGg-7Y-tL0">
+                        <rect key="frame" x="234" y="1" width="15" height="143"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="eYn-Jz-JDB" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="5" id="0yA-ku-zR4"/>
+                <constraint firstItem="eYn-Jz-JDB" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="5" id="Oid-5G-Jsb"/>
+                <constraint firstAttribute="bottom" secondItem="eYn-Jz-JDB" secondAttribute="bottom" constant="35" id="YV0-c6-AMN"/>
+                <constraint firstAttribute="trailing" secondItem="eYn-Jz-JDB" secondAttribute="trailing" constant="5" id="huL-MT-zWp"/>
+            </constraints>
+            <point key="canvasLocation" x="472.5" y="412.5"/>
+        </customView>
+        <arrayController id="nND-4G-gIf"/>
+    </objects>
+</document>

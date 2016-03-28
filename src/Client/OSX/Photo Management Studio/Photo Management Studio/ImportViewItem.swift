@@ -1,5 +1,5 @@
 //
-//  PhotoViewItem.swift
+//  ImportViewItem.swift
 //  Photo Management Studio
 //
 //  Created by Darren Oster on 2/03/2016.
@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class PhotoViewItem: NSCollectionViewItem {
+class ImportViewItem: NSCollectionViewItem {
     
     private func updateView() {
         super.viewWillAppear()
@@ -57,13 +57,13 @@ class PhotoViewItem: NSCollectionViewItem {
     
     override var selected: Bool {
         didSet {
-            (self.view as! PhotoViewItemView).selected = selected
+            (self.view as! ImportViewItemView).selected = selected
         }
     }
     
     override var highlightState: NSCollectionViewItemHighlightState {
         didSet {
-            (self.view as! PhotoViewItemView).highlightState = highlightState
+            (self.view as! ImportViewItemView).highlightState = highlightState
         }
     }
     

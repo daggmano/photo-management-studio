@@ -1,0 +1,482 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		510E8CD01C9EC4B4007413F5 /* OutlineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510E8CCF1C9EC4B4007413F5 /* OutlineViewController.swift */; };
+		510E8CD31C9F898B007413F5 /* LibraryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510E8CD21C9F898B007413F5 /* LibraryItem.swift */; };
+		51716CAE1C9C0DB200872ADC /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51716CAD1C9C0DB200872ADC /* MainWindowController.swift */; };
+		51716CB01C9C124000872ADC /* TitleBarSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51716CAF1C9C124000872ADC /* TitleBarSplitView.swift */; };
+		51716CB31C9C276300872ADC /* TitleBarLeftView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51716CB21C9C276300872ADC /* TitleBarLeftView.xib */; };
+		51716CB51C9C278800872ADC /* TitleBarRightView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51716CB41C9C278800872ADC /* TitleBarRightView.xib */; };
+		51716CB71C9C27A000872ADC /* TitleBarLeftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51716CB61C9C27A000872ADC /* TitleBarLeftViewController.swift */; };
+		51716CBA1C9C27B200872ADC /* TitleBarRightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51716CB81C9C27B200872ADC /* TitleBarRightViewController.swift */; };
+		51716CBD1C9D5A9A00872ADC /* TitleBarLeftView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51716CBC1C9D5A9A00872ADC /* TitleBarLeftView.swift */; };
+		51716CBF1C9D5AA600872ADC /* TitleBarRightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51716CBE1C9D5AA600872ADC /* TitleBarRightView.swift */; };
+		5179793C1CA6A87200C207C3 /* OutlineTitleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5179793B1CA6A87200C207C3 /* OutlineTitleButton.swift */; };
+		517979441CA7F5DA00C207C3 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517979431CA7F5DA00C207C3 /* CollectionViewController.swift */; };
+		517979461CA7F82E00C207C3 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517979451CA7F82E00C207C3 /* CollectionView.swift */; };
+		517979481CA7FBB800C207C3 /* CollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 517979471CA7FBB800C207C3 /* CollectionViewItem.xib */; };
+		5179794C1CA9244800C207C3 /* SplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5179794B1CA9244800C207C3 /* SplitView.swift */; };
+		5179794E1CA9258200C207C3 /* DividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5179794D1CA9258200C207C3 /* DividerView.swift */; };
+		517979511CA926D100C207C3 /* CollectionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517979501CA926D100C207C3 /* CollectionViewItem.swift */; };
+		517979531CA9280800C207C3 /* CollectionViewItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517979521CA9280800C207C3 /* CollectionViewItemView.swift */; };
+		517979551CA9387A00C207C3 /* PhotoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517979541CA9387A00C207C3 /* PhotoItem.swift */; };
+		518489231C9C0A5E006E3B9A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518489221C9C0A5E006E3B9A /* AppDelegate.swift */; };
+		518489251C9C0A5E006E3B9A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518489241C9C0A5E006E3B9A /* MainViewController.swift */; };
+		518489271C9C0A5E006E3B9A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 518489261C9C0A5E006E3B9A /* Assets.xcassets */; };
+		5184892A1C9C0A5E006E3B9A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 518489281C9C0A5E006E3B9A /* Main.storyboard */; };
+		518D8D7D1CA2B156007E508E /* OutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518D8D7C1CA2B156007E508E /* OutlineView.swift */; };
+		518D8D7F1CA2B3B7007E508E /* TitleCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518D8D7E1CA2B3B7007E508E /* TitleCellView.swift */; };
+		97083865721192C17274F761 /* Pods_Photo_Management_Studio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 631C47FDDB53501E51A09605 /* Pods_Photo_Management_Studio.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		307047CA1259C88DCEFC11AD /* Pods-Photo Management Studio.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Photo Management Studio.release.xcconfig"; path = "Pods/Target Support Files/Pods-Photo Management Studio/Pods-Photo Management Studio.release.xcconfig"; sourceTree = "<group>"; };
+		507AAB360039E564D343C385 /* Pods-Photo Management Studio.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Photo Management Studio.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Photo Management Studio/Pods-Photo Management Studio.debug.xcconfig"; sourceTree = "<group>"; };
+		510E8CCF1C9EC4B4007413F5 /* OutlineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutlineViewController.swift; sourceTree = "<group>"; };
+		510E8CD21C9F898B007413F5 /* LibraryItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryItem.swift; sourceTree = "<group>"; };
+		51716CAD1C9C0DB200872ADC /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
+		51716CAF1C9C124000872ADC /* TitleBarSplitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleBarSplitView.swift; sourceTree = "<group>"; };
+		51716CB21C9C276300872ADC /* TitleBarLeftView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TitleBarLeftView.xib; sourceTree = "<group>"; };
+		51716CB41C9C278800872ADC /* TitleBarRightView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TitleBarRightView.xib; sourceTree = "<group>"; };
+		51716CB61C9C27A000872ADC /* TitleBarLeftViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleBarLeftViewController.swift; sourceTree = "<group>"; };
+		51716CB81C9C27B200872ADC /* TitleBarRightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleBarRightViewController.swift; sourceTree = "<group>"; };
+		51716CBC1C9D5A9A00872ADC /* TitleBarLeftView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleBarLeftView.swift; sourceTree = "<group>"; };
+		51716CBE1C9D5AA600872ADC /* TitleBarRightView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleBarRightView.swift; sourceTree = "<group>"; };
+		5179793B1CA6A87200C207C3 /* OutlineTitleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutlineTitleButton.swift; sourceTree = "<group>"; };
+		517979431CA7F5DA00C207C3 /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
+		517979451CA7F82E00C207C3 /* CollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
+		517979471CA7FBB800C207C3 /* CollectionViewItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollectionViewItem.xib; sourceTree = "<group>"; };
+		5179794B1CA9244800C207C3 /* SplitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplitView.swift; sourceTree = "<group>"; };
+		5179794D1CA9258200C207C3 /* DividerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DividerView.swift; sourceTree = "<group>"; };
+		517979501CA926D100C207C3 /* CollectionViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewItem.swift; sourceTree = "<group>"; };
+		517979521CA9280800C207C3 /* CollectionViewItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewItemView.swift; sourceTree = "<group>"; };
+		517979541CA9387A00C207C3 /* PhotoItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoItem.swift; sourceTree = "<group>"; };
+		5184891F1C9C0A5E006E3B9A /* Photo Management Studio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Photo Management Studio.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		518489221C9C0A5E006E3B9A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		518489241C9C0A5E006E3B9A /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		518489261C9C0A5E006E3B9A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		518489291C9C0A5E006E3B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5184892B1C9C0A5E006E3B9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		518D8D7C1CA2B156007E508E /* OutlineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutlineView.swift; sourceTree = "<group>"; };
+		518D8D7E1CA2B3B7007E508E /* TitleCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleCellView.swift; sourceTree = "<group>"; };
+		631C47FDDB53501E51A09605 /* Pods_Photo_Management_Studio.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Photo_Management_Studio.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5184891C1C9C0A5E006E3B9A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97083865721192C17274F761 /* Pods_Photo_Management_Studio.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1739D874C183C1F1BC70EBDD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				507AAB360039E564D343C385 /* Pods-Photo Management Studio.debug.xcconfig */,
+				307047CA1259C88DCEFC11AD /* Pods-Photo Management Studio.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		510E8CD11C9F8975007413F5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				510E8CD21C9F898B007413F5 /* LibraryItem.swift */,
+				517979541CA9387A00C207C3 /* PhotoItem.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		51716CB11C9C272F00872ADC /* TitleBar */ = {
+			isa = PBXGroup;
+			children = (
+				51716CAF1C9C124000872ADC /* TitleBarSplitView.swift */,
+				51716CB21C9C276300872ADC /* TitleBarLeftView.xib */,
+				51716CB41C9C278800872ADC /* TitleBarRightView.xib */,
+				51716CB61C9C27A000872ADC /* TitleBarLeftViewController.swift */,
+				51716CB81C9C27B200872ADC /* TitleBarRightViewController.swift */,
+				51716CBC1C9D5A9A00872ADC /* TitleBarLeftView.swift */,
+				51716CBE1C9D5AA600872ADC /* TitleBarRightView.swift */,
+			);
+			name = TitleBar;
+			sourceTree = "<group>";
+		};
+		517979411CA7F58600C207C3 /* Sidebar */ = {
+			isa = PBXGroup;
+			children = (
+				510E8CCF1C9EC4B4007413F5 /* OutlineViewController.swift */,
+				518D8D7C1CA2B156007E508E /* OutlineView.swift */,
+				518D8D7E1CA2B3B7007E508E /* TitleCellView.swift */,
+				5179793B1CA6A87200C207C3 /* OutlineTitleButton.swift */,
+			);
+			name = Sidebar;
+			sourceTree = "<group>";
+		};
+		517979421CA7F5A600C207C3 /* Collection */ = {
+			isa = PBXGroup;
+			children = (
+				517979431CA7F5DA00C207C3 /* CollectionViewController.swift */,
+				517979451CA7F82E00C207C3 /* CollectionView.swift */,
+				517979471CA7FBB800C207C3 /* CollectionViewItem.xib */,
+				517979501CA926D100C207C3 /* CollectionViewItem.swift */,
+				517979521CA9280800C207C3 /* CollectionViewItemView.swift */,
+			);
+			name = Collection;
+			sourceTree = "<group>";
+		};
+		5179794F1CA9263D00C207C3 /* HelperViews */ = {
+			isa = PBXGroup;
+			children = (
+				5179794B1CA9244800C207C3 /* SplitView.swift */,
+				5179794D1CA9258200C207C3 /* DividerView.swift */,
+			);
+			name = HelperViews;
+			sourceTree = "<group>";
+		};
+		518489161C9C0A5E006E3B9A = {
+			isa = PBXGroup;
+			children = (
+				518489211C9C0A5E006E3B9A /* Photo Management Studio */,
+				518489201C9C0A5E006E3B9A /* Products */,
+				1739D874C183C1F1BC70EBDD /* Pods */,
+				B070840AED43A3B9B0558AA6 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		518489201C9C0A5E006E3B9A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5184891F1C9C0A5E006E3B9A /* Photo Management Studio.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		518489211C9C0A5E006E3B9A /* Photo Management Studio */ = {
+			isa = PBXGroup;
+			children = (
+				5179794F1CA9263D00C207C3 /* HelperViews */,
+				517979421CA7F5A600C207C3 /* Collection */,
+				517979411CA7F58600C207C3 /* Sidebar */,
+				510E8CD11C9F8975007413F5 /* Models */,
+				51716CB11C9C272F00872ADC /* TitleBar */,
+				518489221C9C0A5E006E3B9A /* AppDelegate.swift */,
+				518489261C9C0A5E006E3B9A /* Assets.xcassets */,
+				518489281C9C0A5E006E3B9A /* Main.storyboard */,
+				5184892B1C9C0A5E006E3B9A /* Info.plist */,
+				51716CAD1C9C0DB200872ADC /* MainWindowController.swift */,
+				518489241C9C0A5E006E3B9A /* MainViewController.swift */,
+			);
+			path = "Photo Management Studio";
+			sourceTree = "<group>";
+		};
+		B070840AED43A3B9B0558AA6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				631C47FDDB53501E51A09605 /* Pods_Photo_Management_Studio.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5184891E1C9C0A5E006E3B9A /* Photo Management Studio */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5184892E1C9C0A5E006E3B9A /* Build configuration list for PBXNativeTarget "Photo Management Studio" */;
+			buildPhases = (
+				B801F30B9FAF25805B76969E /* Check Pods Manifest.lock */,
+				5184891B1C9C0A5E006E3B9A /* Sources */,
+				5184891C1C9C0A5E006E3B9A /* Frameworks */,
+				5184891D1C9C0A5E006E3B9A /* Resources */,
+				5EF510E69A1975DE0D8C0767 /* Embed Pods Frameworks */,
+				6BC2CAEDDF3BA8D9D7A01BEC /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Photo Management Studio";
+			productName = "Photo Management Studio";
+			productReference = 5184891F1C9C0A5E006E3B9A /* Photo Management Studio.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		518489171C9C0A5E006E3B9A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = "Criterion Software";
+				TargetAttributes = {
+					5184891E1C9C0A5E006E3B9A = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+				};
+			};
+			buildConfigurationList = 5184891A1C9C0A5E006E3B9A /* Build configuration list for PBXProject "Photo Management Studio" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 518489161C9C0A5E006E3B9A;
+			productRefGroup = 518489201C9C0A5E006E3B9A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5184891E1C9C0A5E006E3B9A /* Photo Management Studio */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5184891D1C9C0A5E006E3B9A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				51716CB31C9C276300872ADC /* TitleBarLeftView.xib in Resources */,
+				518489271C9C0A5E006E3B9A /* Assets.xcassets in Resources */,
+				51716CB51C9C278800872ADC /* TitleBarRightView.xib in Resources */,
+				517979481CA7FBB800C207C3 /* CollectionViewItem.xib in Resources */,
+				5184892A1C9C0A5E006E3B9A /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5EF510E69A1975DE0D8C0767 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Photo Management Studio/Pods-Photo Management Studio-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6BC2CAEDDF3BA8D9D7A01BEC /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Photo Management Studio/Pods-Photo Management Studio-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B801F30B9FAF25805B76969E /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5184891B1C9C0A5E006E3B9A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				518D8D7F1CA2B3B7007E508E /* TitleCellView.swift in Sources */,
+				5179794C1CA9244800C207C3 /* SplitView.swift in Sources */,
+				517979531CA9280800C207C3 /* CollectionViewItemView.swift in Sources */,
+				510E8CD31C9F898B007413F5 /* LibraryItem.swift in Sources */,
+				517979441CA7F5DA00C207C3 /* CollectionViewController.swift in Sources */,
+				51716CBA1C9C27B200872ADC /* TitleBarRightViewController.swift in Sources */,
+				510E8CD01C9EC4B4007413F5 /* OutlineViewController.swift in Sources */,
+				5179793C1CA6A87200C207C3 /* OutlineTitleButton.swift in Sources */,
+				517979461CA7F82E00C207C3 /* CollectionView.swift in Sources */,
+				51716CB01C9C124000872ADC /* TitleBarSplitView.swift in Sources */,
+				51716CBF1C9D5AA600872ADC /* TitleBarRightView.swift in Sources */,
+				517979551CA9387A00C207C3 /* PhotoItem.swift in Sources */,
+				5179794E1CA9258200C207C3 /* DividerView.swift in Sources */,
+				517979511CA926D100C207C3 /* CollectionViewItem.swift in Sources */,
+				51716CBD1C9D5A9A00872ADC /* TitleBarLeftView.swift in Sources */,
+				518489251C9C0A5E006E3B9A /* MainViewController.swift in Sources */,
+				518D8D7D1CA2B156007E508E /* OutlineView.swift in Sources */,
+				518489231C9C0A5E006E3B9A /* AppDelegate.swift in Sources */,
+				51716CAE1C9C0DB200872ADC /* MainWindowController.swift in Sources */,
+				51716CB71C9C27A000872ADC /* TitleBarLeftViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		518489281C9C0A5E006E3B9A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				518489291C9C0A5E006E3B9A /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5184892C1C9C0A5E006E3B9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		5184892D1C9C0A5E006E3B9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		5184892F1C9C0A5E006E3B9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 507AAB360039E564D343C385 /* Pods-Photo Management Studio.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Photo Management Studio/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "au.com.criterionsoftware.Photo-Management-Studio";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		518489301C9C0A5E006E3B9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 307047CA1259C88DCEFC11AD /* Pods-Photo Management Studio.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Photo Management Studio/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "au.com.criterionsoftware.Photo-Management-Studio";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5184891A1C9C0A5E006E3B9A /* Build configuration list for PBXProject "Photo Management Studio" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5184892C1C9C0A5E006E3B9A /* Debug */,
+				5184892D1C9C0A5E006E3B9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5184892E1C9C0A5E006E3B9A /* Build configuration list for PBXNativeTarget "Photo Management Studio" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5184892F1C9C0A5E006E3B9A /* Debug */,
+				518489301C9C0A5E006E3B9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 518489171C9C0A5E006E3B9A /* Project object */;
+}

@@ -1,5 +1,5 @@
 //
-//  PhotoItemViewItemView.swift
+//  ImportItemViewItemView.swift
 //  Photo Management Studio
 //
 //  Created by Darren Oster on 2/03/2016.
@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class PhotoViewItemView: NSView {
+class ImportViewItemView: NSView {
     
     @IBOutlet var innerView: NSView!
 

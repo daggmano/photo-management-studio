@@ -54,8 +54,25 @@
                             </textFieldCell>
                         </textField>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="28688C5A-20E0-4A29-B142-1CBC0B66D4E6" label="Custom View" paletteLabel="Custom View" image="home" id="2ab-Cg-ZJB">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="24" height="24"/>
+                        <size key="maxSize" width="24" height="24"/>
+                        <button key="view" verticalHuggingPriority="750" id="s3x-Yo-jUJ" customClass="PMSHoverButton" customModule="Photo_Management_Studio" customModuleProvider="target">
+                            <rect key="frame" x="26" y="14" width="24" height="24"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="home" imagePosition="overlaps" alignment="center" alternateImage="home-hover" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="ZGg-NB-y2t">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="goHome:" target="-1" id="f6B-LR-Gn1"/>
+                            </connections>
+                        </button>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
+                    <toolbarItem reference="2ab-Cg-ZJB"/>
                     <toolbarItem reference="QdS-8g-ueb"/>
                     <toolbarItem reference="Cgz-s9-8sw"/>
                     <toolbarItem reference="IKZ-oH-Ln1"/>
@@ -67,5 +84,7 @@
     </objects>
     <resources>
         <image name="NSStatusUnavailable" width="16" height="16"/>
+        <image name="home" width="48" height="48"/>
+        <image name="home-hover" width="48" height="48"/>
     </resources>
 </document>

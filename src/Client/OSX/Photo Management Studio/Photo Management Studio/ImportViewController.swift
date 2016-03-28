@@ -11,7 +11,7 @@ import ITProgressIndicator
 
 class ImportViewController : NSViewController, NSCollectionViewDataSource, NSCollectionViewDelegate {
  
-    @IBOutlet weak var collectionView: ImportCollectionView!
+    @IBOutlet weak var collectionView: NSCollectionView!
     @IBOutlet weak var progressIndicator: ITProgressIndicator!
     
     @IBOutlet var sortDescriptor: NSSortDescriptor!
@@ -69,7 +69,7 @@ class ImportViewController : NSViewController, NSCollectionViewDataSource, NSCol
     
     func collectionView(collectionView: NSCollectionView, itemForRepresentedObjectAtIndexPath indexPath: NSIndexPath) -> NSCollectionViewItem {
         
-        let item = collectionView.makeItemWithIdentifier("PhotoViewItem", forIndexPath: indexPath)
+        let item = collectionView.makeItemWithIdentifier("ImportViewItem", forIndexPath: indexPath)
         
         let t = self.importablePhotoArray.objectAtIndex(indexPath.item) as? ImportableItem
         print("Item is \(t?.filename) for index \(indexPath.item)")

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="TitleBarRightViewController" customModule="Photo_Management_Studio" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="c22-O7-iKe" id="aVz-N7-u04"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe" customClass="TitleBarRightView" customModule="Photo_Management_Studio" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="38"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="dR1-hG-xdK" customClass="DividerView" customModule="Photo_Management_Studio" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="1"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="psA-ti-Sh6"/>
+                    </constraints>
+                </customView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VmX-Ua-fnh">
+                    <rect key="frame" x="158" y="10" width="165" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Photo Management Studio" id="9yC-65-Pjw">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="dR1-hG-xdK" secondAttribute="bottom" id="0Xv-89-fJ7"/>
+                <constraint firstItem="VmX-Ua-fnh" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="evk-A9-DkO"/>
+                <constraint firstItem="dR1-hG-xdK" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="k4Y-zI-DUA"/>
+                <constraint firstItem="VmX-Ua-fnh" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="qYa-Nh-QtD"/>
+                <constraint firstAttribute="trailing" secondItem="dR1-hG-xdK" secondAttribute="trailing" id="qkm-Hl-LKR"/>
+            </constraints>
+            <point key="canvasLocation" x="565" y="304"/>
+        </customView>
+    </objects>
+</document>

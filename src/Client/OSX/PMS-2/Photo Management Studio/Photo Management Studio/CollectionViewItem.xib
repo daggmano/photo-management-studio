@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <collectionViewItem nibName="CollectionViewItem" id="Rca-0y-Htn" customClass="CollectionViewItem" customModule="Photo_Management_Studio" customModuleProvider="target">
+            <connections>
+                <outlet property="imageView" destination="tb7-fc-7oE" id="cYM-ED-y6Z"/>
+                <outlet property="nameLabel" destination="tKa-Zj-Iac" id="eCT-Ii-DUv"/>
+                <outlet property="sizeLabel" destination="Ssh-2c-I4n" id="06t-fF-Ti9"/>
+                <outlet property="view" destination="Ynp-eG-dp9" id="Kkz-rJ-XRz"/>
+            </connections>
+        </collectionViewItem>
+        <customView id="Ynp-eG-dp9" customClass="CollectionViewItemView" customModule="Photo_Management_Studio" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="250" height="290"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="8RS-MT-pAf">
+                    <rect key="frame" x="2" y="2" width="246" height="286"/>
+                    <subviews>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tb7-fc-7oE">
+                            <rect key="frame" x="10" y="50" width="226" height="226"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="tb7-fc-7oE" secondAttribute="height" multiplier="1:1" id="dIn-g3-BJa"/>
+                            </constraints>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="gbN-MN-rHq"/>
+                        </imageView>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ssh-2c-I4n" userLabel="SizeLabel">
+                            <rect key="frame" x="8" y="10" width="230" height="17"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="fdA-bx-xfX">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" red="0.70196078431372544" green="0.70196078431372544" blue="0.70196078431372544" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tKa-Zj-Iac" userLabel="FileNameLabel">
+                            <rect key="frame" x="8" y="28" width="230" height="17"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="2eD-Sf-pzS">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="Ssh-2c-I4n" firstAttribute="top" secondItem="tKa-Zj-Iac" secondAttribute="bottom" constant="1" id="7JO-u7-jxO"/>
+                        <constraint firstItem="tb7-fc-7oE" firstAttribute="leading" secondItem="8RS-MT-pAf" secondAttribute="leading" constant="10" id="Bhc-o3-NfT"/>
+                        <constraint firstAttribute="trailing" secondItem="tb7-fc-7oE" secondAttribute="trailing" constant="10" id="C1z-hX-Vu6"/>
+                        <constraint firstAttribute="trailing" secondItem="Ssh-2c-I4n" secondAttribute="trailing" constant="10" id="Iba-zm-hJd"/>
+                        <constraint firstAttribute="trailing" secondItem="tKa-Zj-Iac" secondAttribute="trailing" constant="10" id="Q1v-Vn-BpE"/>
+                        <constraint firstItem="tKa-Zj-Iac" firstAttribute="leading" secondItem="8RS-MT-pAf" secondAttribute="leading" constant="10" id="e9K-MH-nT6"/>
+                        <constraint firstItem="Ssh-2c-I4n" firstAttribute="leading" secondItem="8RS-MT-pAf" secondAttribute="leading" constant="10" id="iOc-Jv-Ao1"/>
+                        <constraint firstAttribute="bottom" secondItem="Ssh-2c-I4n" secondAttribute="bottom" constant="10" id="nyN-sT-dGX"/>
+                        <constraint firstItem="tb7-fc-7oE" firstAttribute="top" secondItem="8RS-MT-pAf" secondAttribute="top" constant="10" id="zKo-4j-GTu"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="8RS-MT-pAf" firstAttribute="leading" secondItem="Ynp-eG-dp9" secondAttribute="leading" constant="2" id="Nql-vs-eNv"/>
+                <constraint firstAttribute="trailing" secondItem="8RS-MT-pAf" secondAttribute="trailing" constant="2" id="dwA-pH-cvz"/>
+                <constraint firstItem="8RS-MT-pAf" firstAttribute="top" secondItem="Ynp-eG-dp9" secondAttribute="top" constant="2" id="ooY-DZ-bLs"/>
+                <constraint firstAttribute="bottom" secondItem="8RS-MT-pAf" secondAttribute="bottom" constant="2" id="xCi-7h-a7N"/>
+            </constraints>
+            <connections>
+                <outlet property="innerView" destination="8RS-MT-pAf" id="PzK-80-q9L"/>
+            </connections>
+            <point key="canvasLocation" x="294.5" y="258"/>
+        </customView>
+    </objects>
+</document>

@@ -91,7 +91,7 @@ namespace PhotoLibraryImageService.Jobs
 				rootPath += "/";
 			}
 			var diskFileList = _fileManagementService.GetFileList(rootPath);
-			var diskFiles = diskFileList.Where(x => !x.Equals(".DS_Store")).Select(x => new Tuple<string, string>(x.ToLowerInvariant(), x)).ToList();
+			var diskFiles = diskFileList.Where(x => !x.Contains(".DS_Store")).Select(x => new Tuple<string, string>(x.ToLowerInvariant(), x)).ToList();
 			var loweredDiskFiles = diskFiles.Select(x => x.Item1).ToList();
 
 			worker.ReportProgress(66);
