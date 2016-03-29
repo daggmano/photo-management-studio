@@ -151,10 +151,29 @@ class CollectionViewController: NSViewController, NSCollectionViewDelegate {
 //        return true
 //    }
     
-//    func collectionView(collectionView: NSCollectionView, acceptDrop draggingInfo: NSDraggingInfo, indexPath: NSIndexPath, dropOperation: NSCollectionViewDropOperation) -> Bool {
-//        print("a")
-//        return true
-//    }
+    func collectionView(collectionView: NSCollectionView, acceptDrop draggingInfo: NSDraggingInfo, indexPath: NSIndexPath, dropOperation: NSCollectionViewDropOperation) -> Bool {
+
+        for item in collectionView.visibleItems() {
+            item.highlightState = .None
+        }
+        
+        let item = collectionView.itemAtIndexPath(indexPath)
+        if let obj = item?.representedObject as? PhotoItem {
+            print(obj.fileName)
+        }
+        
+        let pasteboard = draggingInfo.draggingPasteboard()
+        if let data = pasteboard.dataForType("testCollectionDragType") {
+            let obj = NSKeyedUnarchiver.unarchiveObjectWithData(data) as! NSArray
+            for item in obj {
+                if let o = item as? LibraryItem {
+                    print(o.text)
+                }
+            }
+        }
+
+        return true
+    }
     
 //    func collectionView(collectionView: NSCollectionView, acceptDrop draggingInfo: NSDraggingInfo, index: Int, dropOperation: NSCollectionViewDropOperation) -> Bool {
 //        print("b")
