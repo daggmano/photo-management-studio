@@ -38,11 +38,18 @@ class CollectionViewItemView: NSView {
     
     override func updateLayer() {
         self.innerView.layer!.cornerRadius = 5
+        self.innerView.layer!.borderWidth = 2
         
         if selected {
             self.innerView.layer!.backgroundColor = NSColor(white: 0.3, alpha: 1.0).CGColor
         } else {
             self.innerView.layer!.backgroundColor = NSColor.clearColor().CGColor
+        }
+        
+        if highlightState == .AsDropTarget {
+            self.innerView.layer!.borderColor = NSColor(deviceRed: 0, green: 0.8, blue: 1.0, alpha: 1.0).CGColor
+        } else {
+            self.innerView.layer!.borderColor = NSColor.clearColor().CGColor
         }
     }
     

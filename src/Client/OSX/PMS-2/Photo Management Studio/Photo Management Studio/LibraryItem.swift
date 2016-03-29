@@ -8,39 +8,37 @@
 
 import Cocoa
 
-enum LibraryItemType {
-    case Title, Item, Separator
+enum LibraryItemType: String {
+    case Title = "Title"
+    case Item = "Item"
+    case Separator = "Separator"
 }
 
-class LibraryItem: NSObject {
+class LibraryItem: NSObject, NSCoding {
 
     let text: String?
-    let image: NSImage?
     let type: LibraryItemType!
     var children: [LibraryItem] = []
 
     init(asSeparator: Bool) {
         type = .Separator
         text = nil
-        image = nil
     }
     
     init(asTitle: String) {
         type = .Title
         text = asTitle
-        image = nil
     }
     
     init(asItem: String) {
         type = .Item
         text = asItem
-        image = nil
     }
     
-    init(asItem: String, withImage: NSImage) {
-        type = .Item
-        text = asItem
-        image = withImage
+    init(type: LibraryItemType, text: String?, children: [LibraryItem]) {
+        self.type = type
+        self.text = text
+        self.children = children
     }
     
     func isLeaf() -> Bool {
@@ -53,5 +51,26 @@ class LibraryItem: NSObject {
     
     func isTitle() -> Bool {
         return type == .Title
+    }
+    
+    // MARK: NSCoding
+    
+    required convenience init?(coder decoder: NSCoder) {
+        guard let text = decoder.decodeObjectForKey("text") as? String,
+            let type = LibraryItemType(rawValue: (decoder.decodeObjectForKey("type") as! String)),
+            let children = decoder.decodeObjectForKey("children") as? [LibraryItem]
+            else { return nil }
+        
+        self.init(
+            type: type,
+            text: text,
+            children: children
+        )
+    }
+    
+    func encodeWithCoder(coder: NSCoder) {
+        coder.encodeObject(self.type.rawValue, forKey: "type")
+        coder.encodeObject(self.text, forKey: "text")
+        coder.encodeObject(self.children, forKey: "children")
     }
 }

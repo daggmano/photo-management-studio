@@ -8,12 +8,18 @@
 
 import Cocoa
 
-class OutlineViewController: NSViewController, NSOutlineViewDelegate {
+class OutlineViewController: NSViewController, NSOutlineViewDelegate, NSOutlineViewDataSource {
 
     @IBOutlet weak var outlineView: NSOutlineView!
     @IBOutlet weak var treeController: NSTreeController!
     
+    let dragType: String = "testTreeDragType"
+    
     var libraryItems: [LibraryItem] = []
+    
+    override func awakeFromNib() {
+        outlineView.registerForDraggedTypes([dragType])
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,5 +71,107 @@ class OutlineViewController: NSViewController, NSOutlineViewDelegate {
         }
         
         return false
+    }
+    
+    // MARK: - NSOutlineView Data Source Helper Functions
+    
+//    func childrenOfNode(node : AnyObject?) -> [LibraryItem]? {
+        // 1. If we have a node then return it's children
+        // 2. Else we need to locate the root node and try to return it's children
+        // 3. Finally we exhaust our choices and return nil
+//        if node != nil {
+//            let item: LibraryItem! = node as! LibraryItem
+//            let children: [LibraryItem] = item.children
+//            return children
+//        } else if let rootTreeNode : NSTreeNode = treeController.arrangedObjects.descendantNodeAtIndexPath(NSIndexPath(index: 0)) {
+//            if let rootNode: LibraryItem = rootTreeNode.representedObject as? LibraryItem {
+//                return rootNode.children
+//            }
+//        }
+
+//        return nil
+//    }
+    
+//    func rootNode() -> LibraryItem? {
+//        if let rootTreeNode : NSTreeNode = treeController.arrangedObjects.descendantNodeAtIndexPath(NSIndexPath(index: 0)) {
+//            return rootTreeNode.representedObject as? LibraryItem
+//        } else {
+//            return nil
+//        }
+//    }
+    
+//    func isLeaf(item : AnyObject?) -> Bool {
+//        if item != nil {
+//            if let children : [LibraryItem] = item?.children {
+//                if children.count == 0 {
+//                    return true
+//                } else {
+//                    return false
+//                }
+//            }
+//        }
+        // item is nil
+//        return false
+//    }
+    
+    // MARK: - NSOutlineView Drag and Drop Required Functions
+    
+    func outlineView(outlineView: NSOutlineView, writeItems items: [AnyObject], toPasteboard pasteboard: NSPasteboard) -> Bool {
+        
+        //get an array of URIs for the selected objects
+        var itemsAreDraggable = true
+        
+        print(items)
+        let mutableArray = NSMutableArray()
+        
+        for object in items {
+            if let treeItem = object.representedObject as? LibraryItem {
+                if treeItem.children.count > 0 {
+                    itemsAreDraggable = false
+                } else {
+                    mutableArray.addObject(treeItem)
+                }
+            }
+        }
+
+        if itemsAreDraggable {
+            let data = NSKeyedArchiver.archivedDataWithRootObject(mutableArray)
+            pasteboard.setData(data, forType: "testCollectionDragType")
+        }
+        
+        return itemsAreDraggable
+    }
+    
+    func outlineView(outlineView: NSOutlineView, validateDrop info: NSDraggingInfo, proposedItem item: AnyObject?, proposedChildIndex index: Int) -> NSDragOperation {
+        print(info)
+        print(item)
+        return NSDragOperation.Move
+    }
+    
+    func outlineView(outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: AnyObject?, childIndex index: Int) -> Bool {
+        
+        // Determine the parent node
+//        var parentItem : AnyObject? = item?.representedObject
+        
+        // Get Dragged NSTreeNodes
+//        let pasteboard : NSPasteboard = info.draggingPasteboard()
+//        let data : NSData = pasteboard.dataForType(dragType)! as NSData
+//        let draggedArray : NSArray? = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? NSArray
+        
+        // Loop through DraggedArray
+//        for object : AnyObject in draggedArray! {
+            // Get the ID of the NSManagedObject
+//            if let id : NSManagedObjectID? = persistentStoreCoordinator?.managedObjectIDForURIRepresentation(object as NSURL){
+                // Set new parent to the dragged item
+//                if let treeItem = managedObjectContext?.objectWithID(id!){
+//                    treeItem.setValue(parentItem, forKey: "parent")
+//                }
+//            }
+//        }
+        
+        // Reload the OutlineView
+//        outlineView.reloadData()
+        
+        return true
     }
 }

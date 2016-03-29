@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class PhotoItem: NSObject {
+class PhotoItem: NSObject, NSCoding {
 
     let imageUrl: String!
     let fileName: String!
@@ -18,5 +18,26 @@ class PhotoItem: NSObject {
         self.fileName = fileName
         self.dimensions = dimensions
         self.imageUrl = imageUrl
+    }
+    
+    // MARK: NSCoding
+    
+    required convenience init?(coder decoder: NSCoder) {
+        guard let imageUrl = decoder.decodeObjectForKey("imageUrl") as? String,
+            let fileName = decoder.decodeObjectForKey("fileName") as? String,
+            let dimensions = decoder.decodeObjectForKey("dimensions") as? String
+            else { return nil }
+        
+        self.init(
+            fileName: fileName,
+            dimensions: dimensions,
+            imageUrl: imageUrl
+        )
+    }
+    
+    func encodeWithCoder(coder: NSCoder) {
+        coder.encodeObject(self.fileName, forKey: "fileName")
+        coder.encodeObject(self.dimensions, forKey: "dimensions")
+        coder.encodeObject(self.imageUrl, forKey: "imageUrl")
     }
 }
