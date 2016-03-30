@@ -13,12 +13,12 @@ class OutlineViewController: NSViewController, NSOutlineViewDelegate, NSOutlineV
     @IBOutlet weak var outlineView: NSOutlineView!
     @IBOutlet weak var treeController: NSTreeController!
     
-    let dragType: String = "testTreeDragType"
+    static let dragType: String = "photomanagementstudio.taglist.DragType"
     
     var libraryItems: [LibraryItem] = []
     
     override func awakeFromNib() {
-        outlineView.registerForDraggedTypes([dragType])
+        outlineView.registerForDraggedTypes([CollectionViewController.dragType])
     }
     
     override func viewDidLoad() {
@@ -28,13 +28,11 @@ class OutlineViewController: NSViewController, NSOutlineViewDelegate, NSOutlineV
         self.willChangeValueForKey("libraryItems")
         
         let item = LibraryItem(asTitle: "Tags")
-        item.children.append(LibraryItem(asItem: "Item 1"))
-        item.children.append(LibraryItem(asItem: "Item 2"))
+        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
+        item.children.append(LibraryItem(asItem: "Item 2", canTag: false))
         
-        item.children[1].children.append(LibraryItem(asItem: "Sub Item 2.1"))
-        item.children[1].children[0].children.append(LibraryItem(asItem: "Sub Item 2.1.1"))
-        item.children[1].children[0].children[0].children.append(LibraryItem(asItem: "Sub Item 2.1.1.1"))
-        item.children[1].children[0].children[0].children[0].children.append(LibraryItem(asItem: "Sub Item 2.1.1.1.1"))
+        item.children[1].children.append(LibraryItem(asItem: "Sub Item 2.1", canTag: false))
+        item.children[1].children[0].children.append(LibraryItem(asItem: "Sub Item 2.1.1", canTag: true))
         
         libraryItems.append(item)
         libraryItems.append(LibraryItem(asTitle: "Collections"))
@@ -52,12 +50,13 @@ class OutlineViewController: NSViewController, NSOutlineViewDelegate, NSOutlineV
                 let titleCellView = outlineView.makeViewWithIdentifier("TitleCell", owner: self) as? TitleCellView
                 titleCellView?.representedItem = node
                 result = titleCellView
-            } else if node.isSeparator() {
-                result = outlineView.makeViewWithIdentifier("SeparatorCell", owner: self) as? NSTableCellView
             } else {
                 result = outlineView.makeViewWithIdentifier("ItemCell", owner: self) as? NSTableCellView
-                let value = node.text!
-                result?.textField?.stringValue = value
+                result?.textField?.stringValue = node.text
+
+                if node.canTag {
+                    result?.imageView?.image = NSImage(named: "Photo1")
+                }
             }
         }
         
@@ -73,48 +72,7 @@ class OutlineViewController: NSViewController, NSOutlineViewDelegate, NSOutlineV
         return false
     }
     
-    // MARK: - NSOutlineView Data Source Helper Functions
-    
-//    func childrenOfNode(node : AnyObject?) -> [LibraryItem]? {
-        // 1. If we have a node then return it's children
-        // 2. Else we need to locate the root node and try to return it's children
-        // 3. Finally we exhaust our choices and return nil
-//        if node != nil {
-//            let item: LibraryItem! = node as! LibraryItem
-//            let children: [LibraryItem] = item.children
-//            return children
-//        } else if let rootTreeNode : NSTreeNode = treeController.arrangedObjects.descendantNodeAtIndexPath(NSIndexPath(index: 0)) {
-//            if let rootNode: LibraryItem = rootTreeNode.representedObject as? LibraryItem {
-//                return rootNode.children
-//            }
-//        }
-
-//        return nil
-//    }
-    
-//    func rootNode() -> LibraryItem? {
-//        if let rootTreeNode : NSTreeNode = treeController.arrangedObjects.descendantNodeAtIndexPath(NSIndexPath(index: 0)) {
-//            return rootTreeNode.representedObject as? LibraryItem
-//        } else {
-//            return nil
-//        }
-//    }
-    
-//    func isLeaf(item : AnyObject?) -> Bool {
-//        if item != nil {
-//            if let children : [LibraryItem] = item?.children {
-//                if children.count == 0 {
-//                    return true
-//                } else {
-//                    return false
-//                }
-//            }
-//        }
-        // item is nil
-//        return false
-//    }
-    
-    // MARK: - NSOutlineView Drag and Drop Required Functions
+    // MARK - Drag Operations
     
     func outlineView(outlineView: NSOutlineView, writeItems items: [AnyObject], toPasteboard pasteboard: NSPasteboard) -> Bool {
         
@@ -136,42 +94,61 @@ class OutlineViewController: NSViewController, NSOutlineViewDelegate, NSOutlineV
 
         if itemsAreDraggable {
             let data = NSKeyedArchiver.archivedDataWithRootObject(mutableArray)
-            pasteboard.setData(data, forType: "testCollectionDragType")
+            pasteboard.clearContents()
+            pasteboard.setData(data, forType: OutlineViewController.dragType)
         }
         
         return itemsAreDraggable
     }
     
+    // MARK - Drop Operations
+    
     func outlineView(outlineView: NSOutlineView, validateDrop info: NSDraggingInfo, proposedItem item: AnyObject?, proposedChildIndex index: Int) -> NSDragOperation {
-        print(info)
-        print(item)
-        return NSDragOperation.Move
+
+        if index != -1 || item == nil {
+            return NSDragOperation.None
+        }
+        
+        guard let node = item?.representedObject as? LibraryItem else {
+            return NSDragOperation.None
+        }
+
+        let pasteboard = info.draggingPasteboard()
+        if let types = pasteboard.types {
+            if types.contains(CollectionViewController.dragType) && node.canTag {
+                return NSDragOperation.Copy
+            }
+        }
+
+        return NSDragOperation.None
     }
     
     func outlineView(outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: AnyObject?, childIndex index: Int) -> Bool {
+
+        let pasteboard = info.draggingPasteboard()
         
-        // Determine the parent node
-//        var parentItem : AnyObject? = item?.representedObject
+        guard let types = pasteboard.types else {
+            return false
+        }
         
-        // Get Dragged NSTreeNodes
-//        let pasteboard : NSPasteboard = info.draggingPasteboard()
-//        let data : NSData = pasteboard.dataForType(dragType)! as NSData
-//        let draggedArray : NSArray? = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? NSArray
+        if types.contains(CollectionViewController.dragType) {
+            
+            if let data = pasteboard.dataForType(CollectionViewController.dragType) {
+                let obj = NSKeyedUnarchiver.unarchiveObjectWithData(data) as! NSArray
+                for item in obj {
+                    if let o = item as? PhotoItem {
+                        print("Dropped Photo: \(o.fileName)")
+                    }
+                }
+            }
+
+            if let item = item?.representedObject as? LibraryItem {
+                print("Target Item: \(item.text)")
+            }
+            
+            return true
+        }
         
-        // Loop through DraggedArray
-//        for object : AnyObject in draggedArray! {
-            // Get the ID of the NSManagedObject
-//            if let id : NSManagedObjectID? = persistentStoreCoordinator?.managedObjectIDForURIRepresentation(object as NSURL){
-                // Set new parent to the dragged item
-//                if let treeItem = managedObjectContext?.objectWithID(id!){
-//                    treeItem.setValue(parentItem, forKey: "parent")
-//                }
-//            }
-//        }
-        
-        // Reload the OutlineView
-//        outlineView.reloadData()
-        
-        return true
+        return false
     }
 }

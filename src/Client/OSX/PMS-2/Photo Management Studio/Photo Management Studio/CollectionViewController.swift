@@ -12,9 +12,10 @@ class CollectionViewController: NSViewController, NSCollectionViewDelegate {
     
     @IBOutlet weak var collectionView: NSCollectionView!
     
-    let dragType: String = "testCollectionDragType"
+    static let dragType: String = "photomanagementstudio.collection.DragType"
     
     var photoItems: [PhotoItem] = []
+    var viewIsCollection: Bool = false
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -25,7 +26,7 @@ class CollectionViewController: NSViewController, NSCollectionViewDelegate {
     }
     
     override func awakeFromNib() {
-        collectionView.registerForDraggedTypes([dragType])
+        collectionView.registerForDraggedTypes([CollectionViewController.dragType, OutlineViewController.dragType])
         collectionView.setDraggingSourceOperationMask(.Copy, forLocal: true)
     }
     
@@ -54,21 +55,18 @@ class CollectionViewController: NSViewController, NSCollectionViewDelegate {
         self.didChangeValueForKey("photoItems")
     }
     
+    // MARK - Drag Operations
     
     func collectionView(collectionView: NSCollectionView, writeItemsAtIndexPaths indexPaths: Set<NSIndexPath>, toPasteboard pasteboard: NSPasteboard) -> Bool {
-        
+    
         var selectedItems: [PhotoItem] = []
         for indexPath in indexPaths {
             selectedItems.append(photoItems[indexPath.item])
         }
         
         let indexData = NSKeyedArchiver.archivedDataWithRootObject(selectedItems)
-  
-        pasteboard.setData(indexData, forType: "testTreeDragType")
-//        NSPasteboard.generalPasteboard().clearContents()
-//        NSPasteboard.generalPasteboard().declareTypes([kUTTypeText as String, kUTTypeData as String], owner: nil)
-//        NSPasteboard.generalPasteboard().setString("photos", forType: (kUTTypeText as String))
-//        NSPasteboard.generalPasteboard().setData(indexData, forType: (kUTTypeData as String))
+        pasteboard.clearContents()
+        pasteboard.setData(indexData, forType: CollectionViewController.dragType)
         
         return true
     }
@@ -91,114 +89,109 @@ class CollectionViewController: NSViewController, NSCollectionViewDelegate {
         
         return newImage
     }
-    
-    // Image is dropped on destination NSCollectionView.
-//    func collectionView(collectionView: NSCollectionView, draggingSession session: NSDraggingSession, endedAtPoint screenPoint: NSPoint, dragOperation operation: NSDragOperation) {
 
-//        for item in collectionView.visibleItems() {
-//            item.highlightState = .None
-//        }
+    // MARK - Drop Operations
+    
+    func collectionView(collectionView: NSCollectionView, validateDrop draggingInfo: NSDraggingInfo, proposedIndexPath proposedDropIndexPath: AutoreleasingUnsafeMutablePointer<NSIndexPath?>, dropOperation proposedDropOperation: UnsafeMutablePointer<NSCollectionViewDropOperation>) -> NSDragOperation {
 
-        
-//        let pasteboardItem = NSPasteboard.generalPasteboard().pasteboardItems![0]
-//        let urlString = pasteboardItem.stringForType((kUTTypeText as String))
-        //let imageData = pasteboardItem.dataForType((kUTTypeData as String))
-        
-        // destinationImages is the data source for the destination collectionView. destinationImageURLs is used to keep track of the text urls.
-//        if urlString != nil {
-//            print(urlString)
-//            destinationImageURLs.insert(urlString!, atIndex: 0)
-//            destinationImages.insert(NSImage(data: imageData!)!, atIndex: 0)
-//            destinationCollectionView.reloadData()
-//            let selectionRect = self.favoritesCollectionView.frameForItemAtIndex(0)
-//            destinationCollectionView.scrollRectToVisible(selectionRect)
-//        }
-//    }
-    
-//    func collectionView(collectionView: NSCollectionView, canDragItemsAtIndexes indexes: NSIndexSet, withEvent event: NSEvent) -> Bool {
-//        print("Can Drag indexes : \(indexes)")
-//        return true
-//    }
-    
-    
-    
-//    func collectionView(collectionView: NSCollectionView, acceptDrop draggingInfo: NSDraggingInfo, index: Int, dropOperation: NSCollectionViewDropOperation) -> Bool {
+        let pasteboard = draggingInfo.draggingPasteboard()
+        if let types = pasteboard.types {
+            if (types.contains(CollectionViewController.dragType) && self.viewIsCollection) {
+            
+                if proposedDropOperation.memory == .On {
+                    proposedDropOperation.memory = .Before
+                }
+            
+                return NSDragOperation.Move
+            
+            } else if types.contains(OutlineViewController.dragType) {
 
-//        for item in collectionView.visibleItems() {
-//            item.highlightState = .None
-//        }
-
-//        print("Accept Drop : \(index)")
+                if proposedDropOperation.memory == .Before {
+                    proposedDropOperation.memory = .On
+                }
+            
+                for item in collectionView.visibleItems() {
+                    item.highlightState = .None
+                }
+            
+                if let dropTargetIndexPath = proposedDropIndexPath.memory {
+                
+                    let selectedDropTargets = getSelectedPathsForDropTarget(dropTargetIndexPath)
+                
+                    for indexPath in selectedDropTargets {
+                        if collectionView.indexPathsForVisibleItems().contains(indexPath) {
+                            if let target = collectionView.itemAtIndex(indexPath.item) {
+                                target.highlightState = .AsDropTarget
+                            }
+                        }
+                    }
+                }
+                return NSDragOperation.Copy
+            }
+        }
         
-//        NSPasteboard *pBoard = [draggingInfo draggingPasteboard];
-//        NSData *indexData = [pBoard dataForType:@"my_drag_type_id"];
-//        NSIndexSet *indexes = [NSKeyedUnarchiver unarchiveObjectWithData:indexData];
-//        NSInteger draggedCell = [indexes firstIndex];
-        // Now we know the Original Index (draggedCell) and the
-        // index of destination (index). Simply swap them in the collection view array.
-
-//        return true
-//    }
-    
-//    func collectionView(collectionView: NSCollectionView, acceptDrop draggingInfo: NSDraggingInfo, indexPath: NSIndexPath, dropOperation: NSCollectionViewDropOperation) -> Bool {
-//        for item in collectionView.visibleItems() {
-//            item.highlightState = .None
-//        }
-        
-//        print(indexPath)
-//        print(dropOperation)
-        
-//        return true
-//    }
+        return NSDragOperation.None
+    }
     
     func collectionView(collectionView: NSCollectionView, acceptDrop draggingInfo: NSDraggingInfo, indexPath: NSIndexPath, dropOperation: NSCollectionViewDropOperation) -> Bool {
 
         for item in collectionView.visibleItems() {
             item.highlightState = .None
         }
-        
-        let item = collectionView.itemAtIndexPath(indexPath)
-        if let obj = item?.representedObject as? PhotoItem {
-            print(obj.fileName)
+
+        let pasteboard = draggingInfo.draggingPasteboard()
+        let selectedDropTargets = getSelectedPathsForDropTarget(indexPath)
+
+        guard let types = pasteboard.types else {
+            return false
         }
         
-        let pasteboard = draggingInfo.draggingPasteboard()
-        if let data = pasteboard.dataForType("testCollectionDragType") {
-            let obj = NSKeyedUnarchiver.unarchiveObjectWithData(data) as! NSArray
-            for item in obj {
-                if let o = item as? LibraryItem {
-                    print(o.text)
+        if types.contains(CollectionViewController.dragType) && self.viewIsCollection {
+            // Process dropped photos
+            for path in selectedDropTargets {
+                let item = collectionView.itemAtIndexPath(path)
+                if let obj = item?.representedObject as? PhotoItem {
+                    print("Moving Target: \(obj.fileName)")
                 }
             }
-        }
+            
+            print("Target Index: \(indexPath.item)")
+            
+            return true
+        } else if types.contains(OutlineViewController.dragType) {
+            
+            for path in selectedDropTargets {
+                let item = collectionView.itemAtIndexPath(path)
+                if let obj = item?.representedObject as? PhotoItem {
+                    print("Drop Target: \(obj.fileName)")
+                }
+            }
+        
+            if let data = pasteboard.dataForType(OutlineViewController.dragType) {
+                let obj = NSKeyedUnarchiver.unarchiveObjectWithData(data) as! NSArray
+                for item in obj {
+                    if let o = item as? LibraryItem {
+                        print("Drop Tag: \(o.text)")
+                    }
+                }
+            }
 
-        return true
+            return true
+        }
+        
+        return false
     }
     
-//    func collectionView(collectionView: NSCollectionView, acceptDrop draggingInfo: NSDraggingInfo, index: Int, dropOperation: NSCollectionViewDropOperation) -> Bool {
-//        print("b")
-//        return true
-//    }
+    // MARK - Private Helper Functions
     
-    
-    func collectionView(collectionView: NSCollectionView, validateDrop draggingInfo: NSDraggingInfo, proposedIndexPath proposedDropIndexPath: AutoreleasingUnsafeMutablePointer<NSIndexPath?>, dropOperation proposedDropOperation: UnsafeMutablePointer<NSCollectionViewDropOperation>) -> NSDragOperation {
-        if proposedDropOperation.memory == .Before {
-            proposedDropOperation.memory = .On
-        }
-
-        for item in collectionView.visibleItems() {
-            item.highlightState = .None
-        }
-        
-        if let dropTargetIndexPath = proposedDropIndexPath.memory {
-            if collectionView.indexPathsForVisibleItems().contains(dropTargetIndexPath) {
-                if let target = collectionView.itemAtIndex(dropTargetIndexPath.item) {
-                    target.highlightState = .AsDropTarget
-                }
+    private func getSelectedPathsForDropTarget(indexPath: NSIndexPath) -> Set<NSIndexPath> {
+        if let targetItem = collectionView.itemAtIndexPath(indexPath) {
+            if targetItem.selected {
+                return collectionView.selectionIndexPaths
             }
         }
 
-        return NSDragOperation.Copy
+        return Set<NSIndexPath>(arrayLiteral: indexPath)
     }
  }
 

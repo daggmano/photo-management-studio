@@ -11,42 +11,36 @@ import Cocoa
 enum LibraryItemType: String {
     case Title = "Title"
     case Item = "Item"
-    case Separator = "Separator"
 }
 
 class LibraryItem: NSObject, NSCoding {
 
-    let text: String?
-    let type: LibraryItemType!
+    let text: String
+    let type: LibraryItemType
+    let canTag: Bool
     var children: [LibraryItem] = []
 
-    init(asSeparator: Bool) {
-        type = .Separator
-        text = nil
-    }
-    
     init(asTitle: String) {
-        type = .Title
-        text = asTitle
+        self.type = .Title
+        self.text = asTitle
+        self.canTag = false
     }
     
-    init(asItem: String) {
-        type = .Item
-        text = asItem
+    init(asItem: String, canTag: Bool) {
+        self.type = .Item
+        self.text = asItem
+        self.canTag = canTag
     }
     
-    init(type: LibraryItemType, text: String?, children: [LibraryItem]) {
+    init(type: LibraryItemType, text: String, canTag: Bool, children: [LibraryItem]) {
         self.type = type
         self.text = text
+        self.canTag = canTag
         self.children = children
     }
     
     func isLeaf() -> Bool {
         return children.isEmpty
-    }
-    
-    func isSeparator() -> Bool {
-        return type == .Separator
     }
     
     func isTitle() -> Bool {
@@ -64,6 +58,7 @@ class LibraryItem: NSObject, NSCoding {
         self.init(
             type: type,
             text: text,
+            canTag: decoder.decodeBoolForKey("canTag"),
             children: children
         )
     }
@@ -71,6 +66,7 @@ class LibraryItem: NSObject, NSCoding {
     func encodeWithCoder(coder: NSCoder) {
         coder.encodeObject(self.type.rawValue, forKey: "type")
         coder.encodeObject(self.text, forKey: "text")
+        coder.encodeBool(self.canTag, forKey: "canTag")
         coder.encodeObject(self.children, forKey: "children")
     }
 }
