@@ -26,6 +26,16 @@
 		517979511CA926D100C207C3 /* CollectionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517979501CA926D100C207C3 /* CollectionViewItem.swift */; };
 		517979531CA9280800C207C3 /* CollectionViewItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517979521CA9280800C207C3 /* CollectionViewItemView.swift */; };
 		517979551CA9387A00C207C3 /* PhotoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517979541CA9387A00C207C3 /* PhotoItem.swift */; };
+		5179795B1CAD41BA00C207C3 /* PortHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5179795A1CAD41BA00C207C3 /* PortHelper.swift */; };
+		5179795D1CAD426700C207C3 /* NetworkSupervisor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5179795C1CAD426700C207C3 /* NetworkSupervisor.swift */; };
+		5179795F1CAD455900C207C3 /* InSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5179795E1CAD455900C207C3 /* InSocket.swift */; };
+		517979611CAD45A200C207C3 /* OutSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517979601CAD45A200C207C3 /* OutSocket.swift */; };
+		517979631CAD45FC00C207C3 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517979621CAD45FC00C207C3 /* Config.swift */; };
+		517979651CAD46AC00C207C3 /* NetworkDiscoveryObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517979641CAD46AC00C207C3 /* NetworkDiscoveryObject.swift */; };
+		517979671CAD46D400C207C3 /* JsonProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517979661CAD46D400C207C3 /* JsonProtocol.swift */; };
+		517979691CAD472A00C207C3 /* PingResponseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517979681CAD472A00C207C3 /* PingResponseObject.swift */; };
+		5179796B1CAD475500C207C3 /* ResponseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5179796A1CAD475500C207C3 /* ResponseObject.swift */; };
+		5179796D1CAD477400C207C3 /* LinksObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5179796C1CAD477400C207C3 /* LinksObject.swift */; };
 		518489231C9C0A5E006E3B9A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518489221C9C0A5E006E3B9A /* AppDelegate.swift */; };
 		518489251C9C0A5E006E3B9A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518489241C9C0A5E006E3B9A /* MainViewController.swift */; };
 		518489271C9C0A5E006E3B9A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 518489261C9C0A5E006E3B9A /* Assets.xcassets */; };
@@ -59,6 +69,16 @@
 		517979541CA9387A00C207C3 /* PhotoItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoItem.swift; sourceTree = "<group>"; };
 		517979561CAD365000C207C3 /* Fabric.debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Fabric.debug.xcconfig; sourceTree = "<group>"; };
 		517979571CAD368900C207C3 /* Fabric.release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Fabric.release.xcconfig; sourceTree = "<group>"; };
+		5179795A1CAD41BA00C207C3 /* PortHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PortHelper.swift; sourceTree = "<group>"; };
+		5179795C1CAD426700C207C3 /* NetworkSupervisor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkSupervisor.swift; sourceTree = "<group>"; };
+		5179795E1CAD455900C207C3 /* InSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InSocket.swift; sourceTree = "<group>"; };
+		517979601CAD45A200C207C3 /* OutSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutSocket.swift; sourceTree = "<group>"; };
+		517979621CAD45FC00C207C3 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		517979641CAD46AC00C207C3 /* NetworkDiscoveryObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkDiscoveryObject.swift; sourceTree = "<group>"; };
+		517979661CAD46D400C207C3 /* JsonProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonProtocol.swift; sourceTree = "<group>"; };
+		517979681CAD472A00C207C3 /* PingResponseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingResponseObject.swift; sourceTree = "<group>"; };
+		5179796A1CAD475500C207C3 /* ResponseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseObject.swift; sourceTree = "<group>"; };
+		5179796C1CAD477400C207C3 /* LinksObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinksObject.swift; sourceTree = "<group>"; };
 		5184891F1C9C0A5E006E3B9A /* Photo Management Studio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Photo Management Studio.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		518489221C9C0A5E006E3B9A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		518489241C9C0A5E006E3B9A /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -96,6 +116,11 @@
 			children = (
 				510E8CD21C9F898B007413F5 /* LibraryItem.swift */,
 				517979541CA9387A00C207C3 /* PhotoItem.swift */,
+				517979641CAD46AC00C207C3 /* NetworkDiscoveryObject.swift */,
+				517979661CAD46D400C207C3 /* JsonProtocol.swift */,
+				517979681CAD472A00C207C3 /* PingResponseObject.swift */,
+				5179796A1CAD475500C207C3 /* ResponseObject.swift */,
+				5179796C1CAD477400C207C3 /* LinksObject.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -146,6 +171,17 @@
 			name = HelperViews;
 			sourceTree = "<group>";
 		};
+		517979591CAD41A400C207C3 /* NetworkManagement */ = {
+			isa = PBXGroup;
+			children = (
+				5179795A1CAD41BA00C207C3 /* PortHelper.swift */,
+				5179795C1CAD426700C207C3 /* NetworkSupervisor.swift */,
+				5179795E1CAD455900C207C3 /* InSocket.swift */,
+				517979601CAD45A200C207C3 /* OutSocket.swift */,
+			);
+			name = NetworkManagement;
+			sourceTree = "<group>";
+		};
 		518489161C9C0A5E006E3B9A = {
 			isa = PBXGroup;
 			children = (
@@ -167,6 +203,7 @@
 		518489211C9C0A5E006E3B9A /* Photo Management Studio */ = {
 			isa = PBXGroup;
 			children = (
+				517979591CAD41A400C207C3 /* NetworkManagement */,
 				5179794F1CA9263D00C207C3 /* HelperViews */,
 				517979421CA7F5A600C207C3 /* Collection */,
 				517979411CA7F58600C207C3 /* Sidebar */,
@@ -180,6 +217,7 @@
 				518489241C9C0A5E006E3B9A /* MainViewController.swift */,
 				517979561CAD365000C207C3 /* Fabric.debug.xcconfig */,
 				517979571CAD368900C207C3 /* Fabric.release.xcconfig */,
+				517979621CAD45FC00C207C3 /* Config.swift */,
 			);
 			path = "Photo Management Studio";
 			sourceTree = "<group>";
@@ -332,22 +370,32 @@
 			files = (
 				518D8D7F1CA2B3B7007E508E /* TitleCellView.swift in Sources */,
 				5179794C1CA9244800C207C3 /* SplitView.swift in Sources */,
+				5179796D1CAD477400C207C3 /* LinksObject.swift in Sources */,
 				517979531CA9280800C207C3 /* CollectionViewItemView.swift in Sources */,
+				517979671CAD46D400C207C3 /* JsonProtocol.swift in Sources */,
 				510E8CD31C9F898B007413F5 /* LibraryItem.swift in Sources */,
 				517979441CA7F5DA00C207C3 /* CollectionViewController.swift in Sources */,
+				5179796B1CAD475500C207C3 /* ResponseObject.swift in Sources */,
 				51716CBA1C9C27B200872ADC /* TitleBarRightViewController.swift in Sources */,
 				510E8CD01C9EC4B4007413F5 /* OutlineViewController.swift in Sources */,
+				5179795B1CAD41BA00C207C3 /* PortHelper.swift in Sources */,
 				5179793C1CA6A87200C207C3 /* OutlineTitleButton.swift in Sources */,
 				517979461CA7F82E00C207C3 /* CollectionView.swift in Sources */,
+				5179795D1CAD426700C207C3 /* NetworkSupervisor.swift in Sources */,
 				51716CB01C9C124000872ADC /* TitleBarSplitView.swift in Sources */,
+				517979631CAD45FC00C207C3 /* Config.swift in Sources */,
 				51716CBF1C9D5AA600872ADC /* TitleBarRightView.swift in Sources */,
+				517979691CAD472A00C207C3 /* PingResponseObject.swift in Sources */,
 				517979551CA9387A00C207C3 /* PhotoItem.swift in Sources */,
 				5179794E1CA9258200C207C3 /* DividerView.swift in Sources */,
+				517979651CAD46AC00C207C3 /* NetworkDiscoveryObject.swift in Sources */,
 				517979511CA926D100C207C3 /* CollectionViewItem.swift in Sources */,
 				51716CBD1C9D5A9A00872ADC /* TitleBarLeftView.swift in Sources */,
 				518489251C9C0A5E006E3B9A /* MainViewController.swift in Sources */,
 				518D8D7D1CA2B156007E508E /* OutlineView.swift in Sources */,
+				517979611CAD45A200C207C3 /* OutSocket.swift in Sources */,
 				518489231C9C0A5E006E3B9A /* AppDelegate.swift in Sources */,
+				5179795F1CAD455900C207C3 /* InSocket.swift in Sources */,
 				51716CAE1C9C0DB200872ADC /* MainWindowController.swift in Sources */,
 				51716CB71C9C27A000872ADC /* TitleBarLeftViewController.swift in Sources */,
 			);
