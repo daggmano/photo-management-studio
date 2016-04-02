@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TitleBarRightViewController" customModule="Photo_Management_Studio" customModuleProvider="target">
             <connections>
+                <outlet property="statusIcon" destination="OTj-yO-z4R" id="8dE-E3-qHi"/>
                 <outlet property="view" destination="c22-O7-iKe" id="aVz-N7-u04"/>
             </connections>
         </customObject>
@@ -30,10 +31,20 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OTj-yO-z4R">
+                    <rect key="frame" x="446" y="7" width="24" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="24" id="0Yx-tG-cYq"/>
+                        <constraint firstAttribute="height" constant="24" id="tSR-ci-TSA"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSStatusUnavailable" id="3VY-9O-1Ef"/>
+                </imageView>
             </subviews>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="dR1-hG-xdK" secondAttribute="bottom" id="0Xv-89-fJ7"/>
+                <constraint firstItem="OTj-yO-z4R" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="d1x-9f-uSe"/>
                 <constraint firstItem="VmX-Ua-fnh" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="evk-A9-DkO"/>
+                <constraint firstAttribute="trailing" secondItem="OTj-yO-z4R" secondAttribute="trailing" constant="10" id="fCl-rr-WzS"/>
                 <constraint firstItem="dR1-hG-xdK" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="k4Y-zI-DUA"/>
                 <constraint firstItem="VmX-Ua-fnh" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="qYa-Nh-QtD"/>
                 <constraint firstAttribute="trailing" secondItem="dR1-hG-xdK" secondAttribute="trailing" id="qkm-Hl-LKR"/>
@@ -41,4 +52,7 @@
             <point key="canvasLocation" x="565" y="304"/>
         </customView>
     </objects>
+    <resources>
+        <image name="NSStatusUnavailable" width="16" height="16"/>
+    </resources>
 </document>

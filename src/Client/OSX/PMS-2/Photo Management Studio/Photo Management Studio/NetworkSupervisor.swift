@@ -18,7 +18,7 @@ enum ConnectionState: String {
 
 protocol ServerInfoReceivedDelegate {
     func onServerInfoReceived(message: NSData)
-//    func onDbServerInfoReceived(message: ServerInfoResponseObject)
+    func onDbServerInfoReceived(message: ServerInfoResponseObject)
 }
 
 protocol NetworkConnectionStatusDelegate {
@@ -90,43 +90,43 @@ class NetworkSupervisor: NSObject, ServerInfoReceivedDelegate {
     }
     
     func onServerInfoReceived(message: NSData) {
-//        do {
-//            if let json = try NSJSONSerialization.JSONObjectWithData(message, options: .AllowFragments) as? [String: AnyObject] {
-//                let networkMessage = NetworkMessageObject.init(json: json)
+        do {
+            if let json = try NSJSONSerialization.JSONObjectWithData(message, options: .AllowFragments) as? [String: AnyObject] {
+                let networkMessage = NetworkMessageObject.init(json: json)
                 
-//                if let messageType = networkMessage.messageType {
-//                    switch (messageType) {
-//                    case .ServerSpecification:
-//                        let serverSpec = NetworkMessageObjectGeneric<ServerSpecificationObject>.init(json: json)
+                if let messageType = networkMessage.messageType {
+                    switch (messageType) {
+                    case .ServerSpecification:
+                        let serverSpec = NetworkMessageObjectGeneric<ServerSpecificationObject>.init(json: json)
                         
-//                        guard let message = serverSpec.message,
-//                            let serverAddress = message.serverAddress,
-//                            let serverPort = message.serverPort else {
-//                                break
-//                        }
+                        guard let message = serverSpec.message,
+                            let serverAddress = message.serverAddress,
+                            let serverPort = message.serverPort else {
+                                break
+                        }
                         
-//                        _imageServerAddress = serverAddress
-//                        _imageServerPort = serverPort
-//                        _connectionStatus = .Connecting
-//                        _delegate.onServerConnectionStatusChanged(_connectionStatus)
-//                        break
-//                    }
-//                }
-//            }
-//        } catch {}
+                        _imageServerAddress = serverAddress
+                        _imageServerPort = serverPort
+                        _connectionStatus = .Connecting
+                        _delegate.onServerConnectionStatusChanged(_connectionStatus)
+                        break
+                    }
+                }
+            }
+        } catch {}
     }
 
-//    func onDbServerInfoReceived(message: ServerInfoResponseObject) {
-//        print(message.data?.serverId)
-//        print(message.data?.serverName)
+    func onDbServerInfoReceived(message: ServerInfoResponseObject) {
+        print(message.data?.serverId)
+        print(message.data?.serverName)
         
-//        if let serverId = message.data?.serverId {
-//            DatabaseManager.setupReplication(_imageServerAddress, serverId: serverId)
-//            _connectionStatus = .Connected
-//            _delegate.onServerConnectionStatusChanged(_connectionStatus)
-//            _delegate.setServerUrl("http://\(_imageServerAddress):\(_imageServerPort)")
-//        }
-//    }
+        if let serverId = message.data?.serverId {
+            DatabaseManager.setupReplication(_imageServerAddress, serverId: serverId)
+            _connectionStatus = .Connected
+            _delegate.onServerConnectionStatusChanged(_connectionStatus)
+            _delegate.setServerUrl("http://\(_imageServerAddress):\(_imageServerPort)")
+        }
+    }
     
     func attemptConnection() {
         let discoveryObject = NetworkDiscoveryObject(identifier: "Photo.Management.Studio", clientSocketPort: _serverPort)
@@ -175,6 +175,7 @@ class NetworkSupervisor: NSObject, ServerInfoReceivedDelegate {
                     print("ping response data is null")
                 }
             } catch {
+                print("ex")
                 self._connectionStatus = .Disconnected
                 self.setupWatchdog(500, repeats: true)
                 self._delegate.onServerConnectionStatusChanged(self._connectionStatus)
@@ -195,8 +196,8 @@ class NetworkSupervisor: NSObject, ServerInfoReceivedDelegate {
             do {
                 if let data = data {
                     if let json = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? [String: AnyObject] {
-//                        let serverInfoResponse = ServerInfoResponseObject(json: json)
-//                        self.onDbServerInfoReceived(serverInfoResponse)
+                        let serverInfoResponse = ServerInfoResponseObject(json: json)
+                        self.onDbServerInfoReceived(serverInfoResponse)
                     }
                 }
             } catch {}

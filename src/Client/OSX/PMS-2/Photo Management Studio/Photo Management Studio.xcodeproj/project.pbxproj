@@ -36,6 +36,13 @@
 		517979691CAD472A00C207C3 /* PingResponseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517979681CAD472A00C207C3 /* PingResponseObject.swift */; };
 		5179796B1CAD475500C207C3 /* ResponseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5179796A1CAD475500C207C3 /* ResponseObject.swift */; };
 		5179796D1CAD477400C207C3 /* LinksObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5179796C1CAD477400C207C3 /* LinksObject.swift */; };
+		517979701CAE80EE00C207C3 /* PubSub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5179796F1CAE80EE00C207C3 /* PubSub.swift */; };
+		517979721CAE844100C207C3 /* NetworkMessageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517979711CAE844100C207C3 /* NetworkMessageObject.swift */; };
+		517979741CAE847E00C207C3 /* ServerSpecificationObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517979731CAE847E00C207C3 /* ServerSpecificationObject.swift */; };
+		517979761CAE84D300C207C3 /* ServerInfoResponseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517979751CAE84D300C207C3 /* ServerInfoResponseObject.swift */; };
+		517979781CAE974B00C207C3 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517979771CAE974B00C207C3 /* DatabaseManager.swift */; };
+		5179797B1CAE978C00C207C3 /* CouchDb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5179797A1CAE978C00C207C3 /* CouchDb.swift */; };
+		5179797D1CAE97D300C207C3 /* QueryString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5179797C1CAE97D300C207C3 /* QueryString.swift */; };
 		518489231C9C0A5E006E3B9A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518489221C9C0A5E006E3B9A /* AppDelegate.swift */; };
 		518489251C9C0A5E006E3B9A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518489241C9C0A5E006E3B9A /* MainViewController.swift */; };
 		518489271C9C0A5E006E3B9A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 518489261C9C0A5E006E3B9A /* Assets.xcassets */; };
@@ -79,6 +86,13 @@
 		517979681CAD472A00C207C3 /* PingResponseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingResponseObject.swift; sourceTree = "<group>"; };
 		5179796A1CAD475500C207C3 /* ResponseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseObject.swift; sourceTree = "<group>"; };
 		5179796C1CAD477400C207C3 /* LinksObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinksObject.swift; sourceTree = "<group>"; };
+		5179796F1CAE80EE00C207C3 /* PubSub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubSub.swift; sourceTree = "<group>"; };
+		517979711CAE844100C207C3 /* NetworkMessageObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkMessageObject.swift; sourceTree = "<group>"; };
+		517979731CAE847E00C207C3 /* ServerSpecificationObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerSpecificationObject.swift; sourceTree = "<group>"; };
+		517979751CAE84D300C207C3 /* ServerInfoResponseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerInfoResponseObject.swift; sourceTree = "<group>"; };
+		517979771CAE974B00C207C3 /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		5179797A1CAE978C00C207C3 /* CouchDb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CouchDb.swift; sourceTree = "<group>"; };
+		5179797C1CAE97D300C207C3 /* QueryString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryString.swift; sourceTree = "<group>"; };
 		5184891F1C9C0A5E006E3B9A /* Photo Management Studio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Photo Management Studio.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		518489221C9C0A5E006E3B9A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		518489241C9C0A5E006E3B9A /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -114,6 +128,7 @@
 		510E8CD11C9F8975007413F5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				517979731CAE847E00C207C3 /* ServerSpecificationObject.swift */,
 				510E8CD21C9F898B007413F5 /* LibraryItem.swift */,
 				517979541CA9387A00C207C3 /* PhotoItem.swift */,
 				517979641CAD46AC00C207C3 /* NetworkDiscoveryObject.swift */,
@@ -121,6 +136,8 @@
 				517979681CAD472A00C207C3 /* PingResponseObject.swift */,
 				5179796A1CAD475500C207C3 /* ResponseObject.swift */,
 				5179796C1CAD477400C207C3 /* LinksObject.swift */,
+				517979711CAE844100C207C3 /* NetworkMessageObject.swift */,
+				517979751CAE84D300C207C3 /* ServerInfoResponseObject.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -178,8 +195,26 @@
 				5179795C1CAD426700C207C3 /* NetworkSupervisor.swift */,
 				5179795E1CAD455900C207C3 /* InSocket.swift */,
 				517979601CAD45A200C207C3 /* OutSocket.swift */,
+				517979771CAE974B00C207C3 /* DatabaseManager.swift */,
 			);
 			name = NetworkManagement;
+			sourceTree = "<group>";
+		};
+		5179796E1CAE80DF00C207C3 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5179796F1CAE80EE00C207C3 /* PubSub.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		517979791CAE977A00C207C3 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				5179797A1CAE978C00C207C3 /* CouchDb.swift */,
+				5179797C1CAE97D300C207C3 /* QueryString.swift */,
+			);
+			name = Libraries;
 			sourceTree = "<group>";
 		};
 		518489161C9C0A5E006E3B9A = {
@@ -203,6 +238,8 @@
 		518489211C9C0A5E006E3B9A /* Photo Management Studio */ = {
 			isa = PBXGroup;
 			children = (
+				517979791CAE977A00C207C3 /* Libraries */,
+				5179796E1CAE80DF00C207C3 /* Extensions */,
 				517979591CAD41A400C207C3 /* NetworkManagement */,
 				5179794F1CA9263D00C207C3 /* HelperViews */,
 				517979421CA7F5A600C207C3 /* Collection */,
@@ -384,17 +421,24 @@
 				5179795D1CAD426700C207C3 /* NetworkSupervisor.swift in Sources */,
 				51716CB01C9C124000872ADC /* TitleBarSplitView.swift in Sources */,
 				517979631CAD45FC00C207C3 /* Config.swift in Sources */,
+				517979701CAE80EE00C207C3 /* PubSub.swift in Sources */,
 				51716CBF1C9D5AA600872ADC /* TitleBarRightView.swift in Sources */,
 				517979691CAD472A00C207C3 /* PingResponseObject.swift in Sources */,
 				517979551CA9387A00C207C3 /* PhotoItem.swift in Sources */,
 				5179794E1CA9258200C207C3 /* DividerView.swift in Sources */,
 				517979651CAD46AC00C207C3 /* NetworkDiscoveryObject.swift in Sources */,
+				517979761CAE84D300C207C3 /* ServerInfoResponseObject.swift in Sources */,
 				517979511CA926D100C207C3 /* CollectionViewItem.swift in Sources */,
+				517979741CAE847E00C207C3 /* ServerSpecificationObject.swift in Sources */,
 				51716CBD1C9D5A9A00872ADC /* TitleBarLeftView.swift in Sources */,
 				518489251C9C0A5E006E3B9A /* MainViewController.swift in Sources */,
+				517979781CAE974B00C207C3 /* DatabaseManager.swift in Sources */,
 				518D8D7D1CA2B156007E508E /* OutlineView.swift in Sources */,
 				517979611CAD45A200C207C3 /* OutSocket.swift in Sources */,
+				5179797D1CAE97D300C207C3 /* QueryString.swift in Sources */,
+				517979721CAE844100C207C3 /* NetworkMessageObject.swift in Sources */,
 				518489231C9C0A5E006E3B9A /* AppDelegate.swift in Sources */,
+				5179797B1CAE978C00C207C3 /* CouchDb.swift in Sources */,
 				5179795F1CAD455900C207C3 /* InSocket.swift in Sources */,
 				51716CAE1C9C0DB200872ADC /* MainWindowController.swift in Sources */,
 				51716CB71C9C27A000872ADC /* TitleBarLeftViewController.swift in Sources */,

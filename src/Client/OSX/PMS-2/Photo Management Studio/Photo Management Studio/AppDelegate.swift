@@ -14,6 +14,8 @@ import Crashlytics
 class AppDelegate: NSObject, NSApplicationDelegate, NetworkConnectionStatusDelegate {
 
     var _networkSupervisor: NetworkSupervisor!
+    var _connectionStatus: ConnectionState!
+    var _serverUrl: String?
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Insert code here to initialize your application
@@ -24,6 +26,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NetworkConnectionStatusDeleg
         _networkSupervisor = NetworkSupervisor(delegate: self)
 
     }
+    
+    static func getInstance() -> AppDelegate? {
+        return NSApplication.sharedApplication().delegate as? AppDelegate
+    }
 
     func applicationWillTerminate(aNotification: NSNotification) {
         // Insert code here to tear down your application
@@ -31,18 +37,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, NetworkConnectionStatusDeleg
 
     func onServerConnectionStatusChanged(status: ConnectionState) {
         print("new status: \(status)")
-//        self._connectionStatus = status
-//        Event.emit("connection-status-changed", obj: status.description)
+        self._connectionStatus = status
+        Event.emit("connection-status-changed", obj: status.description)
+    }
+    
+    func getConnectionStatus() -> ConnectionState {
+        return _connectionStatus
     }
 
     func setServerUrl(url: String) {
-//        self._serverUrl = url
+        self._serverUrl = url
     }
     
     func getServerUrl() -> String? {
-//        if (self._connectionStatus == .Connected) {
-//            return _serverUrl
-//        }
+        if (self._connectionStatus == .Connected) {
+            return _serverUrl
+        }
         return nil
     }
 
