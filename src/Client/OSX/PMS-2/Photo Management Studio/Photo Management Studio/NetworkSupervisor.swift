@@ -6,6 +6,7 @@
 //  Copyright © 2016 Criterion Software. All rights reserved.
 //
 
+import Alamofire
 import CocoaAsyncSocket
 
 enum ConnectionState: String {
@@ -138,50 +139,33 @@ class NetworkSupervisor: NSObject, ServerInfoReceivedDelegate {
         
         let url = "http://\(_imageServerAddress):\(_imageServerPort)/api/ping"
         
-        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
-        let session = NSURLSession.sharedSession()
-        
-        let task = session.dataTaskWithRequest(request, completionHandler: {(data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
-            do {
-                if let data = data {
-                    if let json = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? [String: AnyObject] {
-                        let pingResponse = PingResponseObject(json: json)
+        Alamofire.request(.GET, url).responseJSON { response in
+            if response.result.isFailure {
+                self._connectionStatus = .Disconnected
+                self.setupWatchdog(500, repeats: true)
+                self._delegate.onServerConnectionStatusChanged(self._connectionStatus)
+            } else if response.result.isSuccess {
+                if let json = response.result.value as? [String: AnyObject] {
+                    let pingResponse = PingResponseObject(json: json)
+
+                    if let responseData = pingResponse.data {
+                        print(responseData.serverDateTime)
                         
-                        if let responseData = pingResponse.data {
-                            print(responseData.serverDateTime)
-                            
-                            if (self._connectionStatus == .Connecting) {
-                                self.getDbServerId()
-                                self.setupWatchdog(1000, repeats: false)
-                            } else {
-                                self.setupWatchdog(5000, repeats: false)
-                            }
+                        if (self._connectionStatus == .Connecting) {
+                            self.getDbServerId()
+                            self.setupWatchdog(1000, repeats: false)
                         } else {
-                            self._connectionStatus = .Disconnected
-                            self.setupWatchdog(500, repeats: true)
-                            self._delegate.onServerConnectionStatusChanged(self._connectionStatus)
-                            print("unable to get responseData")
+                            self.setupWatchdog(5000, repeats: false)
                         }
                     } else {
                         self._connectionStatus = .Disconnected
                         self.setupWatchdog(500, repeats: true)
                         self._delegate.onServerConnectionStatusChanged(self._connectionStatus)
-                        print("unable to decode responseObject")
+                        print("unable to get responseData")
                     }
-                } else {
-                    self._connectionStatus = .Disconnected
-                    self.setupWatchdog(500, repeats: true)
-                    self._delegate.onServerConnectionStatusChanged(self._connectionStatus)
-                    print("ping response data is null")
                 }
-            } catch {
-                print("ex")
-                self._connectionStatus = .Disconnected
-                self.setupWatchdog(500, repeats: true)
-                self._delegate.onServerConnectionStatusChanged(self._connectionStatus)
             }
-        })
-        task.resume()
+        }
     }
     
     func getDbServerId() {
