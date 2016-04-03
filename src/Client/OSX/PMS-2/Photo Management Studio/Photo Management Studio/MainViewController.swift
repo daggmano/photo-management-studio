@@ -10,8 +10,6 @@ import Cocoa
 
 class MainViewController: NSSplitViewController {
     
-    var _mainWindowController: MainWindowController!
-
     override func viewDidLoad() {
         
         if let splitView = view as? NSSplitView {

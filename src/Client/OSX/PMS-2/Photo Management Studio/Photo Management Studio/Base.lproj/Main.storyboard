@@ -116,6 +116,12 @@
                                                 <action selector="print:" target="Ady-hI-5gd" id="qaZ-4w-aoO"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="dp7-b6-SBa"/>
+                                        <menuItem title="Import Photos..." keyEquivalent="i" id="mfv-ZB-XPt">
+                                            <connections>
+                                                <action selector="importPhotos:" target="Ady-hI-5gd" id="ilH-YM-dSw"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -664,7 +670,128 @@
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-666" y="502"/>
+            <point key="canvasLocation" x="-637" y="472"/>
+        </scene>
+        <!--Window Controller-->
+        <scene sceneID="QVU-0a-i2l">
+            <objects>
+                <windowController storyboardIdentifier="importWindow" id="2x3-WW-W7F" customClass="ImportWindowController" customModule="Photo_Management_Studio" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" identifier="importWindow" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="XMV-Tf-Xuh">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="294" y="372" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1200"/>
+                    </window>
+                    <connections>
+                        <segue destination="OVL-aI-0hJ" kind="relationship" relationship="window.shadowedContentViewController" id="OQ4-Tr-AVO"/>
+                    </connections>
+                </windowController>
+                <customObject id="Djd-sz-z1Z" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-151" y="1008"/>
+        </scene>
+        <!--Import View Controller-->
+        <scene sceneID="Gqq-V4-nsf">
+            <objects>
+                <viewController id="OVL-aI-0hJ" customClass="ImportViewController" customModule="Photo_Management_Studio" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="dbe-Gu-ovO" customClass="ImportView" customModule="Photo_Management_Studio" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="erK-PW-prG">
+                                <rect key="frame" x="4" y="45" width="472" height="221"/>
+                                <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="zT2-kE-kK3">
+                                    <rect key="frame" x="0.0" y="0.0" width="472" height="221"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <collectionView selectable="YES" allowsMultipleSelection="YES" id="RP1-Yc-RqO">
+                                            <rect key="frame" x="0.0" y="0.0" width="472" height="221"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="SkY-qj-BZT">
+                                                <size key="itemSize" width="250" height="290"/>
+                                            </collectionViewFlowLayout>
+                                            <color key="primaryBackgroundColor" red="0.75686274509803919" green="0.75686274509803919" blue="0.75686274509803919" alpha="0.0" colorSpace="calibratedRGB"/>
+                                            <connections>
+                                                <binding destination="P7s-3X-JbR" name="content" keyPath="arrangedObjects" id="0Ic-2j-Zwz"/>
+                                                <outlet property="delegate" destination="OVL-aI-0hJ" id="cfa-be-778"/>
+                                            </connections>
+                                        </collectionView>
+                                    </subviews>
+                                    <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="kNF-kJ-fuF">
+                                    <rect key="frame" x="1" y="144" width="233" height="15"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="BtX-8e-2yo">
+                                    <rect key="frame" x="234" y="1" width="15" height="143"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="Pmf-UU-dYM" customClass="DividerView" customModule="Photo_Management_Studio" customModuleProvider="target">
+                                <rect key="frame" x="4" y="37" width="472" height="1"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="3xQ-E0-Bqz"/>
+                                </constraints>
+                            </customView>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vqb-yb-CaV">
+                                <rect key="frame" x="-2" y="1" width="126" height="32"/>
+                                <buttonCell key="cell" type="push" title="Import photos" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="wAd-6J-vkc">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="performPhotoImport:" target="OVL-aI-0hJ" id="wlm-b5-cbr"/>
+                                </connections>
+                            </button>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="JiF-gB-9Xn" userLabel="Progress Indicator" customClass="ITProgressIndicator">
+                                <rect key="frame" x="190" y="106" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="PNp-cq-Sle"/>
+                                    <constraint firstAttribute="width" constant="100" id="QcZ-ma-7w3"/>
+                                </constraints>
+                            </customView>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="utx-cH-ehh">
+                                <rect key="frame" x="403" y="1" width="75" height="32"/>
+                                <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IKE-6y-glO">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="closeSheet:" target="OVL-aI-0hJ" id="Q0w-bi-Ugt"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Pmf-UU-dYM" secondAttribute="trailing" constant="4" id="Ere-xj-Pm2"/>
+                            <constraint firstItem="erK-PW-prG" firstAttribute="top" secondItem="dbe-Gu-ovO" secondAttribute="top" constant="4" id="HGF-ly-a1k"/>
+                            <constraint firstItem="utx-cH-ehh" firstAttribute="top" secondItem="erK-PW-prG" secondAttribute="bottom" constant="16" id="Kzc-Cg-mci"/>
+                            <constraint firstItem="JiF-gB-9Xn" firstAttribute="centerY" secondItem="erK-PW-prG" secondAttribute="centerY" id="Pnx-1c-5y6"/>
+                            <constraint firstAttribute="trailing" secondItem="utx-cH-ehh" secondAttribute="trailing" constant="8" id="QNG-Jx-lsM"/>
+                            <constraint firstAttribute="trailing" secondItem="erK-PW-prG" secondAttribute="trailing" constant="4" id="QWF-AD-PCd"/>
+                            <constraint firstItem="utx-cH-ehh" firstAttribute="top" secondItem="Pmf-UU-dYM" secondAttribute="bottom" constant="8" id="Z1j-XJ-b4b"/>
+                            <constraint firstItem="Vqb-yb-CaV" firstAttribute="leading" secondItem="dbe-Gu-ovO" secondAttribute="leading" constant="4" id="ZJa-HB-ZZC"/>
+                            <constraint firstItem="Pmf-UU-dYM" firstAttribute="leading" secondItem="dbe-Gu-ovO" secondAttribute="leading" constant="4" id="bmT-ta-Vfa"/>
+                            <constraint firstItem="JiF-gB-9Xn" firstAttribute="centerX" secondItem="dbe-Gu-ovO" secondAttribute="centerX" id="ftH-Ei-x40"/>
+                            <constraint firstAttribute="bottom" secondItem="Vqb-yb-CaV" secondAttribute="bottom" constant="8" id="gkw-n3-MVr"/>
+                            <constraint firstItem="erK-PW-prG" firstAttribute="leading" secondItem="dbe-Gu-ovO" secondAttribute="leading" constant="4" id="h8v-Mq-t6U"/>
+                            <constraint firstAttribute="bottom" secondItem="utx-cH-ehh" secondAttribute="bottom" constant="8" id="soo-Ct-QTJ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="collectionView" destination="RP1-Yc-RqO" id="TlT-A0-gaL"/>
+                        <outlet property="importButton" destination="Vqb-yb-CaV" id="Q7o-fz-5ap"/>
+                        <outlet property="progressIndicator" destination="JiF-gB-9Xn" id="zy2-HB-G7h"/>
+                    </connections>
+                </viewController>
+                <customObject id="Cvj-Rn-lki" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <arrayController id="P7s-3X-JbR">
+                    <connections>
+                        <binding destination="OVL-aI-0hJ" name="contentArray" keyPath="photoItems" id="CVi-pu-YaG"/>
+                    </connections>
+                </arrayController>
+            </objects>
+            <point key="canvasLocation" x="500" y="1104"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="spr-Ws-T0D">
@@ -850,14 +977,14 @@
                                             <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="wXo-vT-ps0">
                                                 <size key="itemSize" width="250" height="290"/>
                                             </collectionViewFlowLayout>
-                                            <color key="primaryBackgroundColor" red="0.13725490196078433" green="0.13725490196078433" blue="0.13725490196078433" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="primaryBackgroundColor" red="0.13725490196078433" green="0.13725490196078433" blue="0.13725490196078433" alpha="0.0" colorSpace="calibratedRGB"/>
                                             <connections>
                                                 <binding destination="ZuO-wv-Gv2" name="content" keyPath="arrangedObjects" id="d6a-Jk-jVw"/>
                                                 <outlet property="delegate" destination="RoP-Ee-PTW" id="Hll-km-ZmC"/>
                                             </connections>
                                         </collectionView>
                                     </subviews>
-                                    <color key="backgroundColor" red="0.84313725490000002" green="0.86274509799999999" blue="0.89411764709999997" alpha="0.0" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </clipView>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="r1S-Ti-vkF">
                                     <rect key="frame" x="1" y="144" width="233" height="15"/>

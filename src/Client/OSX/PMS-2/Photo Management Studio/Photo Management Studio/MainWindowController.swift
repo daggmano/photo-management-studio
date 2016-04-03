@@ -12,6 +12,7 @@ import INAppStoreWindow
 class MainWindowController: NSWindowController, NSSplitViewDelegate {
     
     var _inAppStoreWindow: INAppStoreWindow!
+    var _importWindowController: ImportWindowController!
     
     required init?(coder: NSCoder) {
         _updatingLinkedSplitView = false
@@ -77,4 +78,46 @@ class MainWindowController: NSWindowController, NSSplitViewDelegate {
         }
         return true
     }
+
+    override func validateMenuItem(menuItem: NSMenuItem) -> Bool {
+        let theAction = menuItem.action
+        if theAction == #selector(MainWindowController.importPhotos(_:)) {
+            if AppDelegate.getInstance()?.getConnectionStatus() != .Connected {
+                return false
+            }
+        }
+        
+        return true
+    }
+    
+    func importPhotos(sender: AnyObject?) {
+        
+        if _importWindowController == nil {
+            
+            let storyboard = NSStoryboard(name: "Main", bundle: nil)
+            _importWindowController = storyboard.instantiateControllerWithIdentifier("importWindow") as? ImportWindowController
+        }
+        
+        if let sheetWindow = _importWindowController.window {
+            
+            var rect = sheetWindow.frame
+            let mainRect = self.window!.frame
+            
+            let finalH = NSHeight(mainRect) - 80
+            let finalW = NSWidth(mainRect) - 40
+            
+            rect.origin.y = rect.origin.y + NSHeight(rect) - finalH
+            rect.size.height = finalH
+            
+            rect.origin.x = rect.origin.x + (NSWidth(rect) - finalW) / 2.0
+            rect.size.width = finalW
+            
+            sheetWindow.setFrame(rect, display: true, animate: true)
+            
+            self.window?.beginSheet(sheetWindow, completionHandler: { (response) in
+                print(response)
+            })
+        }
+    }
+
 }

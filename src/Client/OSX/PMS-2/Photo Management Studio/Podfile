@@ -7,5 +7,6 @@ target 'Photo Management Studio' do
   pod 'Crashlytics'
   pod 'Fabric'
   pod 'INAppStoreWindow'
+  pod 'ITProgressIndicator'
 end
 

@@ -43,12 +43,18 @@
 		517979781CAE974B00C207C3 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517979771CAE974B00C207C3 /* DatabaseManager.swift */; };
 		5179797B1CAE978C00C207C3 /* CouchDb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5179797A1CAE978C00C207C3 /* CouchDb.swift */; };
 		5179797D1CAE97D300C207C3 /* QueryString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5179797C1CAE97D300C207C3 /* QueryString.swift */; };
+		517979821CB101E700C207C3 /* ImportWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517979811CB101E700C207C3 /* ImportWindowController.swift */; };
+		517979841CB101F600C207C3 /* ImportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517979831CB101F600C207C3 /* ImportViewController.swift */; };
+		517979861CB114C400C207C3 /* ImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517979851CB114C400C207C3 /* ImportView.swift */; };
 		518489231C9C0A5E006E3B9A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518489221C9C0A5E006E3B9A /* AppDelegate.swift */; };
 		518489251C9C0A5E006E3B9A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518489241C9C0A5E006E3B9A /* MainViewController.swift */; };
 		518489271C9C0A5E006E3B9A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 518489261C9C0A5E006E3B9A /* Assets.xcassets */; };
 		5184892A1C9C0A5E006E3B9A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 518489281C9C0A5E006E3B9A /* Main.storyboard */; };
 		518D8D7D1CA2B156007E508E /* OutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518D8D7C1CA2B156007E508E /* OutlineView.swift */; };
 		518D8D7F1CA2B3B7007E508E /* TitleCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518D8D7E1CA2B3B7007E508E /* TitleCellView.swift */; };
+		51DD4F1D1CB1251200403A47 /* HTTPStatusCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DD4F1C1CB1251200403A47 /* HTTPStatusCodes.swift */; };
+		51DD4F1F1CB1256800403A47 /* JobResponseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DD4F1E1CB1256800403A47 /* JobResponseObject.swift */; };
+		51DD4F211CB125C000403A47 /* ImportableListObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DD4F201CB125C000403A47 /* ImportableListObject.swift */; };
 		97083865721192C17274F761 /* Pods_Photo_Management_Studio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 631C47FDDB53501E51A09605 /* Pods_Photo_Management_Studio.framework */; };
 /* End PBXBuildFile section */
 
@@ -93,6 +99,9 @@
 		517979771CAE974B00C207C3 /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		5179797A1CAE978C00C207C3 /* CouchDb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CouchDb.swift; sourceTree = "<group>"; };
 		5179797C1CAE97D300C207C3 /* QueryString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryString.swift; sourceTree = "<group>"; };
+		517979811CB101E700C207C3 /* ImportWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportWindowController.swift; sourceTree = "<group>"; };
+		517979831CB101F600C207C3 /* ImportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportViewController.swift; sourceTree = "<group>"; };
+		517979851CB114C400C207C3 /* ImportView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportView.swift; sourceTree = "<group>"; };
 		5184891F1C9C0A5E006E3B9A /* Photo Management Studio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Photo Management Studio.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		518489221C9C0A5E006E3B9A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		518489241C9C0A5E006E3B9A /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -101,6 +110,9 @@
 		5184892B1C9C0A5E006E3B9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		518D8D7C1CA2B156007E508E /* OutlineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutlineView.swift; sourceTree = "<group>"; };
 		518D8D7E1CA2B3B7007E508E /* TitleCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleCellView.swift; sourceTree = "<group>"; };
+		51DD4F1C1CB1251200403A47 /* HTTPStatusCodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPStatusCodes.swift; sourceTree = "<group>"; };
+		51DD4F1E1CB1256800403A47 /* JobResponseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobResponseObject.swift; sourceTree = "<group>"; };
+		51DD4F201CB125C000403A47 /* ImportableListObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportableListObject.swift; sourceTree = "<group>"; };
 		631C47FDDB53501E51A09605 /* Pods_Photo_Management_Studio.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Photo_Management_Studio.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -138,6 +150,8 @@
 				5179796C1CAD477400C207C3 /* LinksObject.swift */,
 				517979711CAE844100C207C3 /* NetworkMessageObject.swift */,
 				517979751CAE84D300C207C3 /* ServerInfoResponseObject.swift */,
+				51DD4F1E1CB1256800403A47 /* JobResponseObject.swift */,
+				51DD4F201CB125C000403A47 /* ImportableListObject.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -213,8 +227,19 @@
 			children = (
 				5179797A1CAE978C00C207C3 /* CouchDb.swift */,
 				5179797C1CAE97D300C207C3 /* QueryString.swift */,
+				51DD4F1C1CB1251200403A47 /* HTTPStatusCodes.swift */,
 			);
 			name = Libraries;
+			sourceTree = "<group>";
+		};
+		5179797E1CB0FD2200C207C3 /* ImportSheet */ = {
+			isa = PBXGroup;
+			children = (
+				517979811CB101E700C207C3 /* ImportWindowController.swift */,
+				517979831CB101F600C207C3 /* ImportViewController.swift */,
+				517979851CB114C400C207C3 /* ImportView.swift */,
+			);
+			name = ImportSheet;
 			sourceTree = "<group>";
 		};
 		518489161C9C0A5E006E3B9A = {
@@ -238,6 +263,7 @@
 		518489211C9C0A5E006E3B9A /* Photo Management Studio */ = {
 			isa = PBXGroup;
 			children = (
+				5179797E1CB0FD2200C207C3 /* ImportSheet */,
 				517979791CAE977A00C207C3 /* Libraries */,
 				5179796E1CAE80DF00C207C3 /* Extensions */,
 				517979591CAD41A400C207C3 /* NetworkManagement */,
@@ -408,6 +434,7 @@
 				518D8D7F1CA2B3B7007E508E /* TitleCellView.swift in Sources */,
 				5179794C1CA9244800C207C3 /* SplitView.swift in Sources */,
 				5179796D1CAD477400C207C3 /* LinksObject.swift in Sources */,
+				517979841CB101F600C207C3 /* ImportViewController.swift in Sources */,
 				517979531CA9280800C207C3 /* CollectionViewItemView.swift in Sources */,
 				517979671CAD46D400C207C3 /* JsonProtocol.swift in Sources */,
 				510E8CD31C9F898B007413F5 /* LibraryItem.swift in Sources */,
@@ -421,18 +448,23 @@
 				5179795D1CAD426700C207C3 /* NetworkSupervisor.swift in Sources */,
 				51716CB01C9C124000872ADC /* TitleBarSplitView.swift in Sources */,
 				517979631CAD45FC00C207C3 /* Config.swift in Sources */,
+				51DD4F211CB125C000403A47 /* ImportableListObject.swift in Sources */,
+				51DD4F1F1CB1256800403A47 /* JobResponseObject.swift in Sources */,
 				517979701CAE80EE00C207C3 /* PubSub.swift in Sources */,
 				51716CBF1C9D5AA600872ADC /* TitleBarRightView.swift in Sources */,
 				517979691CAD472A00C207C3 /* PingResponseObject.swift in Sources */,
 				517979551CA9387A00C207C3 /* PhotoItem.swift in Sources */,
+				51DD4F1D1CB1251200403A47 /* HTTPStatusCodes.swift in Sources */,
 				5179794E1CA9258200C207C3 /* DividerView.swift in Sources */,
 				517979651CAD46AC00C207C3 /* NetworkDiscoveryObject.swift in Sources */,
 				517979761CAE84D300C207C3 /* ServerInfoResponseObject.swift in Sources */,
 				517979511CA926D100C207C3 /* CollectionViewItem.swift in Sources */,
+				517979861CB114C400C207C3 /* ImportView.swift in Sources */,
 				517979741CAE847E00C207C3 /* ServerSpecificationObject.swift in Sources */,
 				51716CBD1C9D5A9A00872ADC /* TitleBarLeftView.swift in Sources */,
 				518489251C9C0A5E006E3B9A /* MainViewController.swift in Sources */,
 				517979781CAE974B00C207C3 /* DatabaseManager.swift in Sources */,
+				517979821CB101E700C207C3 /* ImportWindowController.swift in Sources */,
 				518D8D7D1CA2B156007E508E /* OutlineView.swift in Sources */,
 				517979611CAD45A200C207C3 /* OutSocket.swift in Sources */,
 				5179797D1CAE97D300C207C3 /* QueryString.swift in Sources */,
