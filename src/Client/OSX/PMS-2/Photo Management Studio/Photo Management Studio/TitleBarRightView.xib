@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <capability name="box content view" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TitleBarRightViewController" customModule="Photo_Management_Studio" customModuleProvider="target">
@@ -14,42 +15,75 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="c22-O7-iKe" customClass="TitleBarRightView" customModule="Photo_Management_Studio" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="480" height="38"/>
+            <rect key="frame" x="0.0" y="0.0" width="617" height="41"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="dR1-hG-xdK" customClass="DividerView" customModule="Photo_Management_Studio" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="480" height="1"/>
+                    <rect key="frame" x="0.0" y="0.0" width="617" height="1"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="1" id="psA-ti-Sh6"/>
+                        <constraint firstAttribute="height" constant="1" id="YIk-LA-aq0"/>
                     </constraints>
                 </customView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VmX-Ua-fnh">
-                    <rect key="frame" x="158" y="10" width="165" height="17"/>
+                    <rect key="frame" x="226" y="12" width="165" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Photo Management Studio" id="9yC-65-Pjw">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OTj-yO-z4R">
-                    <rect key="frame" x="446" y="7" width="24" height="24"/>
+                <box title="Box" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="1eB-KL-JXF">
+                    <rect key="frame" x="468" y="7" width="144" height="26"/>
+                    <view key="contentView" id="mNK-fv-5kX">
+                        <rect key="frame" x="0.0" y="0.0" width="144" height="26"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ckM-bh-XV7">
+                                <rect key="frame" x="14" y="8" width="96" height="14"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="14" id="Btj-xO-JgN"/>
+                                    <constraint firstAttribute="width" constant="92" id="eqy-fr-QtC"/>
+                                </constraints>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Network Status" id="FpU-mx-Xek">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OTj-yO-z4R">
+                                <rect key="frame" x="116" y="3" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="0Yx-tG-cYq"/>
+                                    <constraint firstAttribute="height" constant="24" id="tSR-ci-TSA"/>
+                                </constraints>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSStatusUnavailable" id="3VY-9O-1Ef"/>
+                            </imageView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="OTj-yO-z4R" secondAttribute="trailing" id="KtE-W2-Idj"/>
+                            <constraint firstItem="OTj-yO-z4R" firstAttribute="leading" secondItem="ckM-bh-XV7" secondAttribute="trailing" constant="8" symbolic="YES" id="OfG-7i-6hl"/>
+                            <constraint firstItem="OTj-yO-z4R" firstAttribute="centerY" secondItem="mNK-fv-5kX" secondAttribute="centerY" id="RcT-5n-r4r"/>
+                            <constraint firstItem="ckM-bh-XV7" firstAttribute="centerY" secondItem="mNK-fv-5kX" secondAttribute="centerY" id="h9C-cC-8ml"/>
+                        </constraints>
+                    </view>
                     <constraints>
-                        <constraint firstAttribute="width" constant="24" id="0Yx-tG-cYq"/>
-                        <constraint firstAttribute="height" constant="24" id="tSR-ci-TSA"/>
+                        <constraint firstAttribute="width" constant="138" id="1R2-iM-aVU"/>
+                        <constraint firstAttribute="height" constant="20" id="fAb-ze-1vr"/>
                     </constraints>
-                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSStatusUnavailable" id="3VY-9O-1Ef"/>
-                </imageView>
+                    <color key="borderColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
+                    <color key="fillColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
+                </box>
             </subviews>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="dR1-hG-xdK" secondAttribute="bottom" id="0Xv-89-fJ7"/>
-                <constraint firstItem="OTj-yO-z4R" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="d1x-9f-uSe"/>
+                <constraint firstItem="1eB-KL-JXF" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="HKC-24-AWm"/>
+                <constraint firstAttribute="trailing" secondItem="1eB-KL-JXF" secondAttribute="trailing" constant="8" id="HjR-sV-RAl"/>
+                <constraint firstAttribute="bottom" secondItem="dR1-hG-xdK" secondAttribute="bottom" id="Ktq-O6-vbE"/>
                 <constraint firstItem="VmX-Ua-fnh" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="evk-A9-DkO"/>
-                <constraint firstAttribute="trailing" secondItem="OTj-yO-z4R" secondAttribute="trailing" constant="10" id="fCl-rr-WzS"/>
                 <constraint firstItem="dR1-hG-xdK" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="k4Y-zI-DUA"/>
                 <constraint firstItem="VmX-Ua-fnh" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="qYa-Nh-QtD"/>
                 <constraint firstAttribute="trailing" secondItem="dR1-hG-xdK" secondAttribute="trailing" id="qkm-Hl-LKR"/>
             </constraints>
-            <point key="canvasLocation" x="565" y="304"/>
+            <point key="canvasLocation" x="633.5" y="304"/>
         </customView>
     </objects>
     <resources>
