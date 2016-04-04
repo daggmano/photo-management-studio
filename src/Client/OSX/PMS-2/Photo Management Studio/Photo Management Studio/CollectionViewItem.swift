@@ -10,36 +10,44 @@ import Cocoa
 
 class CollectionViewItem: NSCollectionViewItem {
     
-    @IBOutlet weak var nameLabel: NSTextField!
-    @IBOutlet weak var sizeLabel: NSTextField!
-
-//    override func viewWillAppear() {
-//        if let photoItem = representedObject as? PhotoItem {
-//            nameLabel.stringValue = photoItem.fileName
-//            sizeLabel.stringValue = photoItem.dimensions
-//            imageView?.image = NSImage(named: photoItem.imageUrl)
-//        }
-//    }
-    
+    @IBOutlet weak var titleLabel: NSTextField!
+    @IBOutlet weak var subTitleLabel: NSTextField!
     
     private func updateView() {
         super.viewWillAppear()
         
-//        self.imageView?.image = NSImage(named: "placeholder")
-        nameLabel.stringValue = ""
-        sizeLabel.stringValue = ""
+        self.imageView?.image = NSImage(named: "placeholder")
+        titleLabel.stringValue = ""
+        subTitleLabel.stringValue = ""
+        view.toolTip = ""
         
         if let item = self.importableItem {
             
-            if let fileName = item.fileName {
-                nameLabel.stringValue = fileName
-            }
-            if let dimensions = item.dimensions {
-                sizeLabel.stringValue = dimensions
+            titleLabel.stringValue = item.title
+
+            if let subTitle = item.subTitle {
+                subTitleLabel.stringValue = subTitle
+                self.view.toolTip = "\(item.title)\n\n\(subTitle)"
+            } else {
+                subTitleLabel.stringValue = ""
+                self.view.toolTip = item.title
             }
             
-            if let imageUrl = item.imageUrl {
-                imageView?.image = NSImage(named: imageUrl)
+            if !item.imageUrl.containsString("http:") {
+                imageView?.image = NSImage(named: item.imageUrl)
+            } else {
+                let url = "\(item.imageUrl)&size=500"
+                    
+                dispatch_async(dispatch_queue_create("getAsyncPhotosGDQueue", nil), { () -> Void in
+                    if let url = NSURL(string: url) {
+                        if let image = NSImage(contentsOfURL: url) {
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                self.imageView?.image = image
+                                self.imageView?.needsDisplay = true
+                            })
+                        }
+                    }
+                })
             }
             
 //            if let thumbUrl = item.thumbUrl {

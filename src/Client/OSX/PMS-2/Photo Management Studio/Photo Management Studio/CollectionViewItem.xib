@@ -12,8 +12,8 @@
         <collectionViewItem nibName="CollectionViewItem" id="Rca-0y-Htn" customClass="CollectionViewItem" customModule="Photo_Management_Studio" customModuleProvider="target">
             <connections>
                 <outlet property="imageView" destination="tb7-fc-7oE" id="cYM-ED-y6Z"/>
-                <outlet property="nameLabel" destination="tKa-Zj-Iac" id="eCT-Ii-DUv"/>
-                <outlet property="sizeLabel" destination="Ssh-2c-I4n" id="06t-fF-Ti9"/>
+                <outlet property="subTitleLabel" destination="Ssh-2c-I4n" id="jhX-ox-yPp"/>
+                <outlet property="titleLabel" destination="tKa-Zj-Iac" id="FRY-1A-avR"/>
                 <outlet property="view" destination="Ynp-eG-dp9" id="Kkz-rJ-XRz"/>
             </connections>
         </collectionViewItem>
@@ -33,7 +33,7 @@
                         </imageView>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ssh-2c-I4n" userLabel="SizeLabel">
                             <rect key="frame" x="8" y="10" width="230" height="17"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="fdA-bx-xfX">
+                            <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="fdA-bx-xfX">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" red="0.70196078431372544" green="0.70196078431372544" blue="0.70196078431372544" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -41,7 +41,7 @@
                         </textField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tKa-Zj-Iac" userLabel="FileNameLabel">
                             <rect key="frame" x="8" y="28" width="230" height="17"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="2eD-Sf-pzS">
+                            <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="2eD-Sf-pzS">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

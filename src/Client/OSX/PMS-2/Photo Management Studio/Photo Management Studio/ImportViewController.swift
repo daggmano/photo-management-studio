@@ -56,7 +56,10 @@ class ImportViewController: NSViewController, NSCollectionViewDelegate {
 //        self.didChangeValueForKey("photoItems")
         
         self.updateSelectedIndexes()
-        self.getImportablePhotos()
+    }
+    
+    override func viewDidAppear() {
+        getImportablePhotos()
     }
     
     func getImportablePhotos() {
@@ -136,7 +139,7 @@ class ImportViewController: NSViewController, NSCollectionViewDelegate {
                     
                         self.photoItems.removeAll()
                         for item in importablePhotos {
-                            self.photoItems.append(PhotoItem(fileName: item.filename!, dimensions: item.fullPath!, imageUrl: item.thumbUrl!))
+                            self.photoItems.append(PhotoItem(title: item.filename!, subTitle: item.fullPath!, imageUrl: item.thumbUrl!, identifier: nil))
                         }
                     
                         self.didChangeValueForKey("photoItems")

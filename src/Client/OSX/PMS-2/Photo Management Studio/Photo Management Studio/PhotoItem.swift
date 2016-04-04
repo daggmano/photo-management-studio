@@ -10,34 +10,37 @@ import Cocoa
 
 class PhotoItem: NSObject, NSCoding {
 
-    let imageUrl: String!
-    let fileName: String!
-    let dimensions: String!
+    let title: String
+    let subTitle: String?
+    let imageUrl: String
+    let identifier: String?
     
-    init(fileName: String, dimensions: String, imageUrl: String) {
-        self.fileName = fileName
-        self.dimensions = dimensions
+    init(title: String, subTitle: String?, imageUrl: String, identifier: String?) {
+        self.title = title
+        self.subTitle = subTitle
         self.imageUrl = imageUrl
+        self.identifier = identifier
     }
     
     // MARK: NSCoding
     
     required convenience init?(coder decoder: NSCoder) {
-        guard let imageUrl = decoder.decodeObjectForKey("imageUrl") as? String,
-            let fileName = decoder.decodeObjectForKey("fileName") as? String,
-            let dimensions = decoder.decodeObjectForKey("dimensions") as? String
+        guard let title = decoder.decodeObjectForKey("title") as? String,
+            let imageUrl = decoder.decodeObjectForKey("imageUrl") as? String
             else { return nil }
         
         self.init(
-            fileName: fileName,
-            dimensions: dimensions,
-            imageUrl: imageUrl
+            title: title,
+            subTitle: decoder.decodeObjectForKey("siubTitle") as? String,
+            imageUrl: imageUrl,
+            identifier: decoder.decodeObjectForKey("identifier") as? String
         )
     }
     
     func encodeWithCoder(coder: NSCoder) {
-        coder.encodeObject(self.fileName, forKey: "fileName")
-        coder.encodeObject(self.dimensions, forKey: "dimensions")
+        coder.encodeObject(self.title, forKey: "title")
+        coder.encodeObject(self.subTitle, forKey: "subTitle")
         coder.encodeObject(self.imageUrl, forKey: "imageUrl")
+        coder.encodeObject(self.identifier, forKey: "identifier")
     }
 }

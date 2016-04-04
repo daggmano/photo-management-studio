@@ -137,7 +137,7 @@ class OutlineViewController: NSViewController, NSOutlineViewDelegate, NSOutlineV
                 let obj = NSKeyedUnarchiver.unarchiveObjectWithData(data) as! NSArray
                 for item in obj {
                     if let o = item as? PhotoItem {
-                        print("Dropped Photo: \(o.fileName)")
+                        print("Dropped Photo: \(o.title)")
                     }
                 }
             }

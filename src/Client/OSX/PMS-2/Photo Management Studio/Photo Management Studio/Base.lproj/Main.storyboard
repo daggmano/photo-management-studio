@@ -860,7 +860,7 @@
                                                                     <rect key="frame" x="4" y="-3" width="156" height="32"/>
                                                                     <buttonCell key="cell" type="bevel" title="Button" bezelStyle="rounded" alignment="left" imageScaling="proportionallyDown" inset="2" id="pQr-QT-CWn">
                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
-                                                                        <font key="font" metaFont="systemBold" size="11"/>
+                                                                        <font key="font" metaFont="smallSystemBold"/>
                                                                     </buttonCell>
                                                                     <connections>
                                                                         <action selector="onShowHide:" target="4BV-r7-edb" id="vgb-6f-rs7"/>
@@ -870,7 +870,7 @@
                                                                     <rect key="frame" x="164" y="-3" width="32" height="32"/>
                                                                     <buttonCell key="cell" type="bevel" bezelStyle="circular" image="NSAddTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyDown" inset="2" id="rW0-Nu-RHf">
                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                        <font key="font" metaFont="system" size="11"/>
+                                                                        <font key="font" metaFont="smallSystem"/>
                                                                     </buttonCell>
                                                                 </button>
                                                             </subviews>

@@ -38,19 +38,19 @@ class CollectionViewController: NSViewController, NSCollectionViewDelegate {
         
         self.willChangeValueForKey("photoItems")
         
-        photoItems.append(PhotoItem(fileName: "FileName1", dimensions: "1920x1080", imageUrl: "Photo1"))
-        photoItems.append(PhotoItem(fileName: "FileName2", dimensions: "1920x1080", imageUrl: "Photo2"))
-        photoItems.append(PhotoItem(fileName: "FileName3", dimensions: "1920x1080", imageUrl: "Photo3"))
-        photoItems.append(PhotoItem(fileName: "FileName4", dimensions: "1920x1080", imageUrl: "Photo4"))
-        photoItems.append(PhotoItem(fileName: "FileName5", dimensions: "1920x1080", imageUrl: "Photo5"))
-        photoItems.append(PhotoItem(fileName: "FileName6", dimensions: "1920x1080", imageUrl: "Photo6"))
-        photoItems.append(PhotoItem(fileName: "FileName7", dimensions: "1920x1080", imageUrl: "Photo7"))
-        photoItems.append(PhotoItem(fileName: "FileName8", dimensions: "1920x1080", imageUrl: "Photo8"))
-        photoItems.append(PhotoItem(fileName: "FileName9", dimensions: "1920x1080", imageUrl: "Photo9"))
-        photoItems.append(PhotoItem(fileName: "FileName10", dimensions: "1920x1080", imageUrl: "Photo10"))
-        photoItems.append(PhotoItem(fileName: "FileName11", dimensions: "1920x1080", imageUrl: "Photo11"))
-        photoItems.append(PhotoItem(fileName: "FileName12", dimensions: "1920x1080", imageUrl: "Photo12"))
-        photoItems.append(PhotoItem(fileName: "FileName13", dimensions: "1920x1080", imageUrl: "Photo13"))
+        photoItems.append(PhotoItem(title: "FileName1", subTitle: "1920x1080", imageUrl: "Photo1", identifier: nil))
+        photoItems.append(PhotoItem(title: "FileName2", subTitle: "1920x1080", imageUrl: "Photo2", identifier: nil))
+        photoItems.append(PhotoItem(title: "FileName3", subTitle: "1920x1080", imageUrl: "Photo3", identifier: nil))
+        photoItems.append(PhotoItem(title: "FileName4", subTitle: "1920x1080", imageUrl: "Photo4", identifier: nil))
+        photoItems.append(PhotoItem(title: "FileName5", subTitle: "1920x1080", imageUrl: "Photo5", identifier: nil))
+        photoItems.append(PhotoItem(title: "FileName6", subTitle: "1920x1080", imageUrl: "Photo6", identifier: nil))
+        photoItems.append(PhotoItem(title: "FileName7", subTitle: "1920x1080", imageUrl: "Photo7", identifier: nil))
+        photoItems.append(PhotoItem(title: "FileName8", subTitle: "1920x1080", imageUrl: "Photo8", identifier: nil))
+        photoItems.append(PhotoItem(title: "FileName9", subTitle: "1920x1080", imageUrl: "Photo9", identifier: nil))
+        photoItems.append(PhotoItem(title: "FileName10", subTitle: "1920x1080", imageUrl: "Photo10", identifier: nil))
+        photoItems.append(PhotoItem(title: "FileName11", subTitle: "1920x1080", imageUrl: "Photo11", identifier: nil))
+        photoItems.append(PhotoItem(title: "FileName12", subTitle: "1920x1080", imageUrl: "Photo12", identifier: nil))
+        photoItems.append(PhotoItem(title: "FileName13", subTitle: "1920x1080", imageUrl: "Photo13", identifier: nil))
         
         self.didChangeValueForKey("photoItems")
     }
@@ -151,7 +151,7 @@ class CollectionViewController: NSViewController, NSCollectionViewDelegate {
             for path in selectedDropTargets {
                 let item = collectionView.itemAtIndexPath(path)
                 if let obj = item?.representedObject as? PhotoItem {
-                    print("Moving Target: \(obj.fileName)")
+                    print("Moving Target: \(obj.title)")
                 }
             }
             
@@ -163,7 +163,7 @@ class CollectionViewController: NSViewController, NSCollectionViewDelegate {
             for path in selectedDropTargets {
                 let item = collectionView.itemAtIndexPath(path)
                 if let obj = item?.representedObject as? PhotoItem {
-                    print("Drop Target: \(obj.fileName)")
+                    print("Drop Target: \(obj.title)")
                 }
             }
         
