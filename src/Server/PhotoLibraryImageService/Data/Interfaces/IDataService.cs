@@ -10,5 +10,6 @@ namespace PhotoLibraryImageService.Data.Interfaces
 		Task<Import> CreateImportTag(Guid tagId, DateTime importDate);
 		Task<Media> InsertMedia(Media media);
 		Task<bool> MediaExists(string loweredFilePath);
+		Task<Media> GetMedia(string pid);
 	}
 }

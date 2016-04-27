@@ -6,6 +6,7 @@ namespace Shared
 	{
 		public string CouchDbPath { get; set; }
 		public string LibraryPath { get; set; }
+		public string ThumbnailPath { get; set; }
 		public int UdpListenPort { get; set; }
 		public int PhotoServerPort { get; set; }
 		public RollbarSettings Rollbar { get; set; }

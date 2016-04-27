@@ -6,9 +6,13 @@
 //  Copyright © 2016 Criterion Software. All rights reserved.
 //
 
+import Foundation
+
 public class DatabaseManager {
     public static func setupReplication(remoteAddress: String, serverId: String) {
         let localName = "photos_\(serverId)"
+        NSUserDefaults.standardUserDefaults().setObject(localName, forKey: "CouchDbLocalName")
+        Event.emit("local-database-changed", obj: NSObject())
         
         // Need to test if local DB exists, and create if not
         
@@ -40,6 +44,8 @@ public class DatabaseManager {
         let remote = "http://\(remoteAddress):5984/photos"
         let localName = "photos_\(serverId)"
         let local = "http://localhost:5984/\(localName)"
+        
+        AppDelegate.getInstance()?.setRemoteDatabaseAddress(remoteAddress);
         
         // Need to test if local DB exists, and create if not
         

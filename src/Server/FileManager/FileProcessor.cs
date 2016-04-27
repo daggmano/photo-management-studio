@@ -16,7 +16,7 @@ namespace FileManager
 			var retval = new Media
 			{
 				MediaId = filePath.ToLowerInvariant().Replace("\\", "/"),
-				CollectionId = Guid.NewGuid().ToString(),
+				UniqueId = Guid.NewGuid().ToString(),
 				FullFilePath = filePath,
 				FileName = Path.GetFileName(filePath),
 				DateAccuracy = 0,

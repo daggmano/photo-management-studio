@@ -12,10 +12,7 @@ namespace DataTypes
 		public string MediaRev { get; set; }
 
 		public string ImportId { get; set; }
-		/// <summary>
-		/// CollectionId is a Guid that is used in the Collection tag
-		/// </summary>
-		public string CollectionId { get; set; }
+		public string UniqueId { get; set; }
 
 		public string FullFilePath { get; set; }
 		public string FileName { get; set; }

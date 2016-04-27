@@ -68,5 +68,17 @@ namespace PhotoLibraryImageService.Data
 				return await store.ExistsAsync(loweredFilePath);
 			}
 		}
+		
+		public async Task<Media> GetMedia(string uid)
+		{
+			using (var store = new MyCouchStore(_couchDbRoot, _couchDbName))
+			{
+				var items = await store.QueryAsync<Media>(new Query("media", "all"));
+				Console.WriteLine("Number of items: " + items.Count());
+				var media = items.Select(x => x.Value).SingleOrDefault(x => x.UniqueId == uid);
+				
+				return media;
+			}
+		}
 	}
 }

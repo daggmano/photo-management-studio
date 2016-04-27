@@ -130,6 +130,7 @@ class NetworkSupervisor: NSObject, ServerInfoReceivedDelegate {
     }
     
     func attemptConnection() {
+        print("attemptConnection: _serverPort = \(_serverPort)")
         let discoveryObject = NetworkDiscoveryObject(identifier: "Photo.Management.Studio", clientSocketPort: _serverPort)
         _socketOut!.send(discoveryObject.toJSON());
     }

@@ -8,14 +8,19 @@
 
 import Cocoa
 
-class CollectionViewController: NSViewController, NSCollectionViewDelegate {
+class CollectionViewController: NSViewController, NSCollectionViewDelegate, NSSplitViewDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate {
     
     @IBOutlet weak var collectionView: NSCollectionView!
+    @IBOutlet weak var splitView: NSSplitView!
+    @IBOutlet weak var outlineView: NSOutlineView!
+    @IBOutlet weak var treeController: NSTreeController!
     
     static let dragType: String = "photomanagementstudio.collection.DragType"
     
     var photoItems: [PhotoItem] = []
     var viewIsCollection: Bool = false
+    
+    var inspectorItems: [InspectorItem] = []
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -36,23 +41,123 @@ class CollectionViewController: NSViewController, NSCollectionViewDelegate {
         let nib = NSNib(nibNamed: "CollectionViewItem", bundle: nil)!
         collectionView.registerNib(nib, forItemWithIdentifier: "")
         
-        self.willChangeValueForKey("photoItems")
+        Event.register("local-database-changed") { (obj) in
+            self.getPhotos()
+        }
         
-        photoItems.append(PhotoItem(title: "FileName1", subTitle: "1920x1080", imageUrl: "Photo1", identifier: nil))
-        photoItems.append(PhotoItem(title: "FileName2", subTitle: "1920x1080", imageUrl: "Photo2", identifier: nil))
-        photoItems.append(PhotoItem(title: "FileName3", subTitle: "1920x1080", imageUrl: "Photo3", identifier: nil))
-        photoItems.append(PhotoItem(title: "FileName4", subTitle: "1920x1080", imageUrl: "Photo4", identifier: nil))
-        photoItems.append(PhotoItem(title: "FileName5", subTitle: "1920x1080", imageUrl: "Photo5", identifier: nil))
-        photoItems.append(PhotoItem(title: "FileName6", subTitle: "1920x1080", imageUrl: "Photo6", identifier: nil))
-        photoItems.append(PhotoItem(title: "FileName7", subTitle: "1920x1080", imageUrl: "Photo7", identifier: nil))
-        photoItems.append(PhotoItem(title: "FileName8", subTitle: "1920x1080", imageUrl: "Photo8", identifier: nil))
-        photoItems.append(PhotoItem(title: "FileName9", subTitle: "1920x1080", imageUrl: "Photo9", identifier: nil))
-        photoItems.append(PhotoItem(title: "FileName10", subTitle: "1920x1080", imageUrl: "Photo10", identifier: nil))
-        photoItems.append(PhotoItem(title: "FileName11", subTitle: "1920x1080", imageUrl: "Photo11", identifier: nil))
-        photoItems.append(PhotoItem(title: "FileName12", subTitle: "1920x1080", imageUrl: "Photo12", identifier: nil))
-        photoItems.append(PhotoItem(title: "FileName13", subTitle: "1920x1080", imageUrl: "Photo13", identifier: nil))
+        splitView?.subviews[1].hidden = true
         
-        self.didChangeValueForKey("photoItems")
+        getPhotos()
+        
+        self.willChangeValueForKey("inspectorItems")
+    }
+    
+    func getPhotos() {
+        let db = Db()
+        db.getAllPhotos() { response in
+            switch response {
+            case .Error(let error):
+                print(error)
+            case .Success(let response):
+                self.processMedia(response.media)
+            }
+        }
+    }
+    
+    func processMedia(media: [MediaObject]) {
+        let serverUrl = AppDelegate.getInstance()?.getServerUrl()
+        
+        dispatch_async(dispatch_get_main_queue()) { 
+            self.willChangeValueForKey("photoItems")
+            
+            self.photoItems.removeAll()
+            
+            for m in media {
+                var thumbUrl = ""
+                if let serverUrl = serverUrl {
+                    print(serverUrl)
+                    if let uniqueId = m.uniqueId {
+                        thumbUrl = "\(serverUrl)/api/image/\(uniqueId)"
+                    }
+                }
+                
+                self.photoItems.append(PhotoItem(title: m.fileName!, subTitle: m.fullFilePath, imageUrl: thumbUrl, identifier: m.mediaId, metadata: m.metadata))
+            }
+            
+            self.didChangeValueForKey("photoItems")
+        }
+    }
+    
+    @IBAction func reload(sender: AnyObject?) {
+        self.getPhotos()
+    }
+    
+    @IBAction func showInfo(sender: AnyObject?) {
+        if splitView.isSubviewCollapsed(splitView.subviews[1]) {
+            splitView.subviews[1].hidden = false
+            updateInspector()
+        } else {
+            splitView.subviews[1].hidden = true
+        }
+    }
+    
+    override func validateMenuItem(menuItem: NSMenuItem) -> Bool {
+        let theAction = menuItem.action
+        if theAction == #selector(CollectionViewController.showInfo(_:)) {
+            if collectionView.selectionIndexes.count == 0 {
+                return false
+            }
+        }
+        
+        return true
+    }
+    
+    func collectionView(collectionView: NSCollectionView, didDeselectItemsAtIndexPaths indexPaths: Set<NSIndexPath>) {
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(20 * Double(NSEC_PER_MSEC)))
+        dispatch_after(delayTime, dispatch_get_main_queue()) { 
+            self.updateInspector()
+        }
+    }
+    
+    func collectionView(collectionView: NSCollectionView, didSelectItemsAtIndexPaths indexPaths: Set<NSIndexPath>) {
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(20 * Double(NSEC_PER_MSEC)))
+        dispatch_after(delayTime, dispatch_get_main_queue()) {
+            self.updateInspector()
+        }
+    }
+    
+    func updateInspector() {
+        if (splitView.isSubviewCollapsed(splitView.subviews[1])) {
+            return
+        }
+        
+        if (collectionView.selectionIndexes.count == 0) {
+            splitView.subviews[1].hidden = true
+        } else {
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                self.willChangeValueForKey("inspectorItems")
+
+                self.inspectorItems.removeAll()
+            
+                for idx in self.collectionView.selectionIndexes {
+            
+                    let photo = self.photoItems[idx]
+                    let item = InspectorItem(asTitle: photo.title)
+                    if let metadata = photo.meta {
+                        for meta in metadata {
+                            item.children.append(InspectorItem(asItem: meta.title, withValue: meta.value))
+                        }
+                    }
+                    
+                    self.inspectorItems.append(item)
+                }
+
+                self.didChangeValueForKey("inspectorItems")
+                
+                self.outlineView.expandItem(nil, expandChildren: true)
+            }
+        }
     }
     
     // MARK - Drag Operations
@@ -79,6 +184,7 @@ class CollectionViewController: NSViewController, NSCollectionViewDelegate {
         
         var left = 0
         for indexPath in indexPaths {
+            // TODO: Change source for NSImage
             let thisImage = NSImage(named: photoItems[indexPath.item].imageUrl)!.resizeImage(40, height: 40)
             
             thisImage.drawInRect(NSMakeRect(CGFloat(left), 0, 40, 40))
@@ -180,6 +286,42 @@ class CollectionViewController: NSViewController, NSCollectionViewDelegate {
         }
         
         return false
+    }
+    
+    // MARK - NSSplitViewDelegate Functions
+    
+    func splitView(splitView: NSSplitView, effectiveRect proposedEffectiveRect: NSRect, forDrawnRect drawnRect: NSRect, ofDividerAtIndex dividerIndex: Int) -> NSRect {
+        return NSZeroRect
+    }
+    
+    // MARK - NSOutlineViewDelegate Functions
+    
+    func outlineView(outlineView: NSOutlineView, viewForTableColumn tableColumn: NSTableColumn?, item: AnyObject) -> NSView? {
+        
+        var result: NSTableCellView?
+        
+        if let node = item.representedObject as? InspectorItem {
+            if node.isTitle() {
+                let titleCellView = outlineView.makeViewWithIdentifier("TitleCell", owner: self) as? InspectorTitleCell
+                titleCellView?.representedItem = node
+                result = titleCellView
+            } else {
+                let valueCellView = outlineView.makeViewWithIdentifier("ValueCell", owner: self) as? InspectorValueCell
+                valueCellView?.representedItem = node
+                result = valueCellView
+            }
+        }
+        
+        return result
+    }
+
+    func outlineView(outlineView: NSOutlineView, heightOfRowByItem item: AnyObject) -> CGFloat {
+        if let node = item.representedObject as? InspectorItem {
+            if node.isTitle() {
+                return 30.0
+            }
+        }
+        return 42.0
     }
     
     // MARK - Private Helper Functions

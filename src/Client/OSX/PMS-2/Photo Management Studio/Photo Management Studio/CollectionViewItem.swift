@@ -36,7 +36,13 @@ class CollectionViewItem: NSCollectionViewItem {
             if !item.imageUrl.containsString("http:") {
                 imageView?.image = NSImage(named: item.imageUrl)
             } else {
-                let url = "\(item.imageUrl)&size=500"
+                var url: String;
+                if (item.imageUrl.containsString("?")) {
+                    url = "\(item.imageUrl)&size=500"
+                } else {
+                    url = "\(item.imageUrl)?size=500"
+                }
+                print(url)
                     
                 dispatch_async(dispatch_queue_create("getAsyncPhotosGDQueue", nil), { () -> Void in
                     if let url = NSURL(string: url) {

@@ -11,12 +11,12 @@ namespace Setup
 	public class DatabaseInitializer
 	{
 		private AppSettings _appSettings;
-		
+
 		public DatabaseInitializer()
 		{
 			_appSettings = SharedConfiguration.GetAppSettings();
 		}
-		
+
 		public async Task Run()
 		{
 			string docString;
@@ -75,7 +75,7 @@ namespace Setup
 						{
 							get = new
 							{
-								map = "function(doc) { if (doc.$doctype == 'serverDetail') { emit(null, doc); } }"
+								map = "function(doc) { if (doc.$doctype == 'serverDetail') { emit(doc._id, doc); } }"
 							}
 						}
 					});
@@ -154,7 +154,7 @@ namespace Setup
 						{
 							all = new
 							{
-								map = "function(doc) { if (doc.$doctype == 'collection') { emit(null, doc); } }"
+								map = "function(doc) { if (doc.$doctype == 'collection') { emit(doc._id, doc); } }"
 							}
 						}
 					});
@@ -174,7 +174,7 @@ namespace Setup
 						{
 							all = new
 							{
-								map = "function(doc) { if (doc.$doctype == 'import') { emit(null, doc); } }"
+								map = "function(doc) { if (doc.$doctype == 'import') { emit(doc._id, doc); } }"
 							}
 						}
 					});
@@ -194,7 +194,7 @@ namespace Setup
 						{
 							all = new
 							{
-								map = "function(doc) { if (doc.$doctype == 'media') { emit(null, doc); } }"
+								map = "function(doc) { if (doc.$doctype == 'media') { emit(doc._id, doc); } }"
 							}
 						}
 					});
@@ -214,15 +214,15 @@ namespace Setup
 						{
 							parents = new
 							{
-								map = "function(doc) { if (doc.$doctype == 'tag' && doc.subType == 'parent') { emit(null, doc); } }"
+								map = "function(doc) { if (doc.$doctype == 'tag' && doc.subType == 'parent') { emit(doc._id, doc); } }"
 							},
                             buckets = new
 							{
-								map = "function(doc) { if (doc.$doctype == 'tag' && doc.subType == 'bucket') { emit(null, doc); } }"
+								map = "function(doc) { if (doc.$doctype == 'tag' && doc.subType == 'bucket') { emit(doc._id, doc); } }"
 							},
                             tags = new
 							{
-								map = "function(doc) { if (doc.$doctype == 'tag' && doc.subType == 'tag') { emit(null, doc); } }"
+								map = "function(doc) { if (doc.$doctype == 'tag' && doc.subType == 'tag') { emit(doc._id, doc); } }"
 							},
 						}
 					});

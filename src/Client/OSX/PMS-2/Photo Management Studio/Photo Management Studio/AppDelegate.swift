@@ -15,6 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NetworkConnectionStatusDeleg
 
     var _networkSupervisor: NetworkSupervisor!
     var _connectionStatus: ConnectionState!
+    var _remoteDatabaseAddress: String?
     var _serverUrl: String?
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
@@ -44,17 +45,33 @@ class AppDelegate: NSObject, NSApplicationDelegate, NetworkConnectionStatusDeleg
     func getConnectionStatus() -> ConnectionState {
         return _connectionStatus
     }
-
-    func setServerUrl(url: String) {
-        self._serverUrl = url
+    
+    func setRemoteDatabaseAddress(url: String) {
+        self._remoteDatabaseAddress = url
+        Event.emit("connection-status-changed", obj: _connectionStatus.description)
     }
     
-    func getServerUrl() -> String? {
-        if (self._connectionStatus == .Connected) {
-            return _serverUrl
+    func getRemoteDatabaseAddress() -> String? {
+        if let status = self._connectionStatus {
+            if status == .Connected {
+                return _remoteDatabaseAddress
+            }
         }
         return nil
     }
-
+    
+    func setServerUrl(url: String) {
+        self._serverUrl = url
+        Event.emit("connection-status-changed", obj: _connectionStatus.description)
+    }
+    
+    func getServerUrl() -> String? {
+        if let status = self._connectionStatus {
+            if status == .Connected {
+                return _serverUrl
+            }
+        }
+        return nil
+    }
 }
 

@@ -82,8 +82,8 @@ class MainWindowController: NSWindowController, NSSplitViewDelegate {
     override func validateMenuItem(menuItem: NSMenuItem) -> Bool {
         let theAction = menuItem.action
         if theAction == #selector(MainWindowController.importPhotos(_:)) {
-            if AppDelegate.getInstance()?.getConnectionStatus() != .Connected {
-                return false
+            if let status = AppDelegate.getInstance()?.getConnectionStatus() {
+                return status == .Connected
             }
         }
         
@@ -119,5 +119,4 @@ class MainWindowController: NSWindowController, NSSplitViewDelegate {
             })
         }
     }
-
 }
