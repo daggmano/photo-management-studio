@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5106B1141CD20D520006C3A8 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5106B1131CD20D520006C3A8 /* ImageCache.swift */; };
+		5106B1161CD2126A0006C3A8 /* NSImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5106B1151CD2126A0006C3A8 /* NSImageExtensions.swift */; };
 		510E8CD01C9EC4B4007413F5 /* OutlineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510E8CCF1C9EC4B4007413F5 /* OutlineViewController.swift */; };
 		510E8CD31C9F898B007413F5 /* LibraryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510E8CD21C9F898B007413F5 /* LibraryItem.swift */; };
 		51716CAE1C9C0DB200872ADC /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51716CAD1C9C0DB200872ADC /* MainWindowController.swift */; };
@@ -69,6 +71,8 @@
 /* Begin PBXFileReference section */
 		307047CA1259C88DCEFC11AD /* Pods-Photo Management Studio.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Photo Management Studio.release.xcconfig"; path = "Pods/Target Support Files/Pods-Photo Management Studio/Pods-Photo Management Studio.release.xcconfig"; sourceTree = "<group>"; };
 		507AAB360039E564D343C385 /* Pods-Photo Management Studio.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Photo Management Studio.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Photo Management Studio/Pods-Photo Management Studio.debug.xcconfig"; sourceTree = "<group>"; };
+		5106B1131CD20D520006C3A8 /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		5106B1151CD2126A0006C3A8 /* NSImageExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSImageExtensions.swift; sourceTree = "<group>"; };
 		510E8CCF1C9EC4B4007413F5 /* OutlineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutlineViewController.swift; sourceTree = "<group>"; };
 		510E8CD21C9F898B007413F5 /* LibraryItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryItem.swift; sourceTree = "<group>"; };
 		51716CAD1C9C0DB200872ADC /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
@@ -241,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				5179796F1CAE80EE00C207C3 /* PubSub.swift */,
+				5106B1151CD2126A0006C3A8 /* NSImageExtensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -251,6 +256,7 @@
 				5179797A1CAE978C00C207C3 /* CouchDb.swift */,
 				5179797C1CAE97D300C207C3 /* QueryString.swift */,
 				51DD4F1C1CB1251200403A47 /* HTTPStatusCodes.swift */,
+				5106B1131CD20D520006C3A8 /* ImageCache.swift */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -477,6 +483,7 @@
 				5179796B1CAD475500C207C3 /* ResponseObject.swift in Sources */,
 				51716CBA1C9C27B200872ADC /* TitleBarRightViewController.swift in Sources */,
 				510E8CD01C9EC4B4007413F5 /* OutlineViewController.swift in Sources */,
+				5106B1141CD20D520006C3A8 /* ImageCache.swift in Sources */,
 				5179795B1CAD41BA00C207C3 /* PortHelper.swift in Sources */,
 				5179793C1CA6A87200C207C3 /* OutlineTitleButton.swift in Sources */,
 				51DD4F251CB3BF6500403A47 /* ImportedFilesObject.swift in Sources */,
@@ -488,6 +495,7 @@
 				51DD4F1F1CB1256800403A47 /* JobResponseObject.swift in Sources */,
 				517979701CAE80EE00C207C3 /* PubSub.swift in Sources */,
 				51716CBF1C9D5AA600872ADC /* TitleBarRightView.swift in Sources */,
+				5106B1161CD2126A0006C3A8 /* NSImageExtensions.swift in Sources */,
 				517979691CAD472A00C207C3 /* PingResponseObject.swift in Sources */,
 				517979551CA9387A00C207C3 /* PhotoItem.swift in Sources */,
 				51DD4F1D1CB1251200403A47 /* HTTPStatusCodes.swift in Sources */,

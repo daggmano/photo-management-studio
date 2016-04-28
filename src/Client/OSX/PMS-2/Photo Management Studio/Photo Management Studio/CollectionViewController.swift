@@ -81,7 +81,7 @@ class CollectionViewController: NSViewController, NSCollectionViewDelegate, NSSp
                     }
                 }
                 
-                self.photoItems.append(PhotoItem(title: m.fileName!, subTitle: m.fullFilePath, imageUrl: thumbUrl, identifier: m.mediaId, metadata: m.metadata))
+                self.photoItems.append(PhotoItem(title: m.fileName!, subTitle: m.fullFilePath, imageUrl: thumbUrl, identifier: m.uniqueId, metadata: m.metadata))
             }
             
             self.didChangeValueForKey("photoItems")

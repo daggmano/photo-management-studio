@@ -43,16 +43,11 @@ class CollectionViewItem: NSCollectionViewItem {
                     url = "\(item.imageUrl)?size=500"
                 }
                 print(url)
-                    
-                dispatch_async(dispatch_queue_create("getAsyncPhotosGDQueue", nil), { () -> Void in
-                    if let url = NSURL(string: url) {
-                        if let image = NSImage(contentsOfURL: url) {
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                self.imageView?.image = image
-                                self.imageView?.needsDisplay = true
-                            })
-                        }
-                    }
+                let thumbName = "\(item.identifier!)_500x500.jpg"
+                
+                ImageCache.getImage(url, thumbName: thumbName, useCache: true, callback: { (image) in
+                    self.imageView?.image = image
+                    self.imageView?.needsDisplay = true
                 })
             }
             
