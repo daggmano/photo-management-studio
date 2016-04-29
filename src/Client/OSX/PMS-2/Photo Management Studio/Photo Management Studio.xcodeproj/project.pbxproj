@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		5106B1141CD20D520006C3A8 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5106B1131CD20D520006C3A8 /* ImageCache.swift */; };
 		5106B1161CD2126A0006C3A8 /* NSImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5106B1151CD2126A0006C3A8 /* NSImageExtensions.swift */; };
+		5106B1181CD2F90E0006C3A8 /* ImportViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5106B1171CD2F90E0006C3A8 /* ImportViewItem.xib */; };
+		5106B11A1CD2F9320006C3A8 /* ImportViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5106B1191CD2F9320006C3A8 /* ImportViewItem.swift */; };
+		5106B11C1CD2F93F0006C3A8 /* ImportViewItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5106B11B1CD2F93F0006C3A8 /* ImportViewItemView.swift */; };
 		510E8CD01C9EC4B4007413F5 /* OutlineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510E8CCF1C9EC4B4007413F5 /* OutlineViewController.swift */; };
 		510E8CD31C9F898B007413F5 /* LibraryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510E8CD21C9F898B007413F5 /* LibraryItem.swift */; };
 		51716CAE1C9C0DB200872ADC /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51716CAD1C9C0DB200872ADC /* MainWindowController.swift */; };
@@ -73,6 +76,9 @@
 		507AAB360039E564D343C385 /* Pods-Photo Management Studio.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Photo Management Studio.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Photo Management Studio/Pods-Photo Management Studio.debug.xcconfig"; sourceTree = "<group>"; };
 		5106B1131CD20D520006C3A8 /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		5106B1151CD2126A0006C3A8 /* NSImageExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSImageExtensions.swift; sourceTree = "<group>"; };
+		5106B1171CD2F90E0006C3A8 /* ImportViewItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImportViewItem.xib; sourceTree = "<group>"; };
+		5106B1191CD2F9320006C3A8 /* ImportViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportViewItem.swift; sourceTree = "<group>"; };
+		5106B11B1CD2F93F0006C3A8 /* ImportViewItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportViewItemView.swift; sourceTree = "<group>"; };
 		510E8CCF1C9EC4B4007413F5 /* OutlineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutlineViewController.swift; sourceTree = "<group>"; };
 		510E8CD21C9F898B007413F5 /* LibraryItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryItem.swift; sourceTree = "<group>"; };
 		51716CAD1C9C0DB200872ADC /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
@@ -264,9 +270,12 @@
 		5179797E1CB0FD2200C207C3 /* ImportSheet */ = {
 			isa = PBXGroup;
 			children = (
+				5106B1171CD2F90E0006C3A8 /* ImportViewItem.xib */,
 				517979811CB101E700C207C3 /* ImportWindowController.swift */,
 				517979831CB101F600C207C3 /* ImportViewController.swift */,
 				517979851CB114C400C207C3 /* ImportView.swift */,
+				5106B1191CD2F9320006C3A8 /* ImportViewItem.swift */,
+				5106B11B1CD2F93F0006C3A8 /* ImportViewItemView.swift */,
 			);
 			name = ImportSheet;
 			sourceTree = "<group>";
@@ -393,6 +402,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5106B1181CD2F90E0006C3A8 /* ImportViewItem.xib in Resources */,
 				51716CB31C9C276300872ADC /* TitleBarLeftView.xib in Resources */,
 				518489271C9C0A5E006E3B9A /* Assets.xcassets in Resources */,
 				51716CB51C9C278800872ADC /* TitleBarRightView.xib in Resources */,
@@ -487,6 +497,7 @@
 				5179795B1CAD41BA00C207C3 /* PortHelper.swift in Sources */,
 				5179793C1CA6A87200C207C3 /* OutlineTitleButton.swift in Sources */,
 				51DD4F251CB3BF6500403A47 /* ImportedFilesObject.swift in Sources */,
+				5106B11A1CD2F9320006C3A8 /* ImportViewItem.swift in Sources */,
 				517979461CA7F82E00C207C3 /* CollectionView.swift in Sources */,
 				5179795D1CAD426700C207C3 /* NetworkSupervisor.swift in Sources */,
 				51716CB01C9C124000872ADC /* TitleBarSplitView.swift in Sources */,
@@ -505,6 +516,7 @@
 				517979511CA926D100C207C3 /* CollectionViewItem.swift in Sources */,
 				517979861CB114C400C207C3 /* ImportView.swift in Sources */,
 				51DD4F271CB3C39600403A47 /* ProgressIndicator.swift in Sources */,
+				5106B11C1CD2F93F0006C3A8 /* ImportViewItemView.swift in Sources */,
 				517979741CAE847E00C207C3 /* ServerSpecificationObject.swift in Sources */,
 				51DD4F291CB4824800403A47 /* MediaObject.swift in Sources */,
 				51716CBD1C9D5A9A00872ADC /* TitleBarLeftView.swift in Sources */,

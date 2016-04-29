@@ -25,7 +25,7 @@ class ImportViewController: NSViewController, NSCollectionViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let nib = NSNib(nibNamed: "CollectionViewItem", bundle: nil)!
+        let nib = NSNib(nibNamed: "ImportViewItem", bundle: nil)!
         collectionView.registerNib(nib, forItemWithIdentifier: "")
         selectedIndexes = NSIndexSet()
         
@@ -61,6 +61,10 @@ class ImportViewController: NSViewController, NSCollectionViewDelegate {
         } else {
             progressIndicatorView.show(false)
         }
+    }
+    
+    func selectNone(sender: AnyObject?) {
+        collectionView.selectionIndexPaths.removeAll()
     }
     
     private func processImportListResponse(message: NSData) {
@@ -117,7 +121,7 @@ class ImportViewController: NSViewController, NSCollectionViewDelegate {
                     
                         self.photoItems.removeAll()
                         for item in importablePhotos {
-                            self.photoItems.append(PhotoItem(title: item.filename!, subTitle: item.fullPath!, imageUrl: item.thumbUrl!, identifier: nil, metadata: nil))
+                            self.photoItems.append(PhotoItem(title: item.filename!, subTitle: item.fullPath!, imageUrl: item.thumbUrl!, identifier: item.fullPath!, metadata: nil))
                         }
                     
                         self.didChangeValueForKey("photoItems")

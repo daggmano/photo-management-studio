@@ -81,6 +81,20 @@
                             </menuItem>
                             <menuItem title="Edit" id="5QF-Oa-p0T">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Edit" id="uwz-ws-P3K">
+                                    <items>
+                                        <menuItem title="Select All" keyEquivalent="a" id="MNk-yU-oZa">
+                                            <connections>
+                                                <action selector="selectAll:" target="Ady-hI-5gd" id="1vH-RF-xf4"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Select None" keyEquivalent="d" id="5wP-RL-bWb">
+                                            <connections>
+                                                <action selector="selectNone:" target="Ady-hI-5gd" id="X5n-EM-2RZ"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
                             </menuItem>
                             <menuItem title="Format" id="jxT-CU-nIS">
                                 <modifierMask key="keyEquivalentModifierMask"/>

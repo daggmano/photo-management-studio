@@ -32,13 +32,6 @@ class InspectorItem: NSObject {
         self.value = withValue
     }
     
-    init(type: InspectorItemType, title: String, value: String, children: [InspectorItem]) {
-        self.type = type
-        self.title = title
-        self.value = value
-        self.children = children
-    }
-    
     func isLeaf() -> Bool {
         return children.isEmpty
     }

@@ -92,6 +92,10 @@ class CollectionViewController: NSViewController, NSCollectionViewDelegate, NSSp
         self.getPhotos()
     }
     
+    func selectNone(sender: AnyObject?) {
+        collectionView.selectionIndexPaths.removeAll()
+    }
+    
     @IBAction func showInfo(sender: AnyObject?) {
         if splitView.isSubviewCollapsed(splitView.subviews[1]) {
             splitView.subviews[1].hidden = false
@@ -302,10 +306,12 @@ class CollectionViewController: NSViewController, NSCollectionViewDelegate, NSSp
         
         if let node = item.representedObject as? InspectorItem {
             if node.isTitle() {
+                print("TItle cell")
                 let titleCellView = outlineView.makeViewWithIdentifier("TitleCell", owner: self) as? InspectorTitleCell
                 titleCellView?.representedItem = node
                 result = titleCellView
             } else {
+                print("Value cell")
                 let valueCellView = outlineView.makeViewWithIdentifier("ValueCell", owner: self) as? InspectorValueCell
                 valueCellView?.representedItem = node
                 result = valueCellView
@@ -318,9 +324,11 @@ class CollectionViewController: NSViewController, NSCollectionViewDelegate, NSSp
     func outlineView(outlineView: NSOutlineView, heightOfRowByItem item: AnyObject) -> CGFloat {
         if let node = item.representedObject as? InspectorItem {
             if node.isTitle() {
+                print("Height is 30")
                 return 30.0
             }
         }
+        print("Height is 42")
         return 42.0
     }
     
