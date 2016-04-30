@@ -27,50 +27,53 @@ class OutlineViewController: NSViewController, NSOutlineViewDelegate, NSOutlineV
         
         self.willChangeValueForKey("libraryItems")
         
-        let item = LibraryItem(asTitle: "Tags")
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 1", canTag: true))
-        item.children.append(LibraryItem(asItem: "Item 2", canTag: false))
-        
-        item.children[1].children.append(LibraryItem(asItem: "Sub Item 2.1", canTag: false))
-        item.children[1].children[0].children.append(LibraryItem(asItem: "Sub Item 2.1.1", canTag: true))
-        
-        libraryItems.append(item)
+        libraryItems.append(LibraryItem(asTitle: "Tags"))
         libraryItems.append(LibraryItem(asTitle: "Collections"))
         libraryItems.append(LibraryItem(asTitle: "Imports"))
         
         self.didChangeValueForKey("libraryItems")
+        
+        Event.register("local-database-changed") { (obj) in
+            self.refreshImports()
+        }
+        
+        refreshImports()
+    }
+    
+    func refreshImports() {
+        let db = Db()
+        db.getAllImports() { response in
+            switch response {
+            case .Error(let error):
+                print(error)
+            case .Success(let response):
+                self.processImports(response.imports)
+            }
+        }
+    }
+    
+    func processImports(imports: [ImportObject]) {
+    
+        print("Importing \(imports.count) imports")
+        
+        dispatch_async(dispatch_get_main_queue()) { 
+            self.willChangeValueForKey("libraryItems")
+            
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "EEE, d MMM yyyy h:mm a"
+            
+            let importParent = self.libraryItems[2]
+            importParent.children.removeAll()
+            
+            for imp in imports {
+                if let importDate = imp.importDate {
+                    print(dateFormatter.stringFromDate(importDate))
+                    importParent.children.append(LibraryItem(asItem: dateFormatter.stringFromDate(importDate), canTag: false))
+                }
+            }
+            
+            self.didChangeValueForKey("libraryItems")
+        }
     }
     
     func outlineView(outlineView: NSOutlineView, viewForTableColumn tableColumn: NSTableColumn?, item: AnyObject) -> NSView? {
