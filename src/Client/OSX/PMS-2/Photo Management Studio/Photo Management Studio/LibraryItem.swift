@@ -9,7 +9,8 @@
 import Cocoa
 
 enum LibraryItemType: String {
-    case Title = "Title"
+    case TitleWithAdd = "TitleWithAdd"
+    case TitleNoAdd = "TitleNoAdd"
     case Item = "Item"
 }
 
@@ -20,8 +21,8 @@ class LibraryItem: NSObject, NSCoding {
     let canTag: Bool
     var children: [LibraryItem] = []
 
-    init(asTitle: String) {
-        self.type = .Title
+    init(asTitle: String, canAdd: Bool) {
+        self.type = canAdd ? .TitleWithAdd : .TitleNoAdd
         self.text = asTitle
         self.canTag = false
     }
@@ -44,7 +45,14 @@ class LibraryItem: NSObject, NSCoding {
     }
     
     func isTitle() -> Bool {
-        return type == .Title
+        return type == .TitleWithAdd || type == .TitleNoAdd
+    }
+    
+    func titleHasAdd() -> Bool {
+        if self.isTitle() {
+            return type == .TitleWithAdd
+        }
+        return false;
     }
     
     // MARK: NSCoding
