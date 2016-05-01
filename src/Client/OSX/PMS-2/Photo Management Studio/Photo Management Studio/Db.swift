@@ -10,6 +10,8 @@ import Cocoa
 
 class Db: NSObject {
     
+    // MARK - Get Photos
+    
     struct MediaResponseObject {
         var media: [MediaObject]!
         
@@ -64,4 +66,62 @@ class Db: NSObject {
             done(.Error(NSError(domain: "DB", code: 0, userInfo: nil)))
         }
     }
+    
+    // MARK - Get Imports
+    
+    struct ImportResponseObject {
+        var imports: [ImportObject]!
+        
+        init(rows: [CouchDb.View.Row]) {
+            imports = []
+            for row in rows {
+                if let doc = row.value as? [String: AnyObject] {
+                    imports.append(ImportObject(json: doc))
+                }
+            }
+        }
+    }
+    
+    enum ImportResponse {
+        case Success(ImportResponseObject)
+        case Error(NSError)
+    }
+
+    func getAllImports(done: (ImportResponse) -> Void) {
+        
+        // Check if connected, if so use server DB, otherwise use local DB
+        let remoteDatabaseAddress = AppDelegate.getInstance()?.getRemoteDatabaseAddress()
+        let localName = NSUserDefaults.standardUserDefaults().objectForKey("CouchDbLocalName") as? String
+        
+        print("Getting all imports, remoteDatabaseAddress: \(remoteDatabaseAddress), localName: \(localName)")
+        
+        var couchDb: CouchDb
+        var database: CouchDb.Database? = nil
+        if remoteDatabaseAddress != nil {
+            couchDb = CouchDb(url: "http://\(remoteDatabaseAddress!):5984", name: nil, password: nil)
+            database = couchDb.use("photos")
+        } else if localName != nil {
+            couchDb = CouchDb(url: "http://localhost:5984", name: nil, password: nil)
+            database = couchDb.use(localName!)
+        } else {
+            done(.Error(NSError(domain: "DB", code: 0, userInfo: nil)))
+        }
+        
+        if let database = database {
+            let view = database.view("imports")
+            let params = CouchDb.QueryParameters()
+            view.get("all", query: params) { response in
+                switch response {
+                case .Error(let error):
+                    done(.Error(error))
+                case .Success(let response):
+                    let importResponseObject = ImportResponseObject(rows: response.rows)
+                    done(.Success(importResponseObject))
+                }
+            }
+        } else {
+            done(.Error(NSError(domain: "DB", code: 0, userInfo: nil)))
+        }
+    }
+
 }
