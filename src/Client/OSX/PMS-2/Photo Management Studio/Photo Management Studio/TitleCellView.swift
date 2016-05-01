@@ -12,11 +12,14 @@ class TitleCellView: NSTableCellView {
     
     @IBOutlet weak var outlineView: NSOutlineView!
     @IBOutlet weak var titleButton: NSButton!
+    @IBOutlet weak var addButton: NSButton!
     
     var representedItem: LibraryItem?
     
     override func viewWillDraw() {
         self.titleButton.title = (representedItem?.text)!.uppercaseString
+
+        addButton.hidden = !representedItem!.titleHasAdd()
     }
     
     @IBAction func onShowHide(sender: AnyObject?) {

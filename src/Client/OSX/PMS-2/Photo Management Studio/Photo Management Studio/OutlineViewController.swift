@@ -27,9 +27,9 @@ class OutlineViewController: NSViewController, NSOutlineViewDelegate, NSOutlineV
         
         self.willChangeValueForKey("libraryItems")
         
-        libraryItems.append(LibraryItem(asTitle: "Tags"))
-        libraryItems.append(LibraryItem(asTitle: "Collections"))
-        libraryItems.append(LibraryItem(asTitle: "Imports"))
+        libraryItems.append(LibraryItem(asTitle: "Tags", canAdd: true))
+        libraryItems.append(LibraryItem(asTitle: "Collections", canAdd: true))
+        libraryItems.append(LibraryItem(asTitle: "Imports", canAdd: false))
         
         self.didChangeValueForKey("libraryItems")
         

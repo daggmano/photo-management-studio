@@ -357,6 +357,7 @@
                                                                 <constraint firstItem="7dz-af-L7X" firstAttribute="centerY" secondItem="4BV-r7-edb" secondAttribute="centerY" id="pBh-j9-DlH"/>
                                                             </constraints>
                                                             <connections>
+                                                                <outlet property="addButton" destination="7dz-af-L7X" id="V2W-mh-eCV"/>
                                                                 <outlet property="outlineView" destination="PNj-MP-hPc" id="BkU-lP-pQW"/>
                                                                 <outlet property="titleButton" destination="FAi-5w-lnv" id="WNK-Qr-c2d"/>
                                                             </connections>
@@ -493,7 +494,7 @@
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <outlineView wantsLayer="YES" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" autosaveColumns="NO" typeSelect="NO" rowHeight="24" rowSizeStyle="systemDefault" viewBased="YES" indentationPerLevel="8" indentationMarkerFollowsCell="NO" outlineTableColumn="RAK-od-Pzn" id="3LT-en-U1r">
-                                                            <rect key="frame" x="0.0" y="0.0" width="283" height="0.0"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="282" height="0.0"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <size key="intercellSpacing" width="2" height="3"/>
                                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.080000000000000002" colorSpace="calibratedRGB"/>
